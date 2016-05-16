@@ -11,13 +11,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JWindow;
 
 public class ServerGUI extends JFrame {
 
-	
+	private JMenuBar topMenuBar;
 	private JMenu topMenu;
+	private JMenuItem menuItemEdit;
 	
 	// JPANELS
 	// *********************************************************************
@@ -49,6 +53,7 @@ public class ServerGUI extends JFrame {
 
 	public ServerGUI() throws Exception {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
 		setLayout(new BorderLayout());
 		setComponents();
@@ -59,7 +64,9 @@ public class ServerGUI extends JFrame {
 
 	private void setComponents() {
 		
+		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
+		menuItemEdit = new JMenuItem("Edit the menu..");
 		// JPANELS
 		// **********************************************************************
 		westPanel = new JPanel();
@@ -130,7 +137,9 @@ public class ServerGUI extends JFrame {
 		westPanel.add(westListPanel, BorderLayout.CENTER);
 
 		add(mainPanel, BorderLayout.CENTER);
-		add(topMenu, BorderLayout.NORTH);
+		add(topMenuBar, BorderLayout.NORTH);
+		topMenuBar.add(topMenu);
+		topMenu.add(menuItemEdit);
 	}
 
 	public static void main(String[] args) throws Exception {
