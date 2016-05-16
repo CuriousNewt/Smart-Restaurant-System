@@ -21,7 +21,8 @@ public class ServerGUI extends JFrame {
 
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
-	private JMenuItem menuItemEdit;
+	private JMenuItem menuItemEditMenu;
+	private JMenuItem menuItemEditTables;
 	
 	// JPANELS
 	// *********************************************************************
@@ -64,9 +65,13 @@ public class ServerGUI extends JFrame {
 
 	private void setComponents() {
 		
+		// TOP MENU BAR
+		// **********************************************************************
 		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
-		menuItemEdit = new JMenuItem("Edit the menu..");
+		menuItemEditMenu = new JMenuItem("Edit menu..");
+		menuItemEditTables = new JMenuItem("Edit tables..");
+		
 		// JPANELS
 		// **********************************************************************
 		westPanel = new JPanel();
@@ -79,10 +84,10 @@ public class ServerGUI extends JFrame {
 
 		// JBUTTONS
 		// *********************************************************************
-		ordersEditButton = new JButton("Remove");
-		payedButton = new JButton("Set as payed");
-		setAsBringed = new JButton("Set as served");
-		selectButton = new JButton("Select table");
+		ordersEditButton = new JButton("Remove selected order");
+		payedButton = new JButton("Set selected order as payed");
+		setAsBringed = new JButton("Set selected order as served");
+		selectButton = new JButton("Show orders of the selected table");
 
 		// JLISTS & DEFAULT LIST MODELS
 		// *************************************************
@@ -139,7 +144,8 @@ public class ServerGUI extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 		add(topMenuBar, BorderLayout.NORTH);
 		topMenuBar.add(topMenu);
-		topMenu.add(menuItemEdit);
+		topMenu.add(menuItemEditMenu);
+		topMenu.add(menuItemEditTables);
 	}
 
 	public static void main(String[] args) throws Exception {
