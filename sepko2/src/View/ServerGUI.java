@@ -68,7 +68,7 @@ public class ServerGUI extends JFrame {
 		// *********************************************************************
 		ordersEditButton = new JButton("Edit...");
 		payedButton = new JButton("Set as payed");
-		setAsBringed = new JButton("Set as bringed");
+		setAsBringed = new JButton("Set as served");
 		selectButton = new JButton("Select table");
 
 		// JLISTS & DEFAULT LIST MODELS
