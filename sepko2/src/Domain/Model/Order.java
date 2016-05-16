@@ -2,7 +2,7 @@ package Domain.Model;
 
 import java.util.ArrayList;
 
-public class Order {//CHANGE 
+public class Order { 
 	private ArrayList<Item> items;
 	private int table;
 	private boolean served;
