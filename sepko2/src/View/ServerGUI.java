@@ -79,7 +79,7 @@ public class ServerGUI extends JFrame {
 
 		// JBUTTONS
 		// *********************************************************************
-		ordersEditButton = new JButton("Edit...");
+		ordersEditButton = new JButton("Remove");
 		payedButton = new JButton("Set as payed");
 		setAsBringed = new JButton("Set as served");
 		selectButton = new JButton("Select table");
