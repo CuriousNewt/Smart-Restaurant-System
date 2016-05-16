@@ -14,5 +14,6 @@ public class Testik {
 		System.out.println("marek push");
 		System.out.println("denis push");
 		System.out.println("uz jdi dopice");
+		System.out.println("12345");
 	}
 }
