@@ -9,5 +9,6 @@ public class Testik {
 		System.out.println("Testik 5");
 		System.out.println("Testik 6");
 		System.out.println("Kundolap");
+		System.out.println("shit");
 	}
 }
