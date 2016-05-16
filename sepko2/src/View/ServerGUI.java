@@ -22,7 +22,6 @@ public class ServerGUI extends JFrame {
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
-	private JMenuItem menuItemEditTables;
 	
 	// JPANELS
 	// *********************************************************************
@@ -70,7 +69,6 @@ public class ServerGUI extends JFrame {
 		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
 		menuItemEditMenu = new JMenuItem("Edit menu..");
-		menuItemEditTables = new JMenuItem("Edit tables..");
 		
 		// JPANELS
 		// **********************************************************************
@@ -145,7 +143,6 @@ public class ServerGUI extends JFrame {
 		add(topMenuBar, BorderLayout.NORTH);
 		topMenuBar.add(topMenu);
 		topMenu.add(menuItemEditMenu);
-		topMenu.add(menuItemEditTables);
 	}
 
 	public static void main(String[] args) throws Exception {
