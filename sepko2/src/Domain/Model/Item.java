@@ -1,5 +1,5 @@
 package Domain.Model;
 
-public class Item {
+abstract class Item {
 
 }
