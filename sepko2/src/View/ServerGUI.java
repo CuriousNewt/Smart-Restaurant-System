@@ -10,11 +10,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 public class ServerGUI extends JFrame {
 
+	
+	private JMenu topMenu;
+	
 	// JPANELS
 	// *********************************************************************
 	private JPanel mainPanel;
@@ -54,6 +58,8 @@ public class ServerGUI extends JFrame {
 	}
 
 	private void setComponents() {
+		
+		topMenu = new JMenu("Edit");
 		// JPANELS
 		// **********************************************************************
 		westPanel = new JPanel();
@@ -107,7 +113,7 @@ public class ServerGUI extends JFrame {
 		// *********************************************************************
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
-
+		
 		eastListPanel.add(listOfOrders);
 
 		eastButtonPanel.add(ordersEditButton);
@@ -124,7 +130,7 @@ public class ServerGUI extends JFrame {
 		westPanel.add(westListPanel, BorderLayout.CENTER);
 
 		add(mainPanel, BorderLayout.CENTER);
-
+		add(topMenu, BorderLayout.NORTH);
 	}
 
 	public static void main(String[] args) throws Exception {
