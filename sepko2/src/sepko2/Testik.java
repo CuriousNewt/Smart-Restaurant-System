@@ -11,5 +11,6 @@ public class Testik {
 		System.out.println("Kundolap");
 		System.out.println("shit");
 		System.out.println("lejko push");
+		System.out.println("marek push");
 	}
 }
