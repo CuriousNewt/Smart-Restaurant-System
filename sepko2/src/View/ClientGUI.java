@@ -2,6 +2,8 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -34,6 +36,8 @@ public class ClientGUI extends JFrame {
 	private JPanel westButtonPanel;
 	private JPanel westListPanel;
 	private JPanel centerButtonPanel;
+	private JPanel centerPanel;
+	private JPanel plusButtonPanel;
 	
 	private JPanel porkPanel;
 	private JPanel beefPanel;
@@ -42,9 +46,10 @@ public class ClientGUI extends JFrame {
 	private JPanel seaFood;
 	private JPanel sideDish;
 	private JPanel desert;
-	private JPanel appetizer;
+	private JPanel starter;
 	private JPanel nonAlcoholicDrinks;
 	private JPanel alcoholicDrinks;
+	private JPanel minusButtonPanel;
 	
 	
 
@@ -94,8 +99,8 @@ public class ClientGUI extends JFrame {
 		setComponents();
 		addPanelsAndLayouts();
 		addBorders();
-		plusButton.setPreferredSize(new Dimension(50, 50));
-		minusButton.setPreferredSize(new Dimension(50, 50));
+		plusButton.setPreferredSize(new Dimension(200, 125));
+		minusButton.setPreferredSize(new Dimension(200, 125));
 		pack();
 	}
 
@@ -118,6 +123,8 @@ public class ClientGUI extends JFrame {
 		westButtonPanel = new JPanel();
 		westListPanel = new JPanel();
 		centerButtonPanel = new JPanel();
+		centerPanel = new JPanel();
+		plusButtonPanel = new JPanel();
 		
 		porkPanel = new JPanel();
 		beefPanel = new JPanel();
@@ -126,9 +133,10 @@ public class ClientGUI extends JFrame {
 		seaFood = new JPanel();
 		sideDish = new JPanel();
 		desert = new JPanel();
-		appetizer = new JPanel();
+		starter = new JPanel();
 		nonAlcoholicDrinks = new JPanel();
 		alcoholicDrinks = new JPanel();
+		minusButtonPanel = new JPanel();
 
 		// JBUTTONS
 		// *********************************************************************
@@ -171,7 +179,8 @@ public class ClientGUI extends JFrame {
 	private void addBorders() {
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		eastPanel.setBorder(BorderFactory.createTitledBorder("ORDERS"));
-		westPanel.setBorder(BorderFactory.createTitledBorder("MENU"));
+		menuTabs.setBorder(BorderFactory.createTitledBorder("MENU"));
+		minusButtonPanel.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 
 	}
 
@@ -179,10 +188,10 @@ public class ClientGUI extends JFrame {
 
 		// SETTING OF LAYOUTS
 		// ***********************************************************
-		mainPanel.setLayout(new GridLayout(1, 3));
+		mainPanel.setLayout(new GridLayout(1, 2));
 		eastPanel.setLayout(new BorderLayout());
 		westPanel.setLayout(new BorderLayout());
-		
+		centerPanel.setLayout(new BorderLayout());
 		
 		porkPanel.setLayout(new BorderLayout());
 		beefPanel.setLayout(new BorderLayout());
@@ -191,11 +200,16 @@ public class ClientGUI extends JFrame {
 		seaFood.setLayout(new BorderLayout());
 		sideDish.setLayout(new BorderLayout());
 		desert.setLayout(new BorderLayout());
-		appetizer.setLayout(new BorderLayout());
+		starter.setLayout(new BorderLayout());
 		nonAlcoholicDrinks.setLayout(new BorderLayout());
 		alcoholicDrinks.setLayout(new BorderLayout());
 		
-		centerButtonPanel.setLayout(new GridLayout(2,0));
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.fill = GridBagConstraints.HORIZONTAL;	
+		
+		centerButtonPanel.setLayout(new GridBagLayout());
 		eastButtonPanel.setLayout(new GridLayout(1, 6));
 		eastListPanel.setLayout(new BorderLayout());
 		westButtonPanel.setLayout(new GridLayout(1, 1));
@@ -210,7 +224,7 @@ public class ClientGUI extends JFrame {
 		menuTabs.add("Sea Food",seaFood);
 		menuTabs.add("Side dish",sideDish);
 		menuTabs.add("Deserts",desert);
-		menuTabs.add("Appetizer",appetizer);
+		menuTabs.add("Starter",starter);
 		menuTabs.add("Non-alcoholic drinks" , nonAlcoholicDrinks);
 		menuTabs.add("Alcoholic drinks" , alcoholicDrinks);
 		
@@ -221,7 +235,7 @@ public class ClientGUI extends JFrame {
 		seaFood.add(seaFoodList, BorderLayout.CENTER);
 		sideDish.add(sideDishList, BorderLayout.CENTER);
 		desert.add(desertList, BorderLayout.CENTER);
-		appetizer.add(appetizerList, BorderLayout.CENTER);
+		starter.add(appetizerList, BorderLayout.CENTER);
 		nonAlcoholicDrinks.add(nonAlcoholicDrinksList, BorderLayout.CENTER);
 		alcoholicDrinks.add(alcoholicDrinksList, BorderLayout.CENTER);
 		
@@ -235,8 +249,11 @@ public class ClientGUI extends JFrame {
 		eastButtonPanel.add(orderButton);
 		eastButtonPanel.add(callStaffButton);
 		
-		centerButtonPanel.add(plusButton);
-		centerButtonPanel.add(minusButton);
+		minusButtonPanel.add(minusButton);
+		plusButtonPanel.add(plusButton);
+		
+		centerButtonPanel.add(plusButtonPanel, gbc);
+		centerButtonPanel.add(minusButtonPanel, gbc);
 		
 
 		eastPanel.add(eastButtonPanel, BorderLayout.SOUTH);
@@ -244,9 +261,9 @@ public class ClientGUI extends JFrame {
 
 		westPanel.add(westButtonPanel, BorderLayout.SOUTH);
 		westPanel.add(westListPanel, BorderLayout.CENTER);
-
+		westPanel.add(centerButtonPanel, BorderLayout.EAST);
+		
 		mainPanel.add(westPanel);
-		mainPanel.add(centerButtonPanel);
 		mainPanel.add(eastPanel);
 		
 		add(mainPanel, BorderLayout.CENTER);
