@@ -23,18 +23,18 @@ public class Database {
 	}
 	
 	
-	public void getFromMenu(int index) throws SQLException {
+	public void getFromMenu() throws SQLException {
 		// TODO change ip and statements only example
+		System.out.println(ip);
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection
-				(ip, "postgres", "admin");
+				(ip, "marek", "root");
+		System.out.println("connection sucessful");
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM niečo");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM meal");
 			ResultSet result = statement.executeQuery();
 			while (result.next()) {
-				System.out.println(result.getString("niečo"));
-				System.out.println(result.getInt("niečo"));
-				System.out.println(result.getString("niečo"));
+				System.out.println(result.getString("description"));
 				System.out.println();
 			}
 		} finally {
@@ -60,4 +60,5 @@ public class Database {
 			connection.close();
 		}
 	}
+
 }
