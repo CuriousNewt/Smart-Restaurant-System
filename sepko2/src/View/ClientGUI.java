@@ -21,7 +21,6 @@ public class ClientGUI extends JFrame {
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
-	
 	private JTabbedPane menuTabs;
 
 	// JPANELS
