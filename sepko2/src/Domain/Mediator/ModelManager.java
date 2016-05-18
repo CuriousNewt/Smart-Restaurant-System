@@ -35,7 +35,6 @@ public class ModelManager implements RestaurantManager {
 
 	@Override
 	public String getMenuByType(String type) {
-		// TODO Auto-generated method stub
 		return this.menu.showByType(type);
 	}
 
