@@ -8,56 +8,96 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Domain.Model.Item;
+import Domain.Model.Meal;
 
 
-public class Database {
+public class Database implements Storage {
 	
 	private String ip;
+	private ModelManager manager;
 	
-	public Database(String filepath) {
+	public Database(String filepath, ModelManager manager) {
+		this.manager = manager;
 		try {
 			this.ip = "jdbc:postgresql://" + ReadIP.getReadIP(filepath).getIP();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	
-	public void getFromMenu() throws SQLException  {
-		// TODO change ip and statements only example
+	public void getMenu() throws SQLException  {
+		
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection
 				(ip, "postgres", "root");
 		System.out.println("connection sucessful");
+		Connection connection = DriverManager.getConnection(ip, "postgres", "root");
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM meal");
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				System.out.println(result.getString("description"));
-				System.out.println();
-			}
+			PreparedStatement statementMeal = connection.prepareStatement("SELECT * FROM meal");
+			ResultSet resultMeal = statementMeal.executeQuery();
+			this.getMealToMenu(resultMeal);
+			
+			PreparedStatement statementDrink = connection.prepareStatement("SELECT * FROM drink");
+			ResultSet resultDrink = statementDrink.executeQuery();
+			this.getDrinkToMenu(resultDrink);
+			
 		} finally {
 			connection.close();
 		}
 	}
 	
-	public void updateDataToDb(Item item) throws SQLException {
-		// TODO change ip and statements only example, add some paramater 
-		int account_type = 2;
-		String account_number = "4984 2142 2349";
+	public void addToMenu(Item item) throws SQLException {
+		
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection
 				(ip, "postgres", "root");
 		try {
+			if(item instanceof Meal){
 			PreparedStatement statement = connection.prepareStatement
-					("UPDATE \"Bank\".accounts SET account_type = ? WHERE account_number = ?");
+					("INSERT INTO");
 			statement.setInt(1, account_type);
 			statement.setString(2, account_number);
 			statement.executeUpdate();
+			
+			}
 		} finally {
 			connection.close();
+		}
+	}
+
+
+	@Override
+	public void removeFromMenu(Item item) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void addToPastOrders(Item item) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void getAllPastOrders() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void getMealToMenu(ResultSet result) throws SQLException {
+		while(result.next()) {
+			manager.getMenu().addMeal(result.getString("name"), result.getString("description"),
+					result.getDouble("price"), result.getInt("amount"), result.getString("type"));
+		}
+	}
+	private void getDrinkToMenu(ResultSet result) throws SQLException {
+		while(result.next()) {
+			manager.getMenu().addDrink(result.getString("name"), result.getString("description"),
+					result.getDouble("price"), result.getDouble("amount"), result.getString("type"));
 		}
 	}
 
