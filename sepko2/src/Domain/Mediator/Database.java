@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import Domain.Model.Drink;
 import Domain.Model.Item;
 import Domain.Model.Meal;
+import Domain.Model.Order;
 
 
 public class Database implements Storage {
@@ -80,7 +81,7 @@ public class Database implements Storage {
 
 
 	@Override
-	public void addToPastOrders(Item item) throws SQLException {
+	public void addToPastOrders(Order order) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
