@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -43,8 +44,6 @@ public class EditMenuGUI extends JFrame {
 	private JPanel starter;
 	private JPanel nonAlcoholicDrinks;
 	private JPanel alcoholicDrinks;
-	
-	
 
 	// JLABELS
 	// *********************************************************************
@@ -53,24 +52,25 @@ public class EditMenuGUI extends JFrame {
 	private JLabel productPriceLabel;
 	private JLabel productAmountLabel;
 	private JLabel productTypeLabel;
+	private JLabel itemTypeLabel;
 	
-	
+
 	private JTextField productNameTextField;
 	private JTextField productDescriptionTextField;
 	private JTextField productPriceTextField;
 	private JTextField productAmountTextField;
 	private JTextField productTypeTextField;
-	
-	private JComboBox productTypeComboBox;
-	
-	
-	
-	
+
+	private JComboBox<String> productTypeComboBox;
+	private JComboBox<String> productContentComboBox;
+	private DefaultComboBoxModel<String> productTypeComboBoxModel;
+	private DefaultComboBoxModel<String> productMealContentComboBoxModel;
+	private DefaultComboBoxModel<String> productDrinkContentComboBoxModel;
+
 	// JBUTTONS
 	// *********************************************************************
 	private JButton addButton;
 	private JButton removeButton;
-	
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
@@ -84,8 +84,7 @@ public class EditMenuGUI extends JFrame {
 	private JList<String> appetizerList;
 	private JList<String> nonAlcoholicDrinksList;
 	private JList<String> alcoholicDrinksList;
-	
-	
+
 	private DefaultListModel<String> porkModel;
 	private DefaultListModel<String> beefModel;
 	private DefaultListModel<String> chickenModel;
@@ -110,7 +109,7 @@ public class EditMenuGUI extends JFrame {
 	private void setComponents() {
 
 		menuTabs = new JTabbedPane();
-		
+
 		// JPANELS
 		// **********************************************************************
 		westPanel = new JPanel();
@@ -147,40 +146,61 @@ public class EditMenuGUI extends JFrame {
 		appetizerModel = new DefaultListModel<String>();
 		nonAlcoholicDrinksModel = new DefaultListModel<String>();
 		alcoholicDrinksModel = new DefaultListModel<String>();
-		
+
 		porkList = new JList(porkModel);
 		beefList = new JList(beefModel);
 		chickenList = new JList(chickenModel);
 		soupList = new JList(soupModel);
-		seaFoodList = new JList(seaFoodModel); 
+		seaFoodList = new JList(seaFoodModel);
 		sideDishList = new JList(sideDishModel);
 		desertList = new JList(desertModel);
 		appetizerList = new JList(appetizerModel);
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
 
-		
 		// JLABELS
 		// **********************************************************************
 		productNameLabel = new JLabel("Name of product:");
-		productDescriptionLabel= new JLabel("Description of product:");
+		productDescriptionLabel = new JLabel("Description of product:");
 		productPriceLabel = new JLabel("Price of product:");
 		productAmountLabel = new JLabel("Amount of product:");
-		productTypeLabel = new JLabel("Type of product:");
+		itemTypeLabel = new JLabel("Type of item:");
+		productTypeLabel = new JLabel("Type of Product:");
 		
+		
+
 		productNameTextField = new JTextField();
-		productDescriptionTextField= new JTextField();
+		productDescriptionTextField = new JTextField();
 		productPriceTextField = new JTextField();
 		productAmountTextField = new JTextField();
-		productTypeComboBox = new JComboBox<String>();
-		
-		
-		
+		productTypeComboBoxModel = new DefaultComboBoxModel<String>(
+				(new String[] { "Meal", "Drink" }));
+		productMealContentComboBoxModel = new DefaultComboBoxModel<String>(
+				new String[] { "Pork", "Beef", "Chicken", "Soup", "Sea Food",
+						"Side dish", "Desert", "Appetizer" });
+
+		productDrinkContentComboBoxModel = new DefaultComboBoxModel<String>(
+				new String[] { "Non-alcoholic", "Alcoholic" });
+
+		productTypeComboBox = new JComboBox<String>(productTypeComboBoxModel);
+
+		productContentComboBox = new JComboBox<String>();
+
+		chickenList = new JList(chickenModel);
+		soupList = new JList(soupModel);
+		seaFoodList = new JList(seaFoodModel);
+		sideDishList = new JList(sideDishModel);
+		desertList = new JList(desertModel);
+		appetizerList = new JList(appetizerModel);
+		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
+		alcoholicDrinksList = new JList(alcoholicDrinksModel);
+
 	}
 
 	private void addBorders() {
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-		eastContentPanel.setBorder(BorderFactory.createTitledBorder("EDIT WINDOW"));
+		eastContentPanel.setBorder(BorderFactory
+				.createTitledBorder("EDIT WINDOW"));
 		menuTabs.setBorder(BorderFactory.createTitledBorder("MENU"));
 
 	}
@@ -192,7 +212,7 @@ public class EditMenuGUI extends JFrame {
 		mainPanel.setLayout(new GridLayout(1, 2));
 		eastPanel.setLayout(new BorderLayout());
 		westPanel.setLayout(new BorderLayout());
-		
+
 		porkPanel.setLayout(new BorderLayout());
 		beefPanel.setLayout(new BorderLayout());
 		chickenPanel.setLayout(new BorderLayout());
@@ -203,9 +223,9 @@ public class EditMenuGUI extends JFrame {
 		starter.setLayout(new BorderLayout());
 		nonAlcoholicDrinks.setLayout(new BorderLayout());
 		alcoholicDrinks.setLayout(new BorderLayout());
-		
-		eastContentPanel.setLayout(new GridLayout(10,2));
-		
+
+		eastContentPanel.setLayout(new GridLayout(7, 2));
+
 		eastButtonPanel.setLayout(new GridLayout(1, 6));
 		westButtonPanel.setLayout(new GridLayout(1, 1));
 		westTextPanel.setLayout(new BorderLayout());
@@ -213,16 +233,16 @@ public class EditMenuGUI extends JFrame {
 		// ADDING INTO PANELS
 		// *********************************************************************
 		menuTabs.add("Pork", porkPanel);
-		menuTabs.add("Beef",beefPanel);
-		menuTabs.add("Chicken",chickenPanel);
-		menuTabs.add("Soup",soupPanel);
-		menuTabs.add("Sea Food",seaFood);
-		menuTabs.add("Side dish",sideDish);
-		menuTabs.add("Deserts",desert);
-		menuTabs.add("Starter",starter);
-		menuTabs.add("Non-alcoholic drinks" , nonAlcoholicDrinks);
-		menuTabs.add("Alcoholic drinks" , alcoholicDrinks);
-		
+		menuTabs.add("Beef", beefPanel);
+		menuTabs.add("Chicken", chickenPanel);
+		menuTabs.add("Soup", soupPanel);
+		menuTabs.add("Sea Food", seaFood);
+		menuTabs.add("Side dish", sideDish);
+		menuTabs.add("Deserts", desert);
+		menuTabs.add("Starter", starter);
+		menuTabs.add("Non-alcoholic drinks", nonAlcoholicDrinks);
+		menuTabs.add("Alcoholic drinks", alcoholicDrinks);
+
 		porkPanel.add(porkList, BorderLayout.CENTER);
 		beefPanel.add(beefList, BorderLayout.CENTER);
 		chickenPanel.add(chickenList, BorderLayout.CENTER);
@@ -233,8 +253,7 @@ public class EditMenuGUI extends JFrame {
 		starter.add(appetizerList, BorderLayout.CENTER);
 		nonAlcoholicDrinks.add(nonAlcoholicDrinksList, BorderLayout.CENTER);
 		alcoholicDrinks.add(alcoholicDrinksList, BorderLayout.CENTER);
-		
-		
+
 		eastContentPanel.add(productNameLabel);
 		eastContentPanel.add(productNameTextField);
 		eastContentPanel.add(productDescriptionLabel);
@@ -243,34 +262,31 @@ public class EditMenuGUI extends JFrame {
 		eastContentPanel.add(productPriceTextField);
 		eastContentPanel.add(productAmountLabel);
 		eastContentPanel.add(productAmountTextField);
-		eastContentPanel.add(productTypeLabel);
+		eastContentPanel.add(itemTypeLabel);
 		eastContentPanel.add(productTypeComboBox);
+		eastContentPanel.add(productTypeLabel);
+		eastContentPanel.add(productContentComboBox);
+		
 
-		
-		
-		
-		
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
 
 		westTextPanel.add(menuTabs);
 
 		eastButtonPanel.add(addButton);
-		
+
 		eastPanel.add(eastButtonPanel, BorderLayout.SOUTH);
 		eastPanel.add(eastContentPanel, BorderLayout.CENTER);
 
 		westButtonPanel.add(removeButton);
-		
+
 		westPanel.add(westButtonPanel, BorderLayout.SOUTH);
 		westPanel.add(westTextPanel, BorderLayout.CENTER);
 
-		
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
-		
+
 		add(mainPanel, BorderLayout.CENTER);
-		
 
 	}
 
