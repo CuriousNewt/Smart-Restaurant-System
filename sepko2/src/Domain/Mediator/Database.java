@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Domain.Model.Drink;
 import Domain.Model.Item;
 import Domain.Model.Meal;
 
@@ -29,9 +30,6 @@ public class Database implements Storage {
 	public void getMenu() throws SQLException  {
 		
 		DriverManager.registerDriver(new org.postgresql.Driver());
-		Connection connection = DriverManager.getConnection
-				(ip, "postgres", "root");
-		System.out.println("connection sucessful");
 		Connection connection = DriverManager.getConnection(ip, "postgres", "root");
 		try {
 			PreparedStatement statementMeal = connection.prepareStatement("SELECT * FROM meal");
@@ -55,12 +53,18 @@ public class Database implements Storage {
 				(ip, "postgres", "root");
 		try {
 			if(item instanceof Meal){
+			Meal meal = (Meal) item;
 			PreparedStatement statement = connection.prepareStatement
-					("INSERT INTO");
-			statement.setInt(1, account_type);
-			statement.setString(2, account_number);
+					("INSERT INTO meal VALUES('" + meal.getName() + "', '" + meal.getDescription() + "', "
+							+ meal.getPrice() + ", " + meal.getAmount() + ", '" + meal.getType() + "')");
 			statement.executeUpdate();
-			
+			}
+			else if(item instanceof Drink) {
+				Drink drink = (Drink) item;
+				PreparedStatement statement = connection.prepareStatement
+						("INSERT INTO drink VALUES('" + drink.getName() + "', '" + drink.getDescription() + "', "
+								+ drink.getPrice() + ", " + drink.getAmount() + ", '" + drink.getType() + "')");
+				statement.executeUpdate();
 			}
 		} finally {
 			connection.close();
