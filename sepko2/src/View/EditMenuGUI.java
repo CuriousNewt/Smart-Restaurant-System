@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 public class EditMenuGUI extends JFrame {
 
@@ -54,7 +55,11 @@ public class EditMenuGUI extends JFrame {
 	private JLabel productTypeLabel;
 	
 	
-	private JTextField 
+	private JTextField productNameTextField;
+	private JTextField productDescriptionTextField;
+	private JTextField productPriceTextField;
+	private JTextField productAmountTextField;
+	private JTextField productTypeTextField;
 	
 	private JComboBox productTypeComboBox;
 	
@@ -157,11 +162,19 @@ public class EditMenuGUI extends JFrame {
 		
 		// JLABELS
 		// **********************************************************************
-		productNameLabel = new JLabel("Name of product");
-		productDescriptionLabel= new JLabel("Description of product");
-		productPriceLabel = new JLabel("Price of product");
-		productAmountLabel = new JLabel("Amount of product");
-		productTypeLabel = new JLabel("Type of product");
+		productNameLabel = new JLabel("Name of product:");
+		productDescriptionLabel= new JLabel("Description of product:");
+		productPriceLabel = new JLabel("Price of product:");
+		productAmountLabel = new JLabel("Amount of product:");
+		productTypeLabel = new JLabel("Type of product:");
+		
+		productNameTextField = new JTextField();
+		productDescriptionTextField= new JTextField();
+		productPriceTextField = new JTextField();
+		productAmountTextField = new JTextField();
+		productTypeComboBox = new JComboBox<String>();
+		
+		
 		
 	}
 
@@ -191,10 +204,9 @@ public class EditMenuGUI extends JFrame {
 		nonAlcoholicDrinks.setLayout(new BorderLayout());
 		alcoholicDrinks.setLayout(new BorderLayout());
 		
-		eastContentPanel.setLayout(new GridLayout(4,1));
+		eastContentPanel.setLayout(new GridLayout(10,2));
 		
 		eastButtonPanel.setLayout(new GridLayout(1, 6));
-		eastContentPanel.setLayout(new BorderLayout());
 		westButtonPanel.setLayout(new GridLayout(1, 1));
 		westTextPanel.setLayout(new BorderLayout());
 
@@ -224,11 +236,19 @@ public class EditMenuGUI extends JFrame {
 		
 		
 		eastContentPanel.add(productNameLabel);
+		eastContentPanel.add(productNameTextField);
 		eastContentPanel.add(productDescriptionLabel);
+		eastContentPanel.add(productDescriptionTextField);
 		eastContentPanel.add(productPriceLabel);
+		eastContentPanel.add(productPriceTextField);
 		eastContentPanel.add(productAmountLabel);
+		eastContentPanel.add(productAmountTextField);
 		eastContentPanel.add(productTypeLabel);
+		eastContentPanel.add(productTypeComboBox);
 
+		
+		
+		
 		
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
@@ -236,10 +256,7 @@ public class EditMenuGUI extends JFrame {
 		westTextPanel.add(menuTabs);
 
 		eastButtonPanel.add(addButton);
-		//eastButtonPanel.add(addButon);
 		
-		
-
 		eastPanel.add(eastButtonPanel, BorderLayout.SOUTH);
 		eastPanel.add(eastContentPanel, BorderLayout.CENTER);
 
