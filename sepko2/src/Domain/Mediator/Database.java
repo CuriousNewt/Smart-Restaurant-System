@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Domain.Model.Item;
+
 
 public class Database {
 	
@@ -14,8 +16,7 @@ public class Database {
 	
 	public Database(String filepath) {
 		try {
-			this.ip = "jdbc:postgresql://" + ReadIP.getReadIP(filepath).getIP()
-					+ ":5432/postgres";
+			this.ip = "jdbc:postgresql://" + ReadIP.getReadIP(filepath).getIP();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -23,12 +24,12 @@ public class Database {
 	}
 	
 	
-	public void getFromMenu() throws SQLException {
+	public void getFromMenu() throws SQLException  {
 		// TODO change ip and statements only example
-		System.out.println(ip);
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection
 				(ip, "postgres", "Admin");
+				(ip, "postgres", "root");
 		System.out.println("connection sucessful");
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM meal");
@@ -42,14 +43,14 @@ public class Database {
 		}
 	}
 	
-	public void updateDataToDb() throws SQLException {
+	public void updateDataToDb(Item item) throws SQLException {
 		// TODO change ip and statements only example, add some paramater 
 		int account_type = 2;
 		String account_number = "4984 2142 2349";
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection
-				(ip, "postgres", "password");
+				(ip, "postgres", "root");
 		try {
 			PreparedStatement statement = connection.prepareStatement
 					("UPDATE \"Bank\".accounts SET account_type = ? WHERE account_number = ?");
