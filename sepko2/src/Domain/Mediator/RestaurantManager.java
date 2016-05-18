@@ -7,9 +7,9 @@ public interface RestaurantManager {
 
 	OrderList getOrders();
 
-	void addMeal();
+	void addMeal(String name, String description, double price, int amount, String type);
 
-	void addDrink();
+	void addDrink(String name, String description, double price, double amount, String type);
 
 	String getMenuByType(String type);
 
@@ -19,9 +19,11 @@ public interface RestaurantManager {
 
 	String showDrinks();
 
-	void addOrder();
+	void addOrder(Order order);
 
-	void removeOrder();
+	void removeOrder(Order order);
+	
+	void removePaid();
 
 	String showOrders();
 }
