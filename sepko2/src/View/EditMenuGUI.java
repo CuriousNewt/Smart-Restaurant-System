@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -31,7 +32,6 @@ public class EditMenuGUI extends JFrame {
 	private JPanel eastContentPanel;
 	private JPanel westButtonPanel;
 	private JPanel westTextPanel;
-	
 	private JPanel porkPanel;
 	private JPanel beefPanel;
 	private JPanel chickenPanel;
@@ -47,7 +47,20 @@ public class EditMenuGUI extends JFrame {
 
 	// JLABELS
 	// *********************************************************************
-
+	private JLabel productNameLabel;
+	private JLabel productDescriptionLabel;
+	private JLabel productPriceLabel;
+	private JLabel productAmountLabel;
+	private JLabel productTypeLabel;
+	
+	
+	private JTextField 
+	
+	private JComboBox productTypeComboBox;
+	
+	
+	
+	
 	// JBUTTONS
 	// *********************************************************************
 	private JButton addButton;
@@ -144,7 +157,12 @@ public class EditMenuGUI extends JFrame {
 		
 		// JLABELS
 		// **********************************************************************
-
+		productNameLabel = new JLabel("Name of product");
+		productDescriptionLabel= new JLabel("Description of product");
+		productPriceLabel = new JLabel("Price of product");
+		productAmountLabel = new JLabel("Amount of product");
+		productTypeLabel = new JLabel("Type of product");
+		
 	}
 
 	private void addBorders() {
@@ -173,7 +191,7 @@ public class EditMenuGUI extends JFrame {
 		nonAlcoholicDrinks.setLayout(new BorderLayout());
 		alcoholicDrinks.setLayout(new BorderLayout());
 		
-		
+		eastContentPanel.setLayout(new GridLayout(4,1));
 		
 		eastButtonPanel.setLayout(new GridLayout(1, 6));
 		eastContentPanel.setLayout(new BorderLayout());
@@ -204,6 +222,13 @@ public class EditMenuGUI extends JFrame {
 		nonAlcoholicDrinks.add(nonAlcoholicDrinksList, BorderLayout.CENTER);
 		alcoholicDrinks.add(alcoholicDrinksList, BorderLayout.CENTER);
 		
+		
+		eastContentPanel.add(productNameLabel);
+		eastContentPanel.add(productDescriptionLabel);
+		eastContentPanel.add(productPriceLabel);
+		eastContentPanel.add(productAmountLabel);
+		eastContentPanel.add(productTypeLabel);
+
 		
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);

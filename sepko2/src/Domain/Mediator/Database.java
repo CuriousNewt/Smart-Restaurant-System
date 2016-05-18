@@ -28,7 +28,6 @@ public class Database {
 		// TODO change ip and statements only example
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection
-				(ip, "postgres", "Admin");
 				(ip, "postgres", "root");
 		System.out.println("connection sucessful");
 		try {
