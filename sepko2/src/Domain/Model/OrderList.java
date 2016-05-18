@@ -20,7 +20,12 @@ public class OrderList {
 		}
 	}
 	
-	
+	public void remove(Order order){
+		for (int i = 0; i < orders.size(); i++) {
+			if(orders.get(i).equals(order))
+				orders.remove(i);
+		}
+	}
 	
 	public String show(){
 		String s = "";
