@@ -28,7 +28,7 @@ public class Database {
 		System.out.println(ip);
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection
-				(ip, "marek", "root");
+				(ip, "postgres", "Admin");
 		System.out.println("connection sucessful");
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM meal");
