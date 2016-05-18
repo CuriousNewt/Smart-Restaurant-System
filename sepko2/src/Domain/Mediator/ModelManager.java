@@ -1,5 +1,16 @@
 package Domain.Mediator;
 
-public class ModelManager {
+import Domain.Model.Menu;
 
+public class ModelManager {
+	
+	private Menu menu;
+	
+	public ModelManager() {
+		this.menu = new Menu();
+	}
+	
+	public Menu getMenu() {
+		return this.menu;
+	}
 }
