@@ -27,14 +27,7 @@ public class OrderList {
 		}
 	}
 	
-	public String show(){
-		String s = "";
-		int  next = 1;
-		for(int i = 0; i < orders.size(); i++){
-			s+= "ORDER " + next + " for TABLE " + orders.get(i).getTable()
-					+ "\n" + orders.get(i).show() + "\n"
-					+ "--------------------------------------------------------------------" + "\n";
-		}
-		return s;
+	public ArrayList<Order> show(){
+		return orders;
 	}
 }

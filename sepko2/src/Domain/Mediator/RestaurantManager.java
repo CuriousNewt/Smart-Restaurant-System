@@ -1,5 +1,7 @@
 package Domain.Mediator;
 
+import java.util.ArrayList;
+
 import Domain.Model.*;
 
 public interface RestaurantManager {
@@ -11,13 +13,13 @@ public interface RestaurantManager {
 
 	void addDrink(String name, String description, double price, double amount, String type);
 
-	String getMenuByType(String type);
+	Menu getMenuByType(String type);
 
-	String showMenu();
+	Menu showMenu();
 
-	String showMeals();
+	Menu showMeals();
 
-	String showDrinks();
+	Menu showDrinks();
 
 	void addOrder(Order order);
 
@@ -25,5 +27,5 @@ public interface RestaurantManager {
 	
 	void removePaid();
 
-	String showOrders();
+	ArrayList<Order> showOrders();
 }

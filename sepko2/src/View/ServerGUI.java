@@ -1,24 +1,23 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JWindow;
 
 public class ServerGUI extends JFrame {
 
+	private EditMenuGUI editMenuGui;
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
@@ -35,7 +34,6 @@ public class ServerGUI extends JFrame {
 	
 	// JLABELS
 	// *********************************************************************
-	private JLabel JLabelWest;
 	
 	// JBUTTONS
 	// *********************************************************************
@@ -59,16 +57,19 @@ public class ServerGUI extends JFrame {
 		setComponents();
 		addPanelsAndLayouts();
 		addBorders();
+		addActionListeners();
 		pack();
+		
 	}
 
-	private void setComponents() {
+	private void setComponents() throws Exception{
 		
 		// TOP MENU BAR
 		// **********************************************************************
 		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
 		menuItemEditMenu = new JMenuItem("Edit menu..");
+		editMenuGui = new EditMenuGUI();
 		
 		// JPANELS
 		// **********************************************************************
@@ -96,7 +97,6 @@ public class ServerGUI extends JFrame {
 
 		// JLABELS
 		// **********************************************************************
-		JLabelWest = new JLabel("Karate kid");
 	}
 
 	private void addBorders(){
@@ -144,10 +144,24 @@ public class ServerGUI extends JFrame {
 		topMenuBar.add(topMenu);
 		topMenu.add(menuItemEditMenu);
 	}
+	// ADDING FUNCTIONS
+			// *********************************************************************
+	class OpenEditMenu implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			editMenuGui.setVisible(true);
+			editMenuGui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			editMenuGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+	}
+	
+	public void addActionListeners(){
+		menuItemEditMenu.addActionListener(new OpenEditMenu());
+	}
 
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		ServerGUI gui = new ServerGUI();
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
-	}
+	}*/
 }

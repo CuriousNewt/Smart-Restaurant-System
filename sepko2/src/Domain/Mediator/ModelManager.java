@@ -1,5 +1,7 @@
 package Domain.Mediator;
 
+import java.util.ArrayList;
+
 import Domain.Model.*;
 
 public class ModelManager implements RestaurantManager {
@@ -34,22 +36,22 @@ public class ModelManager implements RestaurantManager {
 	}
 
 	@Override
-	public String getMenuByType(String type) {
+	public Menu getMenuByType(String type) {
 		return this.menu.showByType(type);
 	}
 
 	@Override
-	public String showMenu() {
+	public Menu showMenu() {
 		return this.menu.show();
 	}
 
 	@Override
-	public String showMeals() {
+	public Menu showMeals() {
 		return this.menu.showMeals();
 	}
 
 	@Override
-	public String showDrinks() {
+	public Menu showDrinks() {
 		return this.menu.showDrinks();
 	}
 
@@ -60,7 +62,7 @@ public class ModelManager implements RestaurantManager {
 
 	@Override
 	public void removeOrder(Order order) {
-		this.orders.remove();
+		this.orders.remove(order);
 	}
 	
 	public void removePaid(){
@@ -68,7 +70,7 @@ public class ModelManager implements RestaurantManager {
 	}
 
 	@Override
-	public String showOrders() {
+	public ArrayList<Order> showOrders() {
 		return this.orders.show();
 	}
 
