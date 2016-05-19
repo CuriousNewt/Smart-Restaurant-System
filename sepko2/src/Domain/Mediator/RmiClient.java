@@ -35,7 +35,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 	public static void main(String[] args) throws Exception {
 		try {
 			String ip = ReadIP.getReadIP("ServerIPaID").getIP();
-			ip = "//localhost"/* + ip*/ + ":1099";
+			ip = "//"+ ip + ":1099";
 			RmiService remoteService = (RmiService) Naming.lookup(ip
 					+ "/RmiService");
 
