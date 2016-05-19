@@ -27,7 +27,6 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 		return id;
 	}
 	
-	public 
 
 	public static void main(String[] args) throws Exception {
 		
@@ -39,9 +38,11 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 
 			RmiClient client = new RmiClient(remoteService);
 			remoteService.addObserver(client);
+			System.out.println(remoteService.showOrders());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
 		
 		ClientGUI gui = new ClientGUI();
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
