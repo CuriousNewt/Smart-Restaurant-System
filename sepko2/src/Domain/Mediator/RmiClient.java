@@ -6,6 +6,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javax.swing.JFrame;
+import Domain.Model.*;
 import Utility.RemoteObserver;
 import Utility.RmiService;
 import View.ClientGUI;
@@ -27,10 +28,11 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 		return id;
 	}
 	
-	public 
+	public Menu getMenu() throws RemoteException{
+		return this.service.show("menu");
+	}
 
 	public static void main(String[] args) throws Exception {
-		
 		try {
 			String ip = ReadIP.getReadIP("ServerIPaID").getIP();
 			ip = "//localhost"/* + ip*/ + ":1099";
@@ -39,10 +41,11 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 
 			RmiClient client = new RmiClient(remoteService);
 			remoteService.addObserver(client);
+			System.out.println(client.getMenu());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+		System.out.println();
 		ClientGUI gui = new ClientGUI();
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
