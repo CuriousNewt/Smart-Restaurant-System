@@ -1,8 +1,9 @@
 package Domain.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Menu {
+public class Menu implements Serializable {
 	private ArrayList<Item> items;
 	
 	public Menu(){
@@ -60,6 +61,14 @@ public class Menu {
 		Menu s = new Menu();
 		for (int i = 0; i < items.size(); i++) {
 			s.add(items.get(i));
+		}
+		return s;
+	}
+	
+	public String toString(){
+		String s = "";
+		for (int i = 0; i < items.size(); i++) {
+			s+= (i+1) + "/" + items.get(i).toString();
 		}
 		return s;
 	}
