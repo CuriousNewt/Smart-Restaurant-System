@@ -31,7 +31,7 @@ public class Database implements Storage {
 	public void getMenu() throws SQLException  {
 		
 		DriverManager.registerDriver(new org.postgresql.Driver());
-		Connection connection = DriverManager.getConnection(ip, "postgres", "root");
+		Connection connection = DriverManager.getConnection(ip, "postgres", "palmcoast17");
 		try {
 			PreparedStatement statementMeal = connection.prepareStatement("SELECT * FROM meal");
 			ResultSet resultMeal = statementMeal.executeQuery();

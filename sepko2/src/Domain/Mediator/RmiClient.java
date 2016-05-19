@@ -28,8 +28,8 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 		return id;
 	}
 	
-	public Menu getMenu() throws RemoteException{
-		return this.service.show("menu");
+	public Menu get(String what) throws RemoteException{
+		return this.service.show(what);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -41,7 +41,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver, Se
 
 			RmiClient client = new RmiClient(remoteService);
 			remoteService.addObserver(client);
-			System.out.println(client.getMenu());
+			System.out.println(client.get("menu"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
