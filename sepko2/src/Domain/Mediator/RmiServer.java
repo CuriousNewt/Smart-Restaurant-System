@@ -93,6 +93,7 @@ public class RmiServer extends Observable implements RmiService {
 			RmiService rmiService = (RmiService) UnicastRemoteObject
 					.exportObject(new RmiServer(controller), 1099);
 			rmiRegistry.bind("RmiService", rmiService);
+			// TODO delete sysout after everitynk yz fajn
 			System.out.println("SERVER RUNS");
 		} catch (Exception ex) {
 			ex.printStackTrace();
