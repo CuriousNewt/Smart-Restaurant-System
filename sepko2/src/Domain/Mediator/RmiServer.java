@@ -8,9 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.swing.JFrame;
-
 import Controller.Controller;
 import Domain.Model.Menu;
 import Domain.Model.Order;
@@ -19,9 +17,26 @@ import Utility.RmiService;
 import View.ServerGUI;
 
 public class RmiServer extends Observable implements RmiService {
-
-	private Controller controller;
 	
+	private Controller controller;
+	/*Thread thread = new Thread() {
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+				}
+				setChanged();
+				try {
+					notifyObservers(show("menu"));
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+	};*/
+
 	private class WrappedObserver implements Observer, Serializable {
 
 		private static final long serialVersionUID = 1L;
@@ -42,7 +57,30 @@ public class RmiServer extends Observable implements RmiService {
 				o.deleteObserver(this);
 			}
 		}
+	}
+	
+	public RmiServer(Controller controller) {
+		this.controller = controller;
+		//thread.start();
+	}
 
+	public static void main(String[] args) throws Exception {
+		ModelManager manager = new ModelManager();
+		Controller controller = new Controller(manager);
+		
+		try {
+			Registry rmiRegistry = LocateRegistry.createRegistry(1099);
+			RmiService rmiService = (RmiService) UnicastRemoteObject
+					.exportObject(new RmiServer(controller), 1099);
+			rmiRegistry.bind("RmiService", rmiService);
+			// TODO delete sysout after everitynk yz fajn
+			System.out.println("SERVER RUNS");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		ServerGUI gui = new ServerGUI();
+		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		gui.setVisible(true);
 	}
 
 	@Override
@@ -59,47 +97,5 @@ public class RmiServer extends Observable implements RmiService {
 		WrappedObserver observer = new WrappedObserver(o);
 		addObserver(observer);
 		System.out.println("Added observer:" + observer);
-	}
-
-	Thread thread = new Thread() {
-		@Override
-		public void run() {
-			while (true) {
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-				}
-				setChanged();
-				try {
-					notifyObservers(show("menu"));
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	};
-
-	public RmiServer(Controller controller) {
-		this.controller = controller;
-		thread.start();
-	}
-
-	public static void main(String[] args) throws Exception {
-		ModelManager manager = new ModelManager();
-		Controller controller = new Controller(manager);
-
-		try {
-			Registry rmiRegistry = LocateRegistry.createRegistry(1099);
-			RmiService rmiService = (RmiService) UnicastRemoteObject
-					.exportObject(new RmiServer(controller), 1099);
-			rmiRegistry.bind("RmiService", rmiService);
-			// TODO delete sysout after everitynk yz fajn
-			System.out.println("SERVER RUNS");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		ServerGUI gui = new ServerGUI();
-		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		gui.setVisible(true);
 	}
 }

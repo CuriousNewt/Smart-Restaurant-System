@@ -271,9 +271,9 @@ public class ClientGUI extends JFrame {
 		topMenu.add(menuItemEditMenu);
 	}
 
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		ClientGUI gui = new ClientGUI();
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
-	}
+	}*/
 }
