@@ -17,25 +17,17 @@ import Utility.RmiService;
 import View.ServerGUI;
 
 public class RmiServer extends Observable implements RmiService {
-	
+
 	private Controller controller;
-	/*Thread thread = new Thread() {
-		@Override
-		public void run() {
-			while (true) {
-				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-				}
-				setChanged();
-				try {
-					notifyObservers(show("menu"));
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-	};*/
+
+	/*
+	 * Thread thread = new Thread() {
+	 * 
+	 * @Override public void run() { while (true) { try { Thread.sleep(10000); }
+	 * catch (InterruptedException e) { } setChanged(); try {
+	 * notifyObservers(show("menu")); } catch (RemoteException e) {
+	 * e.printStackTrace(); } } }; };
+	 */
 
 	private class WrappedObserver implements Observer, Serializable {
 
@@ -58,27 +50,28 @@ public class RmiServer extends Observable implements RmiService {
 			}
 		}
 	}
-	
+
 	public RmiServer(Controller controller) {
 		this.controller = controller;
-		//thread.start();
+		// thread.start();
 	}
 
 	public static void main(String[] args) throws Exception {
 		ModelManager manager = new ModelManager();
+
 		Database database = new Database("databaseIP", manager);
 		database.getMenu();
+
 		Controller controller = new Controller(manager);
-		try {
-			Registry rmiRegistry = LocateRegistry.createRegistry(1099);
-			RmiService rmiService = (RmiService) UnicastRemoteObject
-					.exportObject(new RmiServer(controller), 1099);
-			rmiRegistry.bind("RmiService", rmiService);
-			// TODO delete sysout after everitynk yz fajn
-			System.out.println("SERVER RUNS");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+
+		Registry rmiRegistry = LocateRegistry.createRegistry(1099);
+		RmiService rmiService = (RmiService) UnicastRemoteObject.exportObject(
+				new RmiServer(controller), 1099);
+		rmiRegistry.bind("RmiService", rmiService);
+
+		// TODO delete sysout after everitynk yz fajn
+		System.out.println("SERVER RUNS");
+
 		ServerGUI gui = new ServerGUI();
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
@@ -88,10 +81,12 @@ public class RmiServer extends Observable implements RmiService {
 	public Menu show(String what) throws RemoteException {
 		return controller.show(what);
 	}
+
 	public Controller getController() {
-		
+
 		return controller;
 	}
+
 	@Override
 	public ArrayList<Order> showOrders() throws RemoteException {
 		return controller.showOrders();
