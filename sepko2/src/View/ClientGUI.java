@@ -34,6 +34,8 @@ public class ClientGUI extends JFrame {
 	private JMenuItem menuItemEditMenu;
 	private JTabbedPane menuTabs;
 	private Controller controller;
+	
+	private double totalPrice;
 
 	// JPANELS
 	// *********************************************************************
@@ -116,7 +118,8 @@ public class ClientGUI extends JFrame {
 	}
 
 	private void setComponents() {
-
+		totalPrice = 0;
+		
 		// TOP MENU BAR
 		// **********************************************************************
 		topMenuBar = new JMenuBar();
@@ -361,7 +364,12 @@ public class ClientGUI extends JFrame {
 		}
 		
 	}
+	
+	public void incrementPrice(Item item) {
+			totalPrice += item.getPrice();
+			
 		
+	}
 		
 		
 		public void addActionListeners(){
