@@ -1,8 +1,9 @@
 package Domain.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class OrderList {
+public class OrderList implements Serializable {
 	private ArrayList<Order> orders;
 	
 	public OrderList(){
