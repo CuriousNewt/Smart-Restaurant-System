@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -17,6 +20,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import Controller.Controller;
+import Domain.Model.Item;
+import View.ServerGUI.OpenEditMenu;
 
 public class ClientGUI extends JFrame {
 	
@@ -24,6 +33,7 @@ public class ClientGUI extends JFrame {
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
 	private JTabbedPane menuTabs;
+	private Controller controller;
 
 	// JPANELS
 	// *********************************************************************
@@ -84,13 +94,14 @@ public class ClientGUI extends JFrame {
 	private DefaultListModel<String> soupModel;
 	private DefaultListModel<String> seaFoodModel;
 	private DefaultListModel<String> sideDishModel;
-	private DefaultListModel<String> desertModel;
-	private DefaultListModel<String> appetizerModel;
+	private DefaultListModel<String> dessertModel;
+	private DefaultListModel<String> starterModel;
 	private DefaultListModel<String> nonAlcoholicDrinksModel;
 	private DefaultListModel<String> alcoholicDrinksModel;
 	private DefaultListModel<String> modelOfOrders;
 
-	public ClientGUI() throws Exception {
+	public ClientGUI(Controller controller) throws Exception {
+		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -151,8 +162,8 @@ public class ClientGUI extends JFrame {
 		soupModel = new DefaultListModel<String>();
 		seaFoodModel = new DefaultListModel<String>();
 		sideDishModel = new DefaultListModel<String>();
-		desertModel = new DefaultListModel<String>();
-		appetizerModel = new DefaultListModel<String>();
+		dessertModel = new DefaultListModel<String>();
+		starterModel = new DefaultListModel<String>();
 		nonAlcoholicDrinksModel = new DefaultListModel<String>();
 		alcoholicDrinksModel = new DefaultListModel<String>();
 		modelOfOrders = new DefaultListModel<String>();
@@ -163,8 +174,8 @@ public class ClientGUI extends JFrame {
 		soupList = new JList(soupModel);
 		seaFoodList = new JList(seaFoodModel); 
 		sideDishList = new JList(sideDishModel);
-		desertList = new JList(desertModel);
-		appetizerList = new JList(appetizerModel);
+		desertList = new JList(dessertModel);
+		appetizerList = new JList(starterModel);
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
 		listOfOrder = new JList(modelOfOrders);
@@ -222,7 +233,7 @@ public class ClientGUI extends JFrame {
 		menuTabs.add("Soup",soupPanel);
 		menuTabs.add("Sea Food",seaFood);
 		menuTabs.add("Side dish",sideDish);
-		menuTabs.add("Deserts",desert);
+		menuTabs.add("Desserts",desert);
 		menuTabs.add("Starter",starter);
 		menuTabs.add("Non-alcoholic drinks" , nonAlcoholicDrinks);
 		menuTabs.add("Alcoholic drinks" , alcoholicDrinks);
@@ -270,6 +281,55 @@ public class ClientGUI extends JFrame {
 		topMenuBar.add(topMenu);
 		topMenu.add(menuItemEditMenu);
 	}
+	
+	// ADDING FUNCTIONS
+				// *********************************************************************
+	
+	class MenuByType implements ChangeListener{
+		
+		public void stateChanged(ChangeEvent arg0) {
+			
+			JTabbedPane sourceTabbedPane = (JTabbedPane) arg0.getSource();
+	        String temp = sourceTabbedPane.getName().toLowerCase();
+			
+	        switch(temp){
+	        
+	        case "pork":for(int i=0;i<controller.showMenuByType("pork").size();i++){					
+						porkModel.addElement(controller.showMenuByType("pork").get(i).toString());break;}
+	        case "chicken":for(int i=0;i<controller.showMenuByType("chicken").size();i++){					
+						chickenModel.addElement(controller.showMenuByType("chicken").get(i).toString());break;}
+	        case "starter":for(int i=0;i<controller.showMenuByType("starter").size();i++){					
+						starterModel.addElement(controller.showMenuByType("starter").get(i).toString());break;}
+	        case "beef":for(int i=0;i<controller.showMenuByType("beef").size();i++){					
+						beefModel.addElement(controller.showMenuByType("beef").get(i).toString());break;}
+	        case "dessert":for(int i=0;i<controller.showMenuByType("dessert").size();i++){					
+						dessertModel.addElement(controller.showMenuByType("dessert").get(i).toString());break;}
+	        case "soup":for(int i=0;i<controller.showMenuByType("soup").size();i++){					
+						soupModel.addElement(controller.showMenuByType("soup").get(i).toString());break;}
+	        case "sea food":for(int i=0;i<controller.showMenuByType("seafood").size();i++){					
+						seaFoodModel.addElement(controller.showMenuByType("seafood").get(i).toString());break;}
+	        case "side dish":for(int i=0;i<controller.showMenuByType("sidedish").size();i++){					
+						sideDishModel.addElement(controller.showMenuByType("sidedish").get(i).toString());break;}
+	        case "alcoholic drinks":for(int i=0;i<controller.showMenuByType("alcoholic").size();i++){					
+						alcoholicDrinksModel.addElement(controller.showMenuByType("alcoholic").get(i).toString());break;}
+	        case "non-alcoholic drinks":for(int i=0;i<controller.showMenuByType("nonalcoholic").size();i++){					
+	        			nonAlcoholicDrinksModel.addElement(controller.showMenuByType("nonalcoholic").get(i).toString());break;}
+	        
+	        
+	        
+		}
+		}
+	}
+	
+	
+			
+		
+		
+		
+		
+		public void addActionListeners(){
+			menuTabs.addChangeListener(new MenuByType());
+		}
 
 	/*public static void main(String[] args) throws Exception {
 		ClientGUI gui = new ClientGUI();
