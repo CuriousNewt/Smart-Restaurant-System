@@ -66,9 +66,9 @@ public class RmiServer extends Observable implements RmiService {
 
 	public static void main(String[] args) throws Exception {
 		ModelManager manager = new ModelManager();
-		Controller controller = new Controller(manager);
 		Database database = new Database("databaseIP", manager);
 		database.getMenu();
+		Controller controller = new Controller(manager);
 		try {
 			Registry rmiRegistry = LocateRegistry.createRegistry(1099);
 			RmiService rmiService = (RmiService) UnicastRemoteObject
@@ -89,6 +89,7 @@ public class RmiServer extends Observable implements RmiService {
 		return controller.show(what);
 	}
 	public Controller getController() {
+		
 		return controller;
 	}
 	@Override
