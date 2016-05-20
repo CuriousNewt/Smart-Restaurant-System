@@ -75,30 +75,30 @@ public class ClientGUI extends JFrame {
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
-	private JList<String> porkList;
-	private JList<String> beefList;
-	private JList<String> chickenList;
-	private JList<String> soupList;
-	private JList<String> seaFoodList;
-	private JList<String> sideDishList;
-	private JList<String> desertList;
-	private JList<String> appetizerList;
-	private JList<String> nonAlcoholicDrinksList;
-	private JList<String> alcoholicDrinksList;
-	private JList<String> listOfOrder;
+	private JList<Item> porkList;
+	private JList<Item> beefList;
+	private JList<Item> chickenList;
+	private JList<Item> soupList;
+	private JList<Item> seaFoodList;
+	private JList<Item> sideDishList;
+	private JList<Item> desertList;
+	private JList<Item> appetizerList;
+	private JList<Item> nonAlcoholicDrinksList;
+	private JList<Item> alcoholicDrinksList;
+	private JList<Item> listOfOrder;
 	
 	
-	private DefaultListModel<String> porkModel;
-	private DefaultListModel<String> beefModel;
-	private DefaultListModel<String> chickenModel;
-	private DefaultListModel<String> soupModel;
-	private DefaultListModel<String> seaFoodModel;
-	private DefaultListModel<String> sideDishModel;
-	private DefaultListModel<String> dessertModel;
-	private DefaultListModel<String> starterModel;
-	private DefaultListModel<String> nonAlcoholicDrinksModel;
-	private DefaultListModel<String> alcoholicDrinksModel;
-	private DefaultListModel<String> modelOfOrders;
+	private DefaultListModel<Item> porkModel;
+	private DefaultListModel<Item> beefModel;
+	private DefaultListModel<Item> chickenModel;
+	private DefaultListModel<Item> soupModel;
+	private DefaultListModel<Item> seaFoodModel;
+	private DefaultListModel<Item> sideDishModel;
+	private DefaultListModel<Item> dessertModel;
+	private DefaultListModel<Item> starterModel;
+	private DefaultListModel<Item> nonAlcoholicDrinksModel;
+	private DefaultListModel<Item> alcoholicDrinksModel;
+	private DefaultListModel<Item> modelOfOrders;
 
 	public ClientGUI(Controller controller) throws Exception {
 		this.controller = controller;
@@ -157,17 +157,17 @@ public class ClientGUI extends JFrame {
 		callStaffButton = new JButton("Call saff");
 
 		// JLISTS & DEFAULT LIST MODELS
-		porkModel = new DefaultListModel<String>();
-		beefModel = new DefaultListModel<String>();
-		chickenModel = new DefaultListModel<String>();
-		soupModel = new DefaultListModel<String>();
-		seaFoodModel = new DefaultListModel<String>();
-		sideDishModel = new DefaultListModel<String>();
-		dessertModel = new DefaultListModel<String>();
-		starterModel = new DefaultListModel<String>();
-		nonAlcoholicDrinksModel = new DefaultListModel<String>();
-		alcoholicDrinksModel = new DefaultListModel<String>();
-		modelOfOrders = new DefaultListModel<String>();
+		porkModel = new DefaultListModel<Item>();
+		beefModel = new DefaultListModel<Item>();
+		chickenModel = new DefaultListModel<Item>();
+		soupModel = new DefaultListModel<Item>();
+		seaFoodModel = new DefaultListModel<Item>();
+		sideDishModel = new DefaultListModel<Item>();
+		dessertModel = new DefaultListModel<Item>();
+		starterModel = new DefaultListModel<Item>();
+		nonAlcoholicDrinksModel = new DefaultListModel<Item>();
+		alcoholicDrinksModel = new DefaultListModel<Item>();
+		modelOfOrders = new DefaultListModel<Item>();
 		
 		porkList = new JList(porkModel);
 		beefList = new JList(beefModel);
@@ -298,34 +298,34 @@ public class ClientGUI extends JFrame {
 	        switch(temp){
 	        
 	        case "pork":porkModel.clear();for(int i=0;i<controller.showMenuByType("pork").size();i++){					
-						porkModel.addElement(controller.showMenuByType("pork").get(i).toString());}break;
+						porkModel.addElement(controller.showMenuByType("pork").get(i));}break;
 						
 	        case "chicken":chickenModel.clear();for(int i=0;i<controller.showMenuByType("chicken").size();i++){					
-						chickenModel.addElement(controller.showMenuByType("chicken").get(i).toString());}break;
+						chickenModel.addElement(controller.showMenuByType("chicken").get(i));}break;
 						
 	        case "starter":starterModel.clear();for(int i=0;i<controller.showMenuByType("starter").size();i++){					
-						starterModel.addElement(controller.showMenuByType("starter").get(i).toString());}break;
+						starterModel.addElement(controller.showMenuByType("starter").get(i));}break;
 						
 	        case "beef":beefModel.clear();for(int i=0;i<controller.showMenuByType("beef").size();i++){					
-						beefModel.addElement(controller.showMenuByType("beef").get(i).toString());}break;
+						beefModel.addElement(controller.showMenuByType("beef").get(i));}break;
 						
 	        case "desserts":dessertModel.clear();for(int i=0;i<controller.showMenuByType("dessert").size();i++){					
-						dessertModel.addElement(controller.showMenuByType("dessert").get(i).toString());}break;
+						dessertModel.addElement(controller.showMenuByType("dessert").get(i));}break;
 						
 	        case "soup":soupModel.clear();for(int i=0;i<controller.showMenuByType("soups").size();i++){					
-						soupModel.addElement(controller.showMenuByType("soups").get(i).toString());}break;
+						soupModel.addElement(controller.showMenuByType("soups").get(i));}break;
 						
 	        case "sea food":seaFoodModel.clear();for(int i=0;i<controller.showMenuByType("seafood").size();i++){					
-						seaFoodModel.addElement(controller.showMenuByType("seafood").get(i).toString());}break;
+						seaFoodModel.addElement(controller.showMenuByType("seafood").get(i));}break;
 						
 	        case "side dish":sideDishModel.clear();for(int i=0;i<controller.showMenuByType("sidedish").size();i++){					
-						sideDishModel.addElement(controller.showMenuByType("sidedish").get(i).toString());}break;
+						sideDishModel.addElement(controller.showMenuByType("sidedish").get(i));}break;
 						
 	        case "alcoholic drinks":alcoholicDrinksModel.clear();for(int i=0;i<controller.showMenuByType("alcoholic").size();i++){					
-						alcoholicDrinksModel.addElement(controller.showMenuByType("alcoholic").get(i).toString());}break;
+						alcoholicDrinksModel.addElement(controller.showMenuByType("alcoholic").get(i));}break;
 						
 	        case "non-alcoholic drinks":nonAlcoholicDrinksModel.clear();for(int i=0;i<controller.showMenuByType("nonalcoholic").size();i++){					
-	        			nonAlcoholicDrinksModel.addElement(controller.showMenuByType("nonalcoholic").get(i).toString());}break;
+	        			nonAlcoholicDrinksModel.addElement(controller.showMenuByType("nonalcoholic").get(i));}break;
 	        
 	        default:System.out.println("OUHA SOMETHING WENT WRONG");break;
 	        
@@ -337,17 +337,41 @@ public class ClientGUI extends JFrame {
 	}
 	
 	
+	class plusItemToOrder implements ActionListener{
+	
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+			JList list = (JList) tab.getComponent(0);
+			Item selectedElement = (Item) list.getSelectedValue();
+			modelOfOrders.addElement(selectedElement);
 			
+		}
 		
+	}	
+	
+	class minusItemFromOrder implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Item selectedElement = (Item) listOfOrder.getSelectedValue();
+			modelOfOrders.removeElement(selectedElement);
+			
+		}
+		
+	}
 		
 		
 		
 		public void addActionListeners(){
 			menuTabs.addChangeListener(new MenuByType());
+			plusButton.addActionListener(new plusItemToOrder());
+			minusButton.addActionListener(new minusItemFromOrder());
 			
 			//Filling up pork on start because its first selected tab
 	        for(int i=0;i<controller.showMenuByType("pork").size();i++){					
-				porkModel.addElement(controller.showMenuByType("pork").get(i).toString());
+				porkModel.addElement(controller.showMenuByType("pork").get(i));
 				}
 		}
 
