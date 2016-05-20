@@ -1,11 +1,13 @@
 package Controller;
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import Domain.Mediator.ModelManager;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 import Domain.Model.OrderList;
 
-public class Controller {
+public class Controller implements Serializable {
 	private ModelManager manager;
 	
 	public Controller(ModelManager manager){
