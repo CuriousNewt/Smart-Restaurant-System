@@ -36,15 +36,18 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 	public Menu getMenu() throws RemoteException {
 		return this.service.show("menu");
 	}
-	
-	public Menu get(String what) throws RemoteException{
+
+	public Menu get(String what) throws RemoteException {
 		return this.service.show(what);
 
 	}
 
+	public Controller getController() throws RemoteException {
+		return this.service.getController();
+	}
+
 	public static void main(String[] args) throws Exception {
-		ModelManager modelManager = new ModelManager();
-		Controller controller = new Controller(modelManager);
+
 		try {
 			String ip = ReadIP.getReadIP("ServerIPaID").getIP();
 			ip = "//" + ip + ":1099";
@@ -54,13 +57,12 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 			RmiClient client = new RmiClient(remoteService);
 			remoteService.addObserver(client);
 			System.out.println(client.get("menu"));
+			ClientGUI gui = new ClientGUI(remoteService.getController());
+			gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			gui.setVisible(true);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		System.out.println();
-		ClientGUI gui = new ClientGUI(controller);
-		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		gui.setVisible(true);
 	}
 
 	public void update(Object observable, Object updateMsg)

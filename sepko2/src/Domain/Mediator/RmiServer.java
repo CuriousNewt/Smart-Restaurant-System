@@ -88,6 +88,9 @@ public class RmiServer extends Observable implements RmiService {
 	public Menu show(String what) throws RemoteException {
 		return controller.show(what);
 	}
+	public Controller getController() {
+		return controller;
+	}
 	@Override
 	public ArrayList<Order> showOrders() throws RemoteException {
 		return controller.showOrders();
