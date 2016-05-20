@@ -48,6 +48,8 @@ public class ClientGUI extends JFrame {
 	private JPanel centerPanel;
 	private JPanel plusButtonPanel;
 	
+	private JPanel priceMiddlePanel;
+	
 	private JPanel porkPanel;
 	private JPanel beefPanel;
 	private JPanel chickenPanel;
@@ -64,7 +66,8 @@ public class ClientGUI extends JFrame {
 
 	// JLABELS
 	// *********************************************************************
-
+	private JLabel price;
+	
 	// JBUTTONS
 	// *********************************************************************
 	private JButton plusButton;
@@ -137,6 +140,8 @@ public class ClientGUI extends JFrame {
 		centerPanel = new JPanel();
 		plusButtonPanel = new JPanel();
 		
+		priceMiddlePanel = new JPanel();
+		
 		porkPanel = new JPanel();
 		beefPanel = new JPanel();
 		chickenPanel = new JPanel();
@@ -184,7 +189,8 @@ public class ClientGUI extends JFrame {
 		
 		// JLABELS
 		// **********************************************************************
-
+		price = new JLabel("Total price:  0");
+		
 	}
 
 	private void addBorders() {
@@ -192,6 +198,7 @@ public class ClientGUI extends JFrame {
 		eastPanel.setBorder(BorderFactory.createTitledBorder("ORDERS"));
 		menuTabs.setBorder(BorderFactory.createTitledBorder("MENU"));
 		minusButtonPanel.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
+		priceMiddlePanel.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 
 	}
 
@@ -228,7 +235,7 @@ public class ClientGUI extends JFrame {
 
 		// ADDING INTO PANELS
 		// *********************************************************************
-		menuTabs.add("Pork", porkPanel);
+		menuTabs.add("Pork", porkList);
 		menuTabs.add("Beef",beefPanel);
 		menuTabs.add("Chicken",chickenPanel);
 		menuTabs.add("Soup",soupPanel);
@@ -261,9 +268,11 @@ public class ClientGUI extends JFrame {
 		eastButtonPanel.add(callStaffButton);
 		
 		minusButtonPanel.add(minusButton);
+		priceMiddlePanel.add(price);
 		plusButtonPanel.add(plusButton);
 		
 		centerButtonPanel.add(plusButtonPanel, gbc);
+		centerButtonPanel.add(priceMiddlePanel, gbc);
 		centerButtonPanel.add(minusButtonPanel, gbc);
 		
 
