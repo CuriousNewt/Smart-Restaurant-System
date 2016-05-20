@@ -235,7 +235,7 @@ public class ClientGUI extends JFrame {
 
 		// ADDING INTO PANELS
 		// *********************************************************************
-		menuTabs.add("Pork", porkList);
+		menuTabs.add("Pork", porkPanel);
 		menuTabs.add("Beef",beefPanel);
 		menuTabs.add("Chicken",chickenPanel);
 		menuTabs.add("Soup",soupPanel);
