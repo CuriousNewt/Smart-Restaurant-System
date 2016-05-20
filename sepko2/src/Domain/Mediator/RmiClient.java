@@ -47,22 +47,17 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 	}
 
 	public static void main(String[] args) throws Exception {
+		String ip = ReadIP.getReadIP("ServerIPaID").getIP();
+		ip = "//" + ip + ":1099";
+		RmiService remoteService = (RmiService) Naming.lookup(ip
+				+ "/RmiService");
 
-		try {
-			String ip = ReadIP.getReadIP("ServerIPaID").getIP();
-			ip = "//" + ip + ":1099";
-			RmiService remoteService = (RmiService) Naming.lookup(ip
-					+ "/RmiService");
-
-			RmiClient client = new RmiClient(remoteService);
-			remoteService.addObserver(client);
-			System.out.println(client.get("menu"));
-			ClientGUI gui = new ClientGUI(remoteService.getController());
-			gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			gui.setVisible(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		RmiClient client = new RmiClient(remoteService);
+		remoteService.addObserver(client);
+		// System.out.println(client.get("menu"));
+		ClientGUI gui = new ClientGUI(remoteService.getController());
+		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		gui.setVisible(true);
 	}
 
 	public void update(Object observable, Object updateMsg)
