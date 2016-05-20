@@ -21,8 +21,7 @@ public class Meal extends Item {
 	}
 	
 	public String toString(){
-		return super.getName() + "\n" + super.getDescription() + "\n" + getAmount() + "g " + super.getPrice()+"Kr."
-				+ "\n" + "----------------------------------" + "\n";
+		return  getAmount() + "g  " + super.getName() + "-- " + super.getDescription() + "---- " + super.getPrice()+"Kr.";
 	}
 
 	@Override

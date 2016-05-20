@@ -18,13 +18,16 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import Controller.Controller;
 import Domain.Model.Item;
+import Domain.Model.Order;
 import View.ServerGUI.OpenEditMenu;
 
 public class ClientGUI extends JFrame {
@@ -34,6 +37,9 @@ public class ClientGUI extends JFrame {
 	private JMenuItem menuItemEditMenu;
 	private JTabbedPane menuTabs;
 	private Controller controller;
+	
+	private double totalPrice;
+	private final int ID;
 
 	// JPANELS
 	// *********************************************************************
@@ -47,6 +53,8 @@ public class ClientGUI extends JFrame {
 	private JPanel centerButtonPanel;
 	private JPanel centerPanel;
 	private JPanel plusButtonPanel;
+	
+	private JPanel priceMiddlePanel;
 	
 	private JPanel porkPanel;
 	private JPanel beefPanel;
@@ -64,7 +72,8 @@ public class ClientGUI extends JFrame {
 
 	// JLABELS
 	// *********************************************************************
-
+	private JLabel price;
+	
 	// JBUTTONS
 	// *********************************************************************
 	private JButton plusButton;
@@ -75,33 +84,34 @@ public class ClientGUI extends JFrame {
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
-	private JList<String> porkList;
-	private JList<String> beefList;
-	private JList<String> chickenList;
-	private JList<String> soupList;
-	private JList<String> seaFoodList;
-	private JList<String> sideDishList;
-	private JList<String> desertList;
-	private JList<String> appetizerList;
-	private JList<String> nonAlcoholicDrinksList;
-	private JList<String> alcoholicDrinksList;
-	private JList<String> listOfOrder;
+	private JList<Item> porkList;
+	private JList<Item> beefList;
+	private JList<Item> chickenList;
+	private JList<Item> soupList;
+	private JList<Item> seaFoodList;
+	private JList<Item> sideDishList;
+	private JList<Item> desertList;
+	private JList<Item> appetizerList;
+	private JList<Item> nonAlcoholicDrinksList;
+	private JList<Item> alcoholicDrinksList;
+	private JList<Item> listOfOrder;
 	
 	
-	private DefaultListModel<String> porkModel;
-	private DefaultListModel<String> beefModel;
-	private DefaultListModel<String> chickenModel;
-	private DefaultListModel<String> soupModel;
-	private DefaultListModel<String> seaFoodModel;
-	private DefaultListModel<String> sideDishModel;
-	private DefaultListModel<String> dessertModel;
-	private DefaultListModel<String> starterModel;
-	private DefaultListModel<String> nonAlcoholicDrinksModel;
-	private DefaultListModel<String> alcoholicDrinksModel;
-	private DefaultListModel<String> modelOfOrders;
+	private DefaultListModel<Item> porkModel;
+	private DefaultListModel<Item> beefModel;
+	private DefaultListModel<Item> chickenModel;
+	private DefaultListModel<Item> soupModel;
+	private DefaultListModel<Item> seaFoodModel;
+	private DefaultListModel<Item> sideDishModel;
+	private DefaultListModel<Item> dessertModel;
+	private DefaultListModel<Item> starterModel;
+	private DefaultListModel<Item> nonAlcoholicDrinksModel;
+	private DefaultListModel<Item> alcoholicDrinksModel;
+	private DefaultListModel<Item> modelOfOrders;
 
-	public ClientGUI(Controller controller) throws Exception {
+	public ClientGUI(Controller controller,int ID) throws Exception {
 		this.controller = controller;
+		this.ID = ID;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -116,7 +126,8 @@ public class ClientGUI extends JFrame {
 	}
 
 	private void setComponents() {
-
+		totalPrice = 0;
+		
 		// TOP MENU BAR
 		// **********************************************************************
 		topMenuBar = new JMenuBar();
@@ -136,6 +147,8 @@ public class ClientGUI extends JFrame {
 		centerButtonPanel = new JPanel();
 		centerPanel = new JPanel();
 		plusButtonPanel = new JPanel();
+		
+		priceMiddlePanel = new JPanel();
 		
 		porkPanel = new JPanel();
 		beefPanel = new JPanel();
@@ -157,17 +170,17 @@ public class ClientGUI extends JFrame {
 		callStaffButton = new JButton("Call saff");
 
 		// JLISTS & DEFAULT LIST MODELS
-		porkModel = new DefaultListModel<String>();
-		beefModel = new DefaultListModel<String>();
-		chickenModel = new DefaultListModel<String>();
-		soupModel = new DefaultListModel<String>();
-		seaFoodModel = new DefaultListModel<String>();
-		sideDishModel = new DefaultListModel<String>();
-		dessertModel = new DefaultListModel<String>();
-		starterModel = new DefaultListModel<String>();
-		nonAlcoholicDrinksModel = new DefaultListModel<String>();
-		alcoholicDrinksModel = new DefaultListModel<String>();
-		modelOfOrders = new DefaultListModel<String>();
+		porkModel = new DefaultListModel<Item>();
+		beefModel = new DefaultListModel<Item>();
+		chickenModel = new DefaultListModel<Item>();
+		soupModel = new DefaultListModel<Item>();
+		seaFoodModel = new DefaultListModel<Item>();
+		sideDishModel = new DefaultListModel<Item>();
+		dessertModel = new DefaultListModel<Item>();
+		starterModel = new DefaultListModel<Item>();
+		nonAlcoholicDrinksModel = new DefaultListModel<Item>();
+		alcoholicDrinksModel = new DefaultListModel<Item>();
+		modelOfOrders = new DefaultListModel<Item>();
 		
 		porkList = new JList(porkModel);
 		beefList = new JList(beefModel);
@@ -184,7 +197,8 @@ public class ClientGUI extends JFrame {
 		
 		// JLABELS
 		// **********************************************************************
-
+		price = new JLabel("Total price:  0 Kr. ");
+		
 	}
 
 	private void addBorders() {
@@ -192,6 +206,7 @@ public class ClientGUI extends JFrame {
 		eastPanel.setBorder(BorderFactory.createTitledBorder("ORDERS"));
 		menuTabs.setBorder(BorderFactory.createTitledBorder("MENU"));
 		minusButtonPanel.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
+		priceMiddlePanel.setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 
 	}
 
@@ -261,9 +276,11 @@ public class ClientGUI extends JFrame {
 		eastButtonPanel.add(callStaffButton);
 		
 		minusButtonPanel.add(minusButton);
+		priceMiddlePanel.add(price);
 		plusButtonPanel.add(plusButton);
 		
 		centerButtonPanel.add(plusButtonPanel, gbc);
+		centerButtonPanel.add(priceMiddlePanel, gbc);
 		centerButtonPanel.add(minusButtonPanel, gbc);
 		
 
@@ -291,32 +308,44 @@ public class ClientGUI extends JFrame {
 		public void stateChanged(ChangeEvent arg0) {
 			
 			JTabbedPane sourceTabbedPane = (JTabbedPane) arg0.getSource();
-	        String temp = sourceTabbedPane.getName().toLowerCase();
-	        System.out.println(temp);
+	        int index = sourceTabbedPane.getSelectedIndex();
+	        String temp = sourceTabbedPane.getTitleAt(index).toLowerCase();
+	        
 	        
 	        switch(temp){
 	        
-	        case "pork":for(int i=0;i<controller.showMenuByType("pork").size();i++){					
-						porkModel.addElement(controller.showMenuByType("pork").get(i).toString());}break;
-	        case "chicken":for(int i=0;i<controller.showMenuByType("chicken").size();i++){					
-						chickenModel.addElement(controller.showMenuByType("chicken").get(i).toString());}break;
-	        case "starter":for(int i=0;i<controller.showMenuByType("starter").size();i++){					
-						starterModel.addElement(controller.showMenuByType("starter").get(i).toString());}break;
-	        case "beef":for(int i=0;i<controller.showMenuByType("beef").size();i++){					
-						beefModel.addElement(controller.showMenuByType("beef").get(i).toString());}break;
-	        case "dessert":for(int i=0;i<controller.showMenuByType("dessert").size();i++){					
-						dessertModel.addElement(controller.showMenuByType("dessert").get(i).toString());}break;
-	        case "soup":for(int i=0;i<controller.showMenuByType("soup").size();i++){					
-						soupModel.addElement(controller.showMenuByType("soup").get(i).toString());}break;
-	        case "sea food":for(int i=0;i<controller.showMenuByType("seafood").size();i++){					
-						seaFoodModel.addElement(controller.showMenuByType("seafood").get(i).toString());}break;
-	        case "side dish":for(int i=0;i<controller.showMenuByType("sidedish").size();i++){					
-						sideDishModel.addElement(controller.showMenuByType("sidedish").get(i).toString());}break;
-	        case "alcoholic drinks":for(int i=0;i<controller.showMenuByType("alcoholic").size();i++){					
-						alcoholicDrinksModel.addElement(controller.showMenuByType("alcoholic").get(i).toString());}break;
-	        case "non-alcoholic drinks":for(int i=0;i<controller.showMenuByType("nonalcoholic").size();i++){					
-	        			nonAlcoholicDrinksModel.addElement(controller.showMenuByType("nonalcoholic").get(i).toString());}break;
-	        default:System.out.println("Tvoje mama za bura mrda");break;
+	        case "pork":porkModel.clear();for(int i=0;i<controller.showMenuByType("pork").size();i++){					
+						porkModel.addElement(controller.showMenuByType("pork").get(i));}break;
+						
+	        case "chicken":chickenModel.clear();for(int i=0;i<controller.showMenuByType("chicken").size();i++){					
+						chickenModel.addElement(controller.showMenuByType("chicken").get(i));}break;
+						
+	        case "starter":starterModel.clear();for(int i=0;i<controller.showMenuByType("starter").size();i++){					
+						starterModel.addElement(controller.showMenuByType("starter").get(i));}break;
+						
+	        case "beef":beefModel.clear();for(int i=0;i<controller.showMenuByType("beef").size();i++){					
+						beefModel.addElement(controller.showMenuByType("beef").get(i));}break;
+						
+	        case "desserts":dessertModel.clear();for(int i=0;i<controller.showMenuByType("dessert").size();i++){					
+						dessertModel.addElement(controller.showMenuByType("dessert").get(i));}break;
+						
+	        case "soup":soupModel.clear();for(int i=0;i<controller.showMenuByType("soups").size();i++){					
+						soupModel.addElement(controller.showMenuByType("soups").get(i));}break;
+						
+	        case "sea food":seaFoodModel.clear();for(int i=0;i<controller.showMenuByType("seafood").size();i++){					
+						seaFoodModel.addElement(controller.showMenuByType("seafood").get(i));}break;
+						
+	        case "side dish":sideDishModel.clear();for(int i=0;i<controller.showMenuByType("sidedish").size();i++){					
+						sideDishModel.addElement(controller.showMenuByType("sidedish").get(i));}break;
+						
+	        case "alcoholic drinks":alcoholicDrinksModel.clear();for(int i=0;i<controller.showMenuByType("alcoholic").size();i++){					
+						alcoholicDrinksModel.addElement(controller.showMenuByType("alcoholic").get(i));}break;
+						
+	        case "non-alcoholic drinks":nonAlcoholicDrinksModel.clear();for(int i=0;i<controller.showMenuByType("nonalcoholic").size();i++){					
+	        			nonAlcoholicDrinksModel.addElement(controller.showMenuByType("nonalcoholic").get(i));}break;
+	        
+	        default:System.out.println("OUHA SOMETHING WENT WRONG");break;
+	        
 	        
 	        
 	        
@@ -325,13 +354,69 @@ public class ClientGUI extends JFrame {
 	}
 	
 	
-			
+	class plusItemToOrder implements ActionListener{
+	
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+			JList list = (JList) tab.getComponent(0);
+			Item selectedElement = (Item) list.getSelectedValue();
+			modelOfOrders.addElement(selectedElement);
+			incrementPrice(selectedElement);
+		}
 		
+	}	
+	
+	class minusItemFromOrder implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Item selectedElement = (Item) listOfOrder.getSelectedValue();
+			modelOfOrders.removeElement(selectedElement);
+			decrementPrice(selectedElement);
+		}
 		
+	}
+	
+	class createOrder implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Order order = new Order(ID);
+				for(int i = 0; i < modelOfOrders.size(); i++){
+					order.addItem(modelOfOrders.getElementAt(i));	
+				}
+			//TODO SendOrder
+			System.out.println(order.show());
+			modelOfOrders.clear();
+			JOptionPane.showMessageDialog(ClientGUI.this, "Order successful! \n"
+					+ "Total price: " + totalPrice + " Kr.");
+		}			
+	}
+	
+	public void incrementPrice(Item item) {
+			totalPrice += item.getPrice();
+			price.setText("Total price: " + totalPrice + " Kr.");
+	}
+	
+	public void decrementPrice(Item item) {
+		totalPrice -= item.getPrice();
+		price.setText("Total price: " + totalPrice + " Kr.");
+	
+}
 		
 		
 		public void addActionListeners(){
 			menuTabs.addChangeListener(new MenuByType());
+			plusButton.addActionListener(new plusItemToOrder());
+			minusButton.addActionListener(new minusItemFromOrder());
+			orderButton.addActionListener(new createOrder());
+			
+			//Filling up pork on start because its first selected tab
+	        for(int i=0;i<controller.showMenuByType("pork").size();i++){					
+				porkModel.addElement(controller.showMenuByType("pork").get(i));
+				}
 		}
 
 	/*public static void main(String[] args) throws Exception {

@@ -17,7 +17,7 @@ import View.ClientGUI;
 public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 		Serializable {
 
-	private int id;
+	private static int id;
 	private static final long serialVersionUID = 1L;
 	private RmiService service;
 
@@ -29,7 +29,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 
 	}
 
-	public int getID() {
+	public static int getID() {
 		return id;
 	}
 
@@ -47,22 +47,17 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 	}
 
 	public static void main(String[] args) throws Exception {
+		String ip = ReadIP.getReadIP("ServerIPaID").getIP();
+		ip = "//" + ip + ":1099";
+		RmiService remoteService = (RmiService) Naming.lookup(ip
+				+ "/RmiService");
 
-		try {
-			String ip = ReadIP.getReadIP("ServerIPaID").getIP();
-			ip = "//" + ip + ":1099";
-			RmiService remoteService = (RmiService) Naming.lookup(ip
-					+ "/RmiService");
-
-			RmiClient client = new RmiClient(remoteService);
-			remoteService.addObserver(client);
-			System.out.println(client.get("menu"));
-			ClientGUI gui = new ClientGUI(remoteService.getController());
-			gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			gui.setVisible(true);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		RmiClient client = new RmiClient(remoteService);
+		remoteService.addObserver(client);
+		// System.out.println(client.get("menu"));
+		ClientGUI gui = new ClientGUI(remoteService.getController(), getID());
+		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		gui.setVisible(true);
 	}
 
 	public void update(Object observable, Object updateMsg)
