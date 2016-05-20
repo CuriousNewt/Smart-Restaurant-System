@@ -1,10 +1,11 @@
 package Domain.Mediator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Domain.Model.*;
 
-public class ModelManager implements RestaurantManager {
+public class ModelManager implements RestaurantManager, Serializable {
 	
 	private Menu menu;
 	private OrderList orders;
