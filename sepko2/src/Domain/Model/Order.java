@@ -15,11 +15,8 @@ public class Order {
 		items = new ArrayList<>();
 	}
 	
-	public void addItem(Item item, int quantity){
-		for (int i = 0; i < quantity; i++) {
+	public void addItem(Item item){
 			items.add(item);
-		}
-		
 		}
 	
 	public void removeItem(Item item){

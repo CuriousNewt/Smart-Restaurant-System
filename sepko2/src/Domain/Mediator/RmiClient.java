@@ -17,7 +17,7 @@ import View.ClientGUI;
 public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 		Serializable {
 
-	private int id;
+	private static int id;
 	private static final long serialVersionUID = 1L;
 	private RmiService service;
 
@@ -29,7 +29,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 
 	}
 
-	public int getID() {
+	public static int getID() {
 		return id;
 	}
 
@@ -55,7 +55,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 		RmiClient client = new RmiClient(remoteService);
 		remoteService.addObserver(client);
 		// System.out.println(client.get("menu"));
-		ClientGUI gui = new ClientGUI(remoteService.getController());
+		ClientGUI gui = new ClientGUI(remoteService.getController(), getID());
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}

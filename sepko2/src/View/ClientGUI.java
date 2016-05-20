@@ -18,13 +18,16 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import Controller.Controller;
 import Domain.Model.Item;
+import Domain.Model.Order;
 import View.ServerGUI.OpenEditMenu;
 
 public class ClientGUI extends JFrame {
@@ -36,6 +39,7 @@ public class ClientGUI extends JFrame {
 	private Controller controller;
 	
 	private double totalPrice;
+	private final int ID;
 
 	// JPANELS
 	// *********************************************************************
@@ -105,8 +109,9 @@ public class ClientGUI extends JFrame {
 	private DefaultListModel<Item> alcoholicDrinksModel;
 	private DefaultListModel<Item> modelOfOrders;
 
-	public ClientGUI(Controller controller) throws Exception {
+	public ClientGUI(Controller controller,int ID) throws Exception {
 		this.controller = controller;
+		this.ID = ID;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -192,7 +197,7 @@ public class ClientGUI extends JFrame {
 		
 		// JLABELS
 		// **********************************************************************
-		price = new JLabel("Total price:  0");
+		price = new JLabel("Total price:  0 Kr. ");
 		
 	}
 
@@ -374,14 +379,30 @@ public class ClientGUI extends JFrame {
 		
 	}
 	
+	class createOrder implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Order order = new Order(ID);
+				for(int i = 0; i < modelOfOrders.size(); i++){
+					order.addItem(modelOfOrders.getElementAt(i));	
+				}
+			//TODO SendOrder
+			System.out.println(order.show());
+			modelOfOrders.clear();
+			JOptionPane.showMessageDialog(ClientGUI.this, "Order successful! \n"
+					+ "Total price: " + totalPrice + " Kr.");
+		}			
+	}
+	
 	public void incrementPrice(Item item) {
 			totalPrice += item.getPrice();
-			price.setText("Total price: " + totalPrice);
+			price.setText("Total price: " + totalPrice + " Kr.");
 	}
 	
 	public void decrementPrice(Item item) {
 		totalPrice -= item.getPrice();
-		price.setText("Total price: " + totalPrice);
+		price.setText("Total price: " + totalPrice + " Kr.");
 	
 }
 		
@@ -390,6 +411,7 @@ public class ClientGUI extends JFrame {
 			menuTabs.addChangeListener(new MenuByType());
 			plusButton.addActionListener(new plusItemToOrder());
 			minusButton.addActionListener(new minusItemFromOrder());
+			orderButton.addActionListener(new createOrder());
 			
 			//Filling up pork on start because its first selected tab
 	        for(int i=0;i<controller.showMenuByType("pork").size();i++){					
