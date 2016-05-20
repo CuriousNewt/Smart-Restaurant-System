@@ -358,7 +358,7 @@ public class ClientGUI extends JFrame {
 			JList list = (JList) tab.getComponent(0);
 			Item selectedElement = (Item) list.getSelectedValue();
 			modelOfOrders.addElement(selectedElement);
-			
+			incrementPrice(selectedElement);
 		}
 		
 	}	
@@ -369,16 +369,21 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			Item selectedElement = (Item) listOfOrder.getSelectedValue();
 			modelOfOrders.removeElement(selectedElement);
-			
+			decrementPrice(selectedElement);
 		}
 		
 	}
 	
 	public void incrementPrice(Item item) {
 			totalPrice += item.getPrice();
-			
-		
+			price.setText("Total price: " + totalPrice);
 	}
+	
+	public void decrementPrice(Item item) {
+		totalPrice -= item.getPrice();
+		price.setText("Total price: " + totalPrice);
+	
+}
 		
 		
 		public void addActionListeners(){
