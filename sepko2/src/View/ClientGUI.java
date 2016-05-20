@@ -291,32 +291,44 @@ public class ClientGUI extends JFrame {
 		public void stateChanged(ChangeEvent arg0) {
 			
 			JTabbedPane sourceTabbedPane = (JTabbedPane) arg0.getSource();
-	        String temp = sourceTabbedPane.getName().toLowerCase();
-	        System.out.println(temp);
+	        int index = sourceTabbedPane.getSelectedIndex();
+	        String temp = sourceTabbedPane.getTitleAt(index).toLowerCase();
+	        
 	        
 	        switch(temp){
 	        
-	        case "pork":for(int i=0;i<controller.showMenuByType("pork").size();i++){					
+	        case "pork":porkModel.clear();for(int i=0;i<controller.showMenuByType("pork").size();i++){					
 						porkModel.addElement(controller.showMenuByType("pork").get(i).toString());}break;
-	        case "chicken":for(int i=0;i<controller.showMenuByType("chicken").size();i++){					
+						
+	        case "chicken":chickenModel.clear();for(int i=0;i<controller.showMenuByType("chicken").size();i++){					
 						chickenModel.addElement(controller.showMenuByType("chicken").get(i).toString());}break;
-	        case "starter":for(int i=0;i<controller.showMenuByType("starter").size();i++){					
+						
+	        case "starter":starterModel.clear();for(int i=0;i<controller.showMenuByType("starter").size();i++){					
 						starterModel.addElement(controller.showMenuByType("starter").get(i).toString());}break;
-	        case "beef":for(int i=0;i<controller.showMenuByType("beef").size();i++){					
+						
+	        case "beef":beefModel.clear();for(int i=0;i<controller.showMenuByType("beef").size();i++){					
 						beefModel.addElement(controller.showMenuByType("beef").get(i).toString());}break;
-	        case "dessert":for(int i=0;i<controller.showMenuByType("dessert").size();i++){					
+						
+	        case "desserts":dessertModel.clear();for(int i=0;i<controller.showMenuByType("dessert").size();i++){					
 						dessertModel.addElement(controller.showMenuByType("dessert").get(i).toString());}break;
-	        case "soup":for(int i=0;i<controller.showMenuByType("soup").size();i++){					
-						soupModel.addElement(controller.showMenuByType("soup").get(i).toString());}break;
-	        case "sea food":for(int i=0;i<controller.showMenuByType("seafood").size();i++){					
+						
+	        case "soup":soupModel.clear();for(int i=0;i<controller.showMenuByType("soups").size();i++){					
+						soupModel.addElement(controller.showMenuByType("soups").get(i).toString());}break;
+						
+	        case "sea food":seaFoodModel.clear();for(int i=0;i<controller.showMenuByType("seafood").size();i++){					
 						seaFoodModel.addElement(controller.showMenuByType("seafood").get(i).toString());}break;
-	        case "side dish":for(int i=0;i<controller.showMenuByType("sidedish").size();i++){					
+						
+	        case "side dish":sideDishModel.clear();for(int i=0;i<controller.showMenuByType("sidedish").size();i++){					
 						sideDishModel.addElement(controller.showMenuByType("sidedish").get(i).toString());}break;
-	        case "alcoholic drinks":for(int i=0;i<controller.showMenuByType("alcoholic").size();i++){					
+						
+	        case "alcoholic drinks":alcoholicDrinksModel.clear();for(int i=0;i<controller.showMenuByType("alcoholic").size();i++){					
 						alcoholicDrinksModel.addElement(controller.showMenuByType("alcoholic").get(i).toString());}break;
-	        case "non-alcoholic drinks":for(int i=0;i<controller.showMenuByType("nonalcoholic").size();i++){					
+						
+	        case "non-alcoholic drinks":nonAlcoholicDrinksModel.clear();for(int i=0;i<controller.showMenuByType("nonalcoholic").size();i++){					
 	        			nonAlcoholicDrinksModel.addElement(controller.showMenuByType("nonalcoholic").get(i).toString());}break;
-	        default:System.out.println("Tvoje mama za bura mrda");break;
+	        
+	        default:System.out.println("OUHA SOMETHING WENT WRONG");break;
+	        
 	        
 	        
 	        
@@ -332,6 +344,11 @@ public class ClientGUI extends JFrame {
 		
 		public void addActionListeners(){
 			menuTabs.addChangeListener(new MenuByType());
+			
+			//Filling up pork on start because its first selected tab
+	        for(int i=0;i<controller.showMenuByType("pork").size();i++){					
+				porkModel.addElement(controller.showMenuByType("pork").get(i).toString());
+				}
 		}
 
 	/*public static void main(String[] args) throws Exception {
