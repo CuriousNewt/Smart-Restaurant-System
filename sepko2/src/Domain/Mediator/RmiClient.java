@@ -54,7 +54,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 
 		RmiClient client = new RmiClient(remoteService);
 		remoteService.addObserver(client);
-		// System.out.println(client.get("menu"));
+		System.out.println(client.getID());
 		ClientGUI gui = new ClientGUI(remoteService.getController(), getID());
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);

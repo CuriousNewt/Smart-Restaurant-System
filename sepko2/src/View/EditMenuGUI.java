@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import Domain.Model.Item;
+
 public class EditMenuGUI extends JFrame {
 
 	private JTabbedPane menuTabs;
@@ -42,6 +44,7 @@ public class EditMenuGUI extends JFrame {
 	private JPanel sideDish;
 	private JPanel desert;
 	private JPanel starter;
+	private JPanel pasta;
 	private JPanel nonAlcoholicDrinks;
 	private JPanel alcoholicDrinks;
 
@@ -74,27 +77,29 @@ public class EditMenuGUI extends JFrame {
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
-	private JList<String> porkList;
-	private JList<String> beefList;
-	private JList<String> chickenList;
-	private JList<String> soupList;
-	private JList<String> seaFoodList;
-	private JList<String> sideDishList;
-	private JList<String> desertList;
-	private JList<String> appetizerList;
-	private JList<String> nonAlcoholicDrinksList;
-	private JList<String> alcoholicDrinksList;
+	private JList<Item> porkList;
+	private JList<Item> beefList;
+	private JList<Item> chickenList;
+	private JList<Item> soupList;
+	private JList<Item> seaFoodList;
+	private JList<Item> sideDishList;
+	private JList<Item> desertList;
+	private JList<Item> appetizerList;
+	private JList<Item> pastaList;
+	private JList<Item> nonAlcoholicDrinksList;
+	private JList<Item> alcoholicDrinksList;
 
-	private DefaultListModel<String> porkModel;
-	private DefaultListModel<String> beefModel;
-	private DefaultListModel<String> chickenModel;
-	private DefaultListModel<String> soupModel;
-	private DefaultListModel<String> seaFoodModel;
-	private DefaultListModel<String> sideDishModel;
-	private DefaultListModel<String> desertModel;
-	private DefaultListModel<String> appetizerModel;
-	private DefaultListModel<String> nonAlcoholicDrinksModel;
-	private DefaultListModel<String> alcoholicDrinksModel;
+	private DefaultListModel<Item> porkModel;
+	private DefaultListModel<Item> beefModel;
+	private DefaultListModel<Item> chickenModel;
+	private DefaultListModel<Item> soupModel;
+	private DefaultListModel<Item> seaFoodModel;
+	private DefaultListModel<Item> sideDishModel;
+	private DefaultListModel<Item> desertModel;
+	private DefaultListModel<Item> appetizerModel;
+	private DefaultListModel<Item> pastaModel;
+	private DefaultListModel<Item> nonAlcoholicDrinksModel;
+	private DefaultListModel<Item> alcoholicDrinksModel;
 
 	public EditMenuGUI() throws Exception {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -127,6 +132,7 @@ public class EditMenuGUI extends JFrame {
 		sideDish = new JPanel();
 		desert = new JPanel();
 		starter = new JPanel();
+		pasta = new JPanel();
 		nonAlcoholicDrinks = new JPanel();
 		alcoholicDrinks = new JPanel();
 
@@ -136,16 +142,17 @@ public class EditMenuGUI extends JFrame {
 		addButton = new JButton("Add..");
 
 		// JLISTS & DEFAULT LIST MODELS
-		porkModel = new DefaultListModel<String>();
-		beefModel = new DefaultListModel<String>();
-		chickenModel = new DefaultListModel<String>();
-		soupModel = new DefaultListModel<String>();
-		seaFoodModel = new DefaultListModel<String>();
-		sideDishModel = new DefaultListModel<String>();
-		desertModel = new DefaultListModel<String>();
-		appetizerModel = new DefaultListModel<String>();
-		nonAlcoholicDrinksModel = new DefaultListModel<String>();
-		alcoholicDrinksModel = new DefaultListModel<String>();
+		porkModel = new DefaultListModel<Item>();
+		beefModel = new DefaultListModel<Item>();
+		chickenModel = new DefaultListModel<Item>();
+		soupModel = new DefaultListModel<Item>();
+		seaFoodModel = new DefaultListModel<Item>();
+		sideDishModel = new DefaultListModel<Item>();
+		desertModel = new DefaultListModel<Item>();
+		appetizerModel = new DefaultListModel<Item>();
+		pastaModel = new DefaultListModel<Item>();
+		nonAlcoholicDrinksModel = new DefaultListModel<Item>();
+		alcoholicDrinksModel = new DefaultListModel<Item>();
 
 		porkList = new JList(porkModel);
 		beefList = new JList(beefModel);
@@ -155,6 +162,7 @@ public class EditMenuGUI extends JFrame {
 		sideDishList = new JList(sideDishModel);
 		desertList = new JList(desertModel);
 		appetizerList = new JList(appetizerModel);
+		pastaList = new JList(pastaModel);
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
 
@@ -176,8 +184,8 @@ public class EditMenuGUI extends JFrame {
 		productTypeComboBoxModel = new DefaultComboBoxModel<String>(
 				(new String[] { "Meal", "Drink" }));
 		productMealContentComboBoxModel = new DefaultComboBoxModel<String>(
-				new String[] { "Pork", "Beef", "Chicken", "Soup", "Sea Food",
-						"Side dish", "Desert", "Appetizer" });
+				new String[] { "Starter", "Soup", "Pork", "Beef", "Chicken", "Pasta", "Sea Food",
+						"Side dish", "Dessert"});
 
 		productDrinkContentComboBoxModel = new DefaultComboBoxModel<String>(
 				new String[] { "Non-alcoholic", "Alcoholic" });
@@ -185,16 +193,10 @@ public class EditMenuGUI extends JFrame {
 		productTypeComboBox = new JComboBox<String>(productTypeComboBoxModel);
 
 		productContentComboBox = new JComboBox<String>();
-
-		chickenList = new JList(chickenModel);
-		soupList = new JList(soupModel);
-		seaFoodList = new JList(seaFoodModel);
-		sideDishList = new JList(sideDishModel);
-		desertList = new JList(desertModel);
-		appetizerList = new JList(appetizerModel);
-		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
-		alcoholicDrinksList = new JList(alcoholicDrinksModel);
-
+		if(productTypeComboBox.getSelectedItem().equals("Meal")){
+			productContentComboBox.setModel(productMealContentComboBoxModel);
+		}
+		else productContentComboBox.setModel(productDrinkContentComboBoxModel);
 	}
 
 	private void addBorders() {
@@ -232,14 +234,15 @@ public class EditMenuGUI extends JFrame {
 
 		// ADDING INTO PANELS
 		// *********************************************************************
+		menuTabs.add("Starter", starter);
+		menuTabs.add("Soup", soupPanel);
 		menuTabs.add("Pork", porkPanel);
 		menuTabs.add("Beef", beefPanel);
 		menuTabs.add("Chicken", chickenPanel);
-		menuTabs.add("Soup", soupPanel);
+		menuTabs.add("Pasta", pasta);
 		menuTabs.add("Sea Food", seaFood);
 		menuTabs.add("Side dish", sideDish);
 		menuTabs.add("Deserts", desert);
-		menuTabs.add("Starter", starter);
 		menuTabs.add("Non-alcoholic drinks", nonAlcoholicDrinks);
 		menuTabs.add("Alcoholic drinks", alcoholicDrinks);
 

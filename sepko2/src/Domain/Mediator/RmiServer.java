@@ -33,19 +33,23 @@ public class RmiServer extends Observable implements RmiService {
 
 		private static final long serialVersionUID = 1L;
 
-		private RemoteObserver observer;
-
+		private RemoteObserver observer;		
+		private int id;
 		public WrappedObserver(RemoteObserver observer) {
 			this.observer = observer;
+			this.id = RmiClient.getID();
 		}
-
+		
+		public int id(){
+			return this.id;
+		}
 		@Override
 		public void update(Observable o, Object argument) {
 			try {
 				observer.update(o.toString(), argument);
 			} catch (RemoteException e) {
 				System.out
-						.println("Remote exception removing observer:" + this);
+						.println("Remote exception removing table no. " + id());
 				o.deleteObserver(this);
 			}
 		}
@@ -83,7 +87,6 @@ public class RmiServer extends Observable implements RmiService {
 	}
 
 	public Controller getController() {
-
 		return controller;
 	}
 
@@ -96,6 +99,6 @@ public class RmiServer extends Observable implements RmiService {
 	public void addObserver(RemoteObserver o) throws RemoteException {
 		WrappedObserver observer = new WrappedObserver(o);
 		addObserver(observer);
-		System.out.println("Added observer:" + observer);
+		System.out.println("Table Number " + observer.id() + " connected to server." );
 	}
 }

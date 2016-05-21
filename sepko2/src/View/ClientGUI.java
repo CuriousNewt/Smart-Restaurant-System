@@ -445,9 +445,12 @@ public class ClientGUI extends JFrame {
 
 			System.out.println(order.show());
 			modelOfOrders.clear();
+			
 			JOptionPane.showMessageDialog(ClientGUI.this,
 					"Order successful! \n" + "Total price: " + totalPrice
 							+ " Kr.");
+			totalPrice = 0;
+			price.setText("Total price: " + totalPrice + " Kr.");
 		}
 	}
 
@@ -470,8 +473,8 @@ public class ClientGUI extends JFrame {
 
 		// Filling up pork on start because its first selected tab
 
-		for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
-			porkModel.addElement(controller.showMenuByType("pork").get(i));
+		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+			starterModel.addElement(controller.showMenuByType("starter").get(i));
 		}
 	}
 }
