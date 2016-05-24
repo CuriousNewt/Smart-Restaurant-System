@@ -186,6 +186,6 @@ public class ServerGUI extends JFrame {
 		gui.setVisible(true);
 	}*/
 	public void addTableToList(Object table){
-		tablesModel.addElement(table.toString());
+		tablesModel.addElement(table);
 	}
 }
