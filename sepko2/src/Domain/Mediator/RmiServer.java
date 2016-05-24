@@ -133,7 +133,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		try {
 			order = clientList.get(ID - 1).getOrder();
 			for(int i = 0; i < order.size(); i++){
-				controller.addItemToOrder(order.getItem(i), ID);
+				controller.addItemToOrder(order.getItem(i), ID-1);
 			}
 			System.out.println(clientList.get(0).toString());
 			gui.updateListofOrders(ID);
