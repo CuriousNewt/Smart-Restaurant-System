@@ -15,12 +15,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import Controller.Controller;
+
 public class ServerGUI extends JFrame {
 
 	private EditMenuGUI editMenuGui;
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
+	private Controller controller;
 	
 	// JPANELS
 	// *********************************************************************
@@ -49,7 +52,8 @@ public class ServerGUI extends JFrame {
 	private DefaultListModel tablesModel;
 	private DefaultListModel ordersModel;
 
-	public ServerGUI() throws Exception {
+	public ServerGUI(Controller controller) throws Exception {
+		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -157,6 +161,13 @@ public class ServerGUI extends JFrame {
 	
 	public void addActionListeners(){
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
+	}
+
+	public void updateListofOrders() {
+		for(int i=0;i<controller.getOrders().show().size();i++){
+			ordersModel.add(i, controller.getOrders().show().get(i));
+		}
+		
 	}
 
 	/*public static void main(String[] args) throws Exception {
