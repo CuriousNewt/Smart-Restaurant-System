@@ -124,6 +124,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			Table table = new Table(clientID);
 			clientID++;
 			gui.addTableToList(table);
+			controller.addTable(table);
 		}
 	}
 

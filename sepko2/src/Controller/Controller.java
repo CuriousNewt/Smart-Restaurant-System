@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Domain.Mediator.ModelManager;
 import Domain.Model.Item;
 import Domain.Model.Menu;
-import Domain.Model.Order;
+import Domain.Model.Table;
 import Domain.Model.TableList;
 
 public class Controller implements Serializable {
@@ -62,6 +62,10 @@ public class Controller implements Serializable {
 	
 	public ArrayList<Item> showOrders(int tableNumber) {
 		return this.manager.showOrder(tableNumber);
+	}
+	
+	public void addTable(Table table){
+		manager.addTable(table);
 	}
 
 }

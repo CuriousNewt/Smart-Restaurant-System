@@ -78,6 +78,10 @@ public class ModelManager implements RestaurantManager, Serializable {
 		}
 		return temp;
 	}
+	
+	public void addTable(Table table){
+		tables.addTable(table);
+	}
 
 	
 }
