@@ -471,7 +471,12 @@ public class ClientGUI extends JFrame {
 	class callStaff implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			remoteService.callStaff(ID);
+			try {
+				remoteService.callStaff(ID);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	

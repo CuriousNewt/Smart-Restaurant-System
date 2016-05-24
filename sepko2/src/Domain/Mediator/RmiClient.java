@@ -76,7 +76,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,Cli
 	}
 	
 	@Override
-	public void callStaff() {
+	public void callStaff() throws RemoteException {
 		service.callStaff(ID);
 		
 	}
