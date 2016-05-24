@@ -165,7 +165,7 @@ public class ServerGUI extends JFrame {
 
 	public void updateListofOrders() {
 		for(int i=0;i<controller.getOrders().show().size();i++){
-			ordersModel.add(i, controller.getOrders().show().get(i));
+			ordersModel.add(i, controller.getOrders().show().get(i).toString());
 		}
 		
 	}
