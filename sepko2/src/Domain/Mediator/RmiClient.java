@@ -14,8 +14,8 @@ import Utility.RemoteObserver;
 import Utility.RmiServerInterface;
 import View.ClientGUI;
 
-public class RmiClient extends UnicastRemoteObject implements RemoteObserver,ClientInterface,
-		Serializable {
+public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
+		ClientInterface, Serializable {
 
 	private static int ID;
 	private static final long serialVersionUID = 1L;
@@ -48,13 +48,14 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,Cli
 	public static void main(String[] args) throws Exception {
 		String ip = ReadIP.getReadIP("ServerIPaID").getIP();
 		ip = "//" + ip + ":1099";
-		RmiServerInterface remoteService = (RmiServerInterface) Naming.lookup(ip
-				+ "/RmiService");
+		RmiServerInterface remoteService = (RmiServerInterface) Naming
+				.lookup(ip + "/RmiService");
 		RmiClient client = new RmiClient(remoteService);
 		remoteService.registerForCallback(client);
 		remoteService.addObserver(client);
 		System.out.println(client.getID());
-		ClientGUI gui = new ClientGUI(remoteService.getController(), getID(),remoteService);
+		ClientGUI gui = new ClientGUI(remoteService.getController(), getID(),
+				remoteService);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
@@ -62,8 +63,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,Cli
 	public void update(Object observable, Object updateMsg)
 			throws RemoteException {
 
-	} 
-	
+	}
 
 	@Override
 	public Order getOrders() {
@@ -74,13 +74,13 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,Cli
 	@Override
 	public void callStaff() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setID(int ID) {
 		this.ID = ID;
-		
+
 	}
 
 }
