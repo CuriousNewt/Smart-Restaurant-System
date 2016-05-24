@@ -10,14 +10,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import Controller.Controller;
+import Domain.Model.Item;
 import Domain.Model.Menu;
 import Domain.Model.Order;
+import Domain.Model.Table;
 import Utility.RemoteObserver;
 import Utility.RmiServerInterface;
-import View.ClientGUI;
 import View.ServerGUI;
 
 public class RmiServer extends Observable implements RmiServerInterface {
@@ -102,8 +102,8 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	}
 
 	@Override
-	public ArrayList<Order> showOrders() throws RemoteException {
-		return controller.showOrders();
+	public ArrayList<Item> showOrders(int tableNumber) throws RemoteException {
+		return controller.showOrders(tableNumber);
 	}
 
 	@Override
@@ -121,7 +121,10 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			clientInterface.setID(clientID);
 			System.out.println(clientID);
 			System.out.println("NEW CLIENT!");
+			Table table = new Table(clientID);
 			clientID++;
+			gui.addTableToList(table);
+			controller.addTable(table);
 		}
 	}
 
@@ -129,10 +132,12 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	public synchronized void doCallbacks(int ID) {
 		Order order;
 		try {
-			order = clientList.get(ID - 1).getOrders();
-			controller.addOrder(order);
+			order = clientList.get(ID - 1).getOrder();
+			for(int i = 0; i < order.size(); i++){
+				controller.addItemToOrder(order.getItem(i), ID-1);
+			}
 			System.out.println(clientList.get(0).toString());
-			gui.updateListofOrders();
+			gui.updateListofOrders(ID-1);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

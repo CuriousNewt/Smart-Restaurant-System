@@ -7,7 +7,7 @@ import Domain.Model.*;
 public interface RestaurantManager {
 	Menu getMenu();
 
-	OrderList getOrders();
+	TableList getTables();
 
 	void addMeal(String name, String description, double price, int amount, String type);
 
@@ -20,12 +20,12 @@ public interface RestaurantManager {
 	Menu showMeals();
 
 	Menu showDrinks();
-
-	void addOrder(Order order);
-
-	void removeOrder(Order order);
 	
-	void removePaid();
+	void removePaid(int tableNumber, Item item);
 
-	ArrayList<Order> showOrders();
+	ArrayList<Item> showOrder(int tableNumber);
+
+	void addItemToOrder(Item item, int tableNumber);
+
+	void removeItemFromOrder(Item item, int tableNumber);
 }

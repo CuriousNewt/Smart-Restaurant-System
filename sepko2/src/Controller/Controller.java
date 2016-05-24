@@ -3,9 +3,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import Domain.Mediator.ModelManager;
+import Domain.Model.Item;
 import Domain.Model.Menu;
-import Domain.Model.Order;
-import Domain.Model.OrderList;
+import Domain.Model.Table;
+import Domain.Model.TableList;
 
 public class Controller implements Serializable {
 	private ModelManager manager;
@@ -28,8 +29,8 @@ public class Controller implements Serializable {
 		}
 	}
 	
-	public OrderList getOrders() {
-		return manager.getOrders();
+	public TableList getTables() {
+		return manager.getTables();
 	}
 
 	public void addMeal(String name, String description, double price,
@@ -45,22 +46,26 @@ public class Controller implements Serializable {
 
 	
 	
-	public void addOrder(Order order) {
-		this.manager.addOrder(order);
+	public void addItemToOrder(Item item, int tableNumber) {
+		this.manager.addItemToOrder(item, tableNumber);
 	}
 
 	
-	public void removeOrder(Order order) {
-		this.manager.removeOrder(order);
+	public void removeItemFromOrder(Item item, int tableNumber) {
+		this.manager.removeItemFromOrder(item, tableNumber);
 	}
 	
-	public void removePaid(){
-		this.manager.removePaid();
+	public void removePaid(int tableNumber, Item item){
+		this.manager.removePaid(tableNumber, item);
 	}
 
 	
-	public ArrayList<Order> showOrders() {
-		return this.manager.showOrders();
+	public ArrayList<Item> showOrders(int tableNumber) {
+		return this.manager.showOrder(tableNumber);
+	}
+	
+	public void addTable(Table table){
+		manager.addTable(table);
 	}
 
 }

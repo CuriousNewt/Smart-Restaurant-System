@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import Controller.Controller;
 import Domain.Mediator.ClientInterface;
+import Domain.Model.Item;
 import Domain.Model.Menu;
-import Domain.Model.Order;
 
 public interface RmiServerInterface extends Remote {
 
@@ -14,7 +14,7 @@ public interface RmiServerInterface extends Remote {
 
     Menu show(String what) throws RemoteException;
     Controller getController() throws RemoteException;
-    ArrayList<Order> showOrders() throws RemoteException;
+    ArrayList<Item> showOrders(int tableNumber) throws RemoteException;
     void registerForCallback(ClientInterface clientInterface) throws RemoteException;
     void doCallbacks(int ID) throws RemoteException;
 
