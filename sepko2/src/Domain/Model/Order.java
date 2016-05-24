@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 public class Order { 
 	private ArrayList<Item> items;
-	private int table;
 	private boolean served;
 	private boolean paid;
 	
-	public Order(int table){
-		this.table = table;
+	public Order(){
 		this.served = false;
 		this.paid = false;
 		items = new ArrayList<>();
@@ -45,10 +43,6 @@ public class Order {
 			price += items.get(i).getPrice();
 		}
 		return price;
-	}
-	
-	public int getTable(){
-		return table;
 	}
 	
 	public String show(){

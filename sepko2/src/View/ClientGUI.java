@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -21,9 +22,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import Controller.Controller;
+import Domain.Mediator.RmiClient;
 import Domain.Model.Item;
 import Domain.Model.Order;
+import Utility.RmiServerInterface;
 
 public class ClientGUI extends JFrame {
 
@@ -33,7 +37,7 @@ public class ClientGUI extends JFrame {
 	private JTabbedPane menuTabs;
 	private Controller controller;
 	private double totalPrice;
-
+	private RmiServerInterface remoteService;
 	private final int ID;
 
 	// JPANELS //
@@ -110,10 +114,11 @@ public class ClientGUI extends JFrame {
 
 	private DefaultListModel<Item> modelOfOrders;
 
-	public ClientGUI(Controller controller, int ID) throws Exception {
+	public ClientGUI(Controller controller, int ID,
+			RmiServerInterface remoteService) throws Exception {
 		this.controller = controller;
 		this.ID = ID;
-
+		this.remoteService = remoteService;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -438,14 +443,14 @@ public class ClientGUI extends JFrame {
 	class createOrder implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Order order = new Order(ID);
+			Order order = new Order();
 			for (int i = 0; i < modelOfOrders.size(); i++) {
 				order.addItem(modelOfOrders.getElementAt(i));
 			}
 
 			System.out.println(order.show());
 			modelOfOrders.clear();
-			
+			remoteService.doCallbacks(ID);
 			JOptionPane.showMessageDialog(ClientGUI.this,
 					"Order successful! \n" + "Total price: " + totalPrice
 							+ " Kr.");
@@ -474,7 +479,8 @@ public class ClientGUI extends JFrame {
 		// Filling up pork on start because its first selected tab
 
 		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
-			starterModel.addElement(controller.showMenuByType("starter").get(i));
+			starterModel
+					.addElement(controller.showMenuByType("starter").get(i));
 		}
 	}
 }

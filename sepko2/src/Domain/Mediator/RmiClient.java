@@ -11,26 +11,25 @@ import javax.swing.JFrame;
 import Controller.Controller;
 import Domain.Model.*;
 import Utility.RemoteObserver;
-import Utility.RmiService;
+import Utility.RmiServerInterface;
 import View.ClientGUI;
 
-public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
+public class RmiClient extends UnicastRemoteObject implements RemoteObserver,ClientInterface,
 		Serializable {
 
-	private static int id;
+	private static int ID;
 	private static final long serialVersionUID = 1L;
-	private RmiService service;
+	private RmiServerInterface service;
 
-	protected RmiClient(RmiService service) throws RemoteException,
+	protected RmiClient(RmiServerInterface service) throws RemoteException,
 			FileNotFoundException {
 		super();
-		this.id = ReadIP.getReadIP("ServerIPaID").getID();
 		this.service = service;
 
 	}
 
 	public static int getID() {
-		return id;
+		return ID;
 	}
 
 	public Menu getMenu() throws RemoteException {
@@ -49,13 +48,13 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 	public static void main(String[] args) throws Exception {
 		String ip = ReadIP.getReadIP("ServerIPaID").getIP();
 		ip = "//" + ip + ":1099";
-		RmiService remoteService = (RmiService) Naming.lookup(ip
+		RmiServerInterface remoteService = (RmiServerInterface) Naming.lookup(ip
 				+ "/RmiService");
-
 		RmiClient client = new RmiClient(remoteService);
+		remoteService.registerForCallback(client);
 		remoteService.addObserver(client);
 		System.out.println(client.getID());
-		ClientGUI gui = new ClientGUI(remoteService.getController(), getID());
+		ClientGUI gui = new ClientGUI(remoteService.getController(), getID(),remoteService);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
@@ -63,6 +62,25 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 	public void update(Object observable, Object updateMsg)
 			throws RemoteException {
 
+	} 
+	
+
+	@Override
+	public Order getOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void callStaff() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setID(int ID) {
+		this.ID = ID;
+		
 	}
 
 }

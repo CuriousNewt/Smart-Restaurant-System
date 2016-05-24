@@ -4,14 +4,17 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import Controller.Controller;
+import Domain.Mediator.ClientInterface;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 
-public interface RmiService extends Remote {
+public interface RmiServerInterface extends Remote {
 
     void addObserver(RemoteObserver o) throws RemoteException;
 
     Menu show(String what) throws RemoteException;
     Controller getController() throws RemoteException;
     ArrayList<Order> showOrders() throws RemoteException;
+    void registerForCallback(ClientInterface clientInterface);
+    void doCallbacks(int ID);
 }
