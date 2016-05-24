@@ -110,7 +110,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	}
 
 	@Override
-	public void registerForCallback(ClientInterface clientInterface) throws RemoteException {
+	public synchronized void registerForCallback(ClientInterface clientInterface) throws RemoteException {
 		if (!(clientList.contains(clientInterface))) {
 			clientList.add(clientInterface);
 			clientInterface.setID(clientID);
