@@ -468,6 +468,13 @@ public class ClientGUI extends JFrame {
 		}
 	}
 
+	class callStaff implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			remoteService.callStaff(ID);
+		}
+	}
+	
 	public void incrementPrice(Item item) {
 		totalPrice += item.getPrice();
 		price.setText("Total price: " + totalPrice + " Kr.");

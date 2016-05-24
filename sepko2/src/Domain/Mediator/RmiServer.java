@@ -10,12 +10,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Controller.Controller;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 import Utility.RemoteObserver;
 import Utility.RmiServerInterface;
+import View.ClientGUI;
 import View.ServerGUI;
 
 public class RmiServer extends Observable implements RmiServerInterface {
@@ -136,6 +138,11 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void callStaff(int ID) {
+		gui.callStaff(ID);
 	}
 
 }

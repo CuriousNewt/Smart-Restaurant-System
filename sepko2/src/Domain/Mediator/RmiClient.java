@@ -77,7 +77,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,Cli
 	
 	@Override
 	public void callStaff() {
-		// TODO Auto-generated method stub
+		service.callStaff(ID);
 		
 	}
 
