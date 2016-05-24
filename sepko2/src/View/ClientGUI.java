@@ -40,6 +40,7 @@ public class ClientGUI extends JFrame {
 	private double totalPrice;
 	private RmiServerInterface remoteService;
 	private final int ID;
+	private RmiClient client;
 
 	// JPANELS //
 	// *********************************************************************
@@ -116,10 +117,11 @@ public class ClientGUI extends JFrame {
 	private DefaultListModel<Item> modelOfOrders;
 
 	public ClientGUI(Controller controller, int ID,
-			RmiServerInterface remoteService) throws Exception {
+			RmiServerInterface remoteService, RmiClient client) throws Exception {
 		this.controller = controller;
 		this.ID = ID;
 		this.remoteService = remoteService;
+		this.client = client;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -451,6 +453,7 @@ public class ClientGUI extends JFrame {
 
 			System.out.println(order.show());
 			modelOfOrders.clear();
+			client.setOrder(order);
 			try {
 				remoteService.doCallbacks(ID);
 			} catch (RemoteException e1) {
