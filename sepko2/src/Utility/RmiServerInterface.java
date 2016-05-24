@@ -15,6 +15,6 @@ public interface RmiServerInterface extends Remote {
     Menu show(String what) throws RemoteException;
     Controller getController() throws RemoteException;
     ArrayList<Order> showOrders() throws RemoteException;
-    void registerForCallback(ClientInterface clientInterface);
-    void doCallbacks(int ID);
+    void registerForCallback(ClientInterface clientInterface) throws RemoteException;
+    void doCallbacks(int ID) throws RemoteException;
 }

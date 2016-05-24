@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -450,7 +451,12 @@ public class ClientGUI extends JFrame {
 
 			System.out.println(order.show());
 			modelOfOrders.clear();
-			remoteService.doCallbacks(ID);
+			try {
+				remoteService.doCallbacks(ID);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			JOptionPane.showMessageDialog(ClientGUI.this,
 					"Order successful! \n" + "Total price: " + totalPrice
 							+ " Kr.");

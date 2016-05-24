@@ -1,9 +1,10 @@
 package Domain.Mediator;
 
-import Domain.Model.Order;
-import Utility.RmiServerInterface;
+import java.rmi.Remote;
 
-public interface ClientInterface {
+import Domain.Model.Order;
+
+public interface ClientInterface extends Remote {
 	void setID(int ID);
 	public Order getOrders();
 	public void callStaff();
