@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Controller.Controller;
+import Domain.Model.Item;
 import Domain.Model.Table;
 
 public class ServerGUI extends JFrame {
@@ -91,7 +92,7 @@ public class ServerGUI extends JFrame {
 
 		// JBUTTONS
 		// *********************************************************************
-		ordersEditButton = new JButton("Remove selected order");
+		ordersEditButton = new JButton("Remove selected item");
 		payedButton = new JButton("Set selected order as paid");
 		setAsBringed = new JButton("Set selected order as served");
 		selectButton = new JButton("Show orders of the selected table");
@@ -167,6 +168,7 @@ public class ServerGUI extends JFrame {
 	public void addActionListeners() {
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
 		listOfTables.addMouseListener(new ViewTableOrder());
+		ordersEditButton.addActionListener(new RemoveItem());
 	}
 
 	public void updateListOfOrders(int tableNumber) {
@@ -178,6 +180,19 @@ public class ServerGUI extends JFrame {
 
 	}
 
+	class RemoveItem implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JList list = listOfOrders;
+			Item item = (Item) list.getSelectedValue();
+			controller.removeItemFromOrder(item,
+					listOfTables.getSelectedIndex() + 1);
+			updateListOfOrders(listOfTables.getSelectedIndex() + 1);
+
+		}
+	}
+
 	public class ViewTableOrder implements MouseListener {
 
 		@Override
@@ -185,8 +200,7 @@ public class ServerGUI extends JFrame {
 			if (e.getClickCount() == 2) {
 				JList temp = (JList) e.getSource();
 				Table table = (Table) temp.getSelectedValue();
-				System.out.println(table.getOrder());
-				updateListOfOrders(table.getTableNumber()-1);
+				updateListOfOrders(table.getTableNumber() - 1);
 			}
 
 		}
@@ -231,4 +245,5 @@ public class ServerGUI extends JFrame {
 	public void addTableToList(Object table) {
 		tablesModel.addElement(table);
 	}
+
 }
