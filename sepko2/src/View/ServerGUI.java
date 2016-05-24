@@ -186,7 +186,7 @@ public class ServerGUI extends JFrame {
 				JList temp = (JList) e.getSource();
 				Table table = (Table) temp.getSelectedValue();
 				System.out.println(table.getOrder());
-				updateListOfOrders(table.getTableNumber());
+				updateListOfOrders(table.getTableNumber()-1);
 			}
 
 		}
