@@ -125,7 +125,8 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		try {
 			order = clientList.get(ID - 1).getOrders();
 			controller.addOrder(order);
-			System.out.println(order.toString());
+			System.out.println(clientList.get(0).toString());
+			//System.out.println(order.toString());
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
