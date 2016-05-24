@@ -114,6 +114,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		if (!(clientList.contains(clientInterface))) {
 			clientList.add(clientInterface);
 			clientInterface.setID(clientID);
+			System.out.println(clientID);
 			System.out.println("NEW CLIENT!");
 			clientID++;
 		}
