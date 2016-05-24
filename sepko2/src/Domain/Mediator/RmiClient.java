@@ -20,6 +20,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 	private static int ID;
 	private static final long serialVersionUID = 1L;
 	private RmiServerInterface service;
+	private Order order;
 
 	protected RmiClient(RmiServerInterface service) throws RemoteException,
 			FileNotFoundException {
@@ -54,8 +55,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 		remoteService.registerForCallback(client);
 		remoteService.addObserver(client);
 		System.out.println(client.getID());
-		ClientGUI gui = new ClientGUI(remoteService.getController(), getID(),
-				remoteService);
+		ClientGUI gui = new ClientGUI(remoteService.getController(), getID(),remoteService, client);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
@@ -67,14 +67,17 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 
 	@Override
 	public Order getOrders() {
-		// TODO Auto-generated method stub
-		return null;
+		return order;
 	}
 
+	public void setOrder(Order order){
+		this.order = order;
+	}
+	
 	@Override
-	public void callStaff() {
-		// TODO Auto-generated method stub
 
+	public void callStaff() throws RemoteException {
+		service.callStaff(ID);
 	}
 
 	@Override

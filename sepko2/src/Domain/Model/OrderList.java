@@ -31,4 +31,8 @@ public class OrderList implements Serializable {
 	public ArrayList<Order> show(){
 		return orders;
 	}
+
+	public int size() {
+		return orders.size();
+	}
 }

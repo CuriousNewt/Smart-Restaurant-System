@@ -8,12 +8,16 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import Controller.Controller;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 import Utility.RemoteObserver;
 import Utility.RmiServerInterface;
+import View.ClientGUI;
 import View.ServerGUI;
 
 public class RmiServer extends Observable implements RmiServerInterface {
@@ -21,6 +25,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	private Controller controller;
 	private ArrayList<ClientInterface> clientList;
 	private int clientID;
+	private static ServerGUI gui;
 
 	/*
 	 * Thread thread = new Thread() {
@@ -59,8 +64,9 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		}
 	}
 
-	public RmiServer(Controller controller) {
+	public RmiServer(Controller controller) throws Exception {
 		this.controller = controller;
+		this.gui = new ServerGUI(controller);
 		clientID = 1;
 		clientList = new ArrayList<ClientInterface>();
 		// thread.start();
@@ -82,7 +88,6 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		// TODO delete sysout after everitynk yz fajn
 		System.out.println("SERVER RUNS");
 
-		ServerGUI gui = new ServerGUI();
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
@@ -127,11 +132,17 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			order = clientList.get(ID - 1).getOrders();
 			controller.addOrder(order);
 			System.out.println(clientList.get(0).toString());
+			gui.updateListofOrders();
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void callStaff(int ID) {
+		gui.callStaff(ID);
 	}
 
 }

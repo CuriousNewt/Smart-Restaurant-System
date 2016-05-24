@@ -13,7 +13,10 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import Controller.Controller;
 
 public class ServerGUI extends JFrame {
 
@@ -21,6 +24,7 @@ public class ServerGUI extends JFrame {
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
+	private Controller controller;
 	
 	// JPANELS
 	// *********************************************************************
@@ -49,7 +53,8 @@ public class ServerGUI extends JFrame {
 	private DefaultListModel tablesModel;
 	private DefaultListModel ordersModel;
 
-	public ServerGUI() throws Exception {
+	public ServerGUI(Controller controller) throws Exception {
+		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -155,8 +160,24 @@ public class ServerGUI extends JFrame {
 		}
 	}
 	
+	
 	public void addActionListeners(){
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
+	}
+
+	public void updateListofOrders() {
+		ordersModel.clear();
+		for(int i=0;i<controller.getOrders().show().size();i++){
+			ordersModel.add(i, controller.getOrders().show().get(i));
+			//TODO displaying items and tables
+		}	
+		
+	}
+
+	public void callStaff(int ID) {
+		JOptionPane.showMessageDialog(ServerGUI.this,
+				"Table number " + ID + " requests your assistance.");
+		
 	}
 
 	/*public static void main(String[] args) throws Exception {
