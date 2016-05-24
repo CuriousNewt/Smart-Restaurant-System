@@ -1,8 +1,9 @@
 package Domain.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TableList {
+public class TableList implements Serializable{
 	private ArrayList<Table> tables;
 	
 	public TableList(){

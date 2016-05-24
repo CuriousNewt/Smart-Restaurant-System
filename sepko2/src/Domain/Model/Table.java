@@ -1,8 +1,9 @@
 package Domain.Model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Table {
+
+public class Table implements Serializable{
 	private Order order;
 	private int tableNumber;
 
