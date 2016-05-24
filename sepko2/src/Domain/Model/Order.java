@@ -14,9 +14,17 @@ public class Order implements Serializable {
 		items = new ArrayList<>();
 	}
 	
+	public int size(){
+		return items.size();
+	}
+	
 	public void addItem(Item item){
 			items.add(item);
 		}
+	
+	public Item getItem(int index){
+		return items.get(index);
+	}
 	
 	public void removeItem(Item item){
 		items.remove(item);

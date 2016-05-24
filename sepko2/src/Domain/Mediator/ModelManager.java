@@ -8,11 +8,11 @@ import Domain.Model.*;
 public class ModelManager implements RestaurantManager, Serializable {
 	
 	private Menu menu;
-	private OrderList orders;
+	private TableList tables;
 	
 	public ModelManager() {
 		this.menu = new Menu();
-		this.orders = new OrderList();
+		this.tables = new TableList();
 	}
 	
 	public Menu getMenu() {
@@ -20,8 +20,8 @@ public class ModelManager implements RestaurantManager, Serializable {
 	}
 
 	@Override
-	public OrderList getOrders() {
-		return this.orders;
+	public TableList getTables() {
+		return this.tables;
 	}
 
 	@Override
@@ -57,22 +57,26 @@ public class ModelManager implements RestaurantManager, Serializable {
 	}
 
 	@Override
-	public void addOrder(Order order) {
-		this.orders.add(order);
+	public void addItemToOrder(Item item, int tableNumber) {
+		this.tables.getTable(tableNumber).addItemToOrder(item);
 	}
 
 	@Override
-	public void removeOrder(Order order) {
-		this.orders.remove(order);
+	public void removeItemFromOrder(Item item, int tableNumber) {
+		this.tables.getTable(tableNumber).removeItem(item);
 	}
-	
-	public void removePaid(){
-		this.orders.remove();
+	//TODO remove all the items (forloop)
+	public void removePaid(int tableNumber, Item item){
+		this.tables.getTable(tableNumber).removeItem(item);
 	}
 
 	@Override
-	public ArrayList<Order> showOrders() {
-		return this.orders.show();
+	public ArrayList<Item> showOrder(int tableNumber) {
+		ArrayList<Item> temp = new ArrayList<Item>();
+		for(int i = 0; i < tables.getTable(tableNumber).getOrder().size(); i++){
+			temp.add(tables.getTable(tableNumber).getOrder().getItem(i));
+		}
+		return temp;
 	}
 
 	

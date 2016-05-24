@@ -67,7 +67,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,Cli
 	
 
 	@Override
-	public Order getOrders() {
+	public Order getOrder() {
 		return order;
 	}
 

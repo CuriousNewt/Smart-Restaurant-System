@@ -165,10 +165,10 @@ public class ServerGUI extends JFrame {
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
 	}
 
-	public void updateListofOrders() {
+	public void updateListofOrders(int tableNumber) {
 		ordersModel.clear();
-		for(int i=0;i<controller.getOrders().show().size();i++){
-			ordersModel.add(i, controller.getOrders().show().get(i));
+		for(int i=0;i<controller.showOrders(tableNumber).size();i++){
+			ordersModel.add(i, controller.showOrders(tableNumber).get(i));
 			//TODO displaying items and tables
 		}	
 		
