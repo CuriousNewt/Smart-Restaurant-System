@@ -496,6 +496,7 @@ public class ClientGUI extends JFrame {
 		plusButton.addActionListener(new plusItemToOrder());
 		minusButton.addActionListener(new minusItemFromOrder());
 		orderButton.addActionListener(new createOrder());
+		callStaffButton.addActionListener(new callStaff());
 
 		// Filling up pork on start because its first selected tab
 
