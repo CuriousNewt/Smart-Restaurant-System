@@ -122,6 +122,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			System.out.println(clientID);
 			System.out.println("NEW CLIENT!");
 			clientID++;
+			gui.addTableToList(clientInterface);
 		}
 	}
 

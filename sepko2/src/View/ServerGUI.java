@@ -185,4 +185,7 @@ public class ServerGUI extends JFrame {
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}*/
+	public void addTableToList(Object table){
+		tablesModel.addElement(table.toString());
+	}
 }
