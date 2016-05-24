@@ -121,8 +121,14 @@ public class RmiServer extends Observable implements RmiServerInterface {
 
 	@Override
 	public synchronized void doCallbacks(int ID) {
-		Order order = clientList.get(ID - 1).getOrders();
-		controller.addOrder(order);
+		Order order;
+		try {
+			order = clientList.get(ID - 1).getOrders();
+			controller.addOrder(order);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
