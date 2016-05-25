@@ -187,7 +187,7 @@ public class ServerGUI extends JFrame {
 			JList list = listOfOrders;
 			Item item = (Item) list.getSelectedValue();
 			controller.removeItemFromOrder(item,
-					listOfTables.getSelectedIndex() + 1);
+					listOfTables.getSelectedIndex());
 			updateListOfOrders(listOfTables.getSelectedIndex() + 1);
 
 		}
