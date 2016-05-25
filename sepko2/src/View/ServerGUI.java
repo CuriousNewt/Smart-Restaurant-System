@@ -188,7 +188,7 @@ public class ServerGUI extends JFrame {
 			Item item = (Item) list.getSelectedValue();
 			controller.removeItemFromOrder(item,
 					listOfTables.getSelectedIndex());
-			updateListOfOrders(listOfTables.getSelectedIndex() + 1);
+			updateListOfOrders(listOfTables.getSelectedIndex());
 
 		}
 	}
