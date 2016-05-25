@@ -23,6 +23,10 @@ public class Drink extends Item {
 	public String toString(){
 		return getAmount() + "l  " + super.getName() + "-- " + super.getDescription() + "---- " + super.getPrice()+"Kr.";
 	}
+	public String moreInfo(){
+		return super.getName() + "\n" + super.getDescription() + "\n" + "Amount: " +
+				getAmount() + "l\n" + "Price: " + super.getPrice() + "Kr.";
+	}
 
 	@Override
 	public String getType() {

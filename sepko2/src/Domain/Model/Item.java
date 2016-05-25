@@ -36,4 +36,6 @@ public abstract class Item implements Serializable{
 	public abstract String getType();
 	
 	public abstract String toString();
+	
+	public abstract String moreInfo();
 }

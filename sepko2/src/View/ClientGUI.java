@@ -69,7 +69,7 @@ public class ClientGUI extends JFrame {
 	private JPanel desert;
 	private JPanel nonAlcoholicDrinks;
 	private JPanel alcoholicDrinks;
-
+	private JPanel infoPanel;
 	private JPanel minusButtonPanel;
 
 	// JLABELS //
@@ -84,6 +84,7 @@ public class ClientGUI extends JFrame {
 	private JButton orderButton;
 	private JButton minusButton;
 	private JButton callStaffButton;
+	private JButton moreInfo;
 
 	// JLISTS & DEFAULT LIST MODELS //
 	// *********************************************************************
@@ -160,7 +161,7 @@ public class ClientGUI extends JFrame {
 		centerPanel = new JPanel();
 		plusButtonPanel = new JPanel();
 		priceMiddlePanel = new JPanel();
-
+		infoPanel = new JPanel();
 		starter = new JPanel();
 		soupPanel = new JPanel();
 		porkPanel = new JPanel();
@@ -172,7 +173,6 @@ public class ClientGUI extends JFrame {
 		desert = new JPanel();
 		nonAlcoholicDrinks = new JPanel();
 		alcoholicDrinks = new JPanel();
-
 		minusButtonPanel = new JPanel();
 
 		// JBUTTONS //
@@ -182,6 +182,7 @@ public class ClientGUI extends JFrame {
 		plusButton = new JButton("+");
 		orderButton = new JButton("Order");
 		callStaffButton = new JButton("Call saff");
+		moreInfo = new JButton("More Info");
 
 		// JLISTS & DEFAULT LIST MODELS
 
@@ -295,10 +296,12 @@ public class ClientGUI extends JFrame {
 		minusButtonPanel.add(minusButton);
 		priceMiddlePanel.add(price);
 		plusButtonPanel.add(plusButton);
+		infoPanel.add(moreInfo);
 
 		centerButtonPanel.add(plusButtonPanel, gbc);
 		centerButtonPanel.add(priceMiddlePanel, gbc);
 		centerButtonPanel.add(minusButtonPanel, gbc);
+		centerButtonPanel.add(infoPanel,gbc);
 
 		eastPanel.add(eastButtonPanel, BorderLayout.SOUTH);
 		eastPanel.add(eastListPanel, BorderLayout.CENTER);
@@ -482,6 +485,23 @@ public class ClientGUI extends JFrame {
 		}
 	}
 	
+	class moreInfo implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+			JList list = (JList) tab.getComponent(0);
+			Item selectedElement = (Item) list.getSelectedValue();
+			try{
+			JOptionPane.showMessageDialog(ClientGUI.this,
+						selectedElement.moreInfo());
+			}
+			catch(NullPointerException m){
+				JOptionPane.showMessageDialog(ClientGUI.this,
+						"Item from menu must be selected!");
+			}
+		}
+	}
+	
 	public void incrementPrice(Item item) {
 		totalPrice += item.getPrice();
 		price.setText("Total price: " + totalPrice + " Kr.");
@@ -499,6 +519,7 @@ public class ClientGUI extends JFrame {
 		minusButton.addActionListener(new minusItemFromOrder());
 		orderButton.addActionListener(new createOrder());
 		callStaffButton.addActionListener(new callStaff());
+		moreInfo.addActionListener(new moreInfo());
 
 		// Filling up pork on start because its first selected tab
 
