@@ -108,8 +108,10 @@ public class EditMenuGUI extends JFrame {
 		this.database = database;
 		setLayout(new BorderLayout());
 		setComponents();
+		fillFirstTab();
 		addPanelsAndLayouts();
 		addBorders();
+		addActionListeners();
 		pack();
 	}
 
@@ -295,6 +297,10 @@ public class EditMenuGUI extends JFrame {
 
 	}
 	
+	public void addActionListeners(){
+		menuTabs.addChangeListener(new MenuByType());
+	}
+	
 	class MenuByType implements ChangeListener {
 		public void stateChanged(ChangeEvent arg0) {
 
@@ -398,6 +404,14 @@ public class EditMenuGUI extends JFrame {
 				System.out.println("OUHA SOMETHING WENT WRONG");
 				break;
 			}
+		}
+	}
+	
+	private void fillFirstTab(){
+		starterModel.clear();
+		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+			starterModel.addElement(controller
+					.showMenuByType("starter").get(i));
 		}
 	}
 }
