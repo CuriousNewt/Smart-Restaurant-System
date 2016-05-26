@@ -29,6 +29,10 @@ public class Controller implements Serializable {
 		}
 	}
 	
+	public void clearMenu() {
+		manager.clearMenu();
+	}
+	
 	public TableList getTables() {
 		return manager.getTables();
 	}
