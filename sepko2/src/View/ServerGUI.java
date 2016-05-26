@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Controller.Controller;
+import Domain.Mediator.Database;
 import Domain.Model.Item;
 import Domain.Model.Table;
 
@@ -29,6 +30,7 @@ public class ServerGUI extends JFrame {
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
 	private Controller controller;
+	private Database database;
 
 	// JPANELS
 	// *********************************************************************
@@ -57,7 +59,8 @@ public class ServerGUI extends JFrame {
 	private DefaultListModel tablesModel;
 	private DefaultListModel ordersModel;
 
-	public ServerGUI(Controller controller) throws Exception {
+	public ServerGUI(Controller controller, Database database) throws Exception {
+		this.database = database;
 		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
@@ -78,7 +81,7 @@ public class ServerGUI extends JFrame {
 		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
 		menuItemEditMenu = new JMenuItem("Edit menu..");
-		editMenuGui = new EditMenuGUI();
+		editMenuGui = new EditMenuGUI(database, controller);
 
 		// JPANELS
 		// **********************************************************************

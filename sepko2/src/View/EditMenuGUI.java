@@ -1,9 +1,6 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -14,18 +11,21 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import Controller.Controller;
+import Domain.Mediator.Database;
 import Domain.Model.Item;
 
 public class EditMenuGUI extends JFrame {
 
 	private JTabbedPane menuTabs;
+	private Controller controller;
+	private Database database;
 
 	// JPANELS
 	// *********************************************************************
@@ -95,15 +95,17 @@ public class EditMenuGUI extends JFrame {
 	private DefaultListModel<Item> soupModel;
 	private DefaultListModel<Item> seaFoodModel;
 	private DefaultListModel<Item> sideDishModel;
-	private DefaultListModel<Item> desertModel;
-	private DefaultListModel<Item> appetizerModel;
+	private DefaultListModel<Item> dessertModel;
+	private DefaultListModel<Item> starterModel;
 	private DefaultListModel<Item> pastaModel;
 	private DefaultListModel<Item> nonAlcoholicDrinksModel;
 	private DefaultListModel<Item> alcoholicDrinksModel;
 
-	public EditMenuGUI() throws Exception {
+	public EditMenuGUI(Database database, Controller controller) throws Exception {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Edit Menu");
+		this.controller = controller;
+		this.database = database;
 		setLayout(new BorderLayout());
 		setComponents();
 		addPanelsAndLayouts();
@@ -148,8 +150,8 @@ public class EditMenuGUI extends JFrame {
 		soupModel = new DefaultListModel<Item>();
 		seaFoodModel = new DefaultListModel<Item>();
 		sideDishModel = new DefaultListModel<Item>();
-		desertModel = new DefaultListModel<Item>();
-		appetizerModel = new DefaultListModel<Item>();
+		dessertModel = new DefaultListModel<Item>();
+		starterModel = new DefaultListModel<Item>();
 		pastaModel = new DefaultListModel<Item>();
 		nonAlcoholicDrinksModel = new DefaultListModel<Item>();
 		alcoholicDrinksModel = new DefaultListModel<Item>();
@@ -160,8 +162,8 @@ public class EditMenuGUI extends JFrame {
 		soupList = new JList(soupModel);
 		seaFoodList = new JList(seaFoodModel);
 		sideDishList = new JList(sideDishModel);
-		desertList = new JList(desertModel);
-		appetizerList = new JList(appetizerModel);
+		desertList = new JList(dessertModel);
+		appetizerList = new JList(starterModel);
 		pastaList = new JList(pastaModel);
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
@@ -292,10 +294,110 @@ public class EditMenuGUI extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 
 	}
+	
+	class MenuByType implements ChangeListener {
+		public void stateChanged(ChangeEvent arg0) {
 
-	public static void main(String[] args) throws Exception {
-		EditMenuGUI gui = new EditMenuGUI();
-		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		gui.setVisible(true);
+			JTabbedPane sourceTabbedPane = (JTabbedPane) arg0.getSource();
+			int index = sourceTabbedPane.getSelectedIndex();
+			String temp = sourceTabbedPane.getTitleAt(index).toLowerCase();
+
+			switch (temp) {
+			case "pasta":
+				pastaModel.clear();
+				for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
+					pastaModel.addElement(controller.showMenuByType("pasta")
+							.get(i));
+				}
+				break;
+
+			case "pork":
+				porkModel.clear();
+				for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
+					porkModel.addElement(controller.showMenuByType("pork").get(
+							i));
+				}
+				break;
+
+			case "chicken":
+				chickenModel.clear();
+				for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
+					chickenModel.addElement(controller
+							.showMenuByType("chicken").get(i));
+				}
+				break;
+
+			case "starter":
+				starterModel.clear();
+				for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+					starterModel.addElement(controller
+							.showMenuByType("starter").get(i));
+				}
+				break;
+
+			case "beef":
+				beefModel.clear();
+				for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
+					beefModel.addElement(controller.showMenuByType("beef").get(
+							i));
+				}
+				break;
+
+			case "desserts":
+				dessertModel.clear();
+				for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
+					dessertModel.addElement(controller
+							.showMenuByType("dessert").get(i));
+				}
+				break;
+
+			case "soup":
+				soupModel.clear();
+				for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
+					soupModel.addElement(controller.showMenuByType("soups")
+							.get(i));
+				}
+				break;
+
+			case "sea food":
+				seaFoodModel.clear();
+				for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
+					seaFoodModel.addElement(controller
+							.showMenuByType("seafood").get(i));
+				}
+				break;
+
+			case "side dish":
+				sideDishModel.clear();
+				for (int i = 0; i < controller.showMenuByType("sidedish")
+						.size(); i++) {
+					sideDishModel.addElement(controller.showMenuByType(
+							"sidedish").get(i));
+				}
+				break;
+
+			case "alcoholic drinks":
+				alcoholicDrinksModel.clear();
+				for (int i = 0; i < controller.showMenuByType("alcoholic")
+						.size(); i++) {
+					alcoholicDrinksModel.addElement(controller.showMenuByType(
+							"alcoholic").get(i));
+				}
+				break;
+
+			case "non-alcoholic drinks":
+				nonAlcoholicDrinksModel.clear();
+				for (int i = 0; i < controller.showMenuByType("nonalcoholic")
+						.size(); i++) {
+					nonAlcoholicDrinksModel.addElement(controller
+							.showMenuByType("nonalcoholic").get(i));
+				}
+				break;
+
+			default:
+				System.out.println("OUHA SOMETHING WENT WRONG");
+				break;
+			}
+		}
 	}
 }
