@@ -229,6 +229,7 @@ public class EditMenuGUI extends JFrame {
 		starter.setLayout(new BorderLayout());
 		nonAlcoholicDrinks.setLayout(new BorderLayout());
 		alcoholicDrinks.setLayout(new BorderLayout());
+		pasta.setLayout(new BorderLayout());
 
 		eastContentPanel.setLayout(new GridLayout(7, 2));
 
@@ -260,7 +261,8 @@ public class EditMenuGUI extends JFrame {
 		starter.add(appetizerList, BorderLayout.CENTER);
 		nonAlcoholicDrinks.add(nonAlcoholicDrinksList, BorderLayout.CENTER);
 		alcoholicDrinks.add(alcoholicDrinksList, BorderLayout.CENTER);
-
+		pasta.add(pastaList, BorderLayout.CENTER);
+		
 		eastContentPanel.add(productNameLabel);
 		eastContentPanel.add(productNameTextField);
 		eastContentPanel.add(productDescriptionLabel);
