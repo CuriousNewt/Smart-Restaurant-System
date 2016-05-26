@@ -324,6 +324,12 @@ public class ClientGUI extends JFrame {
 			JTabbedPane sourceTabbedPane = (JTabbedPane) arg0.getSource();
 			int index = sourceTabbedPane.getSelectedIndex();
 			String temp = sourceTabbedPane.getTitleAt(index).toLowerCase();
+			try {
+				controller = remoteService.getController();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			switch (temp) {
 			case "pasta":
