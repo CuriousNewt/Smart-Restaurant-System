@@ -18,7 +18,10 @@ public class ModelManager implements RestaurantManager, Serializable {
 	public Menu getMenu() {
 		return this.menu;
 	}
-
+	public void clearMenu() {
+		this.menu = new Menu();
+	}
+	
 	@Override
 	public TableList getTables() {
 		return this.tables;
