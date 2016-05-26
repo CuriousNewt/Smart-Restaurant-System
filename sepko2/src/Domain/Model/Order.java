@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Order implements Serializable { 
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Item> items;
 	private boolean served;
 	private boolean paid;
