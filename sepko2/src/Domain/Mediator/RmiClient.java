@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Controller.Controller;
 import Domain.Model.*;
@@ -91,8 +92,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 			gui.setController(remoteService.getController());
 			gui.getMenuByType();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("doooo pièe... èosi sa riadne dojebalo");
 		}
 	}
 

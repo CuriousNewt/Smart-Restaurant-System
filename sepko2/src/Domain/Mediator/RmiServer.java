@@ -110,8 +110,6 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	public void addObserver(RemoteObserver o) throws RemoteException {
 		WrappedObserver observer = new WrappedObserver(o);
 		addObserver(observer);
-		System.out.println("Table Number " + observer.id()
-				+ " connected to server.");
 	}
 
 	@Override
@@ -139,8 +137,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			System.out.println(clientList.get(0).toString());
 			gui.updateListOfOrders(ID-1);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Something went wrong RMISERVER 140");
 		}
 	}
 	public synchronized void updateMenuOfClients() throws RemoteException {

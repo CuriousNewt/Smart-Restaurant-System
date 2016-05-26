@@ -191,11 +191,15 @@ public class ServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JList list = listOfOrders;
+			try{
 			Item item = (Item) list.getSelectedValue();
 			controller.removeItemFromOrder(item,
 					listOfTables.getSelectedIndex());
 			updateListOfOrders(listOfTables.getSelectedIndex());
-
+			}
+			catch(Exception exception){
+				JOptionPane.showMessageDialog(ServerGUI.this, "Select an item you want to remove first");
+			}
 		}
 	}
 
@@ -206,9 +210,13 @@ public class ServerGUI extends JFrame {
 			if (e.getClickCount() == 2) {
 				JList temp = (JList) e.getSource();
 				Table table = (Table) temp.getSelectedValue();
+				if(table.getOrder().size() == 0){
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"NO ORDERS TO SERVE FOR TABLE " 
+					+ table.getTableNumber());
+				}
 				updateListOfOrders(table.getTableNumber() - 1);
 			}
-
 		}
 
 		@Override

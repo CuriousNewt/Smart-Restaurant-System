@@ -491,8 +491,8 @@ public class ClientGUI extends JFrame {
 				break;
 
 			default:
-				System.out.println("OUHA SOMETHING WENT WRONG");
-				break;
+				JOptionPane.showMessageDialog(ClientGUI.this,
+						"Menu tab not initialized. Call staff!");
 			}
 		}
 	}
@@ -503,9 +503,14 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JList list = (JList) tab.getComponent(0);
-			Item selectedElement = (Item) list.getSelectedValue();
-			modelOfOrders.addElement(selectedElement);
-			incrementPrice(selectedElement);
+			try {
+				Item selectedElement = (Item) list.getSelectedValue();
+				modelOfOrders.addElement(selectedElement);
+				incrementPrice(selectedElement);
+			} catch (NullPointerException exception) {
+				JOptionPane.showMessageDialog(ClientGUI.this,
+						"Please select the item from menu first");
+			}
 		}
 
 	}
@@ -513,9 +518,14 @@ public class ClientGUI extends JFrame {
 	class minusItemFromOrder implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Item selectedElement = (Item) listOfOrder.getSelectedValue();
-			modelOfOrders.removeElement(selectedElement);
-			decrementPrice(selectedElement);
+			try {
+				Item selectedElement = (Item) listOfOrder.getSelectedValue();
+				modelOfOrders.removeElement(selectedElement);
+				decrementPrice(selectedElement);
+			} catch (NullPointerException exception) {
+				JOptionPane.showMessageDialog(ClientGUI.this,
+						"Please select the item you want to remove first ");
+			}
 		}
 	}
 
@@ -523,24 +533,30 @@ public class ClientGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Order order = new Order();
-			for (int i = 0; i < modelOfOrders.size(); i++) {
-				order.addItem(modelOfOrders.getElementAt(i));
-			}
+			if (modelOfOrders.size() == 0) {
+				JOptionPane.showMessageDialog(ClientGUI.this,
+						"Please add items you want to order first \n"
+								+ "or call staff");
+			} else {
+				for (int i = 0; i < modelOfOrders.size(); i++) {
+					order.addItem(modelOfOrders.getElementAt(i));
+				}
 
-			System.out.println(order.show());
-			modelOfOrders.clear();
-			client.setOrder(order);
-			try {
-				remoteService.doCallbacks(ID);
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				System.out.println(order.show());
+				modelOfOrders.clear();
+				client.setOrder(order);
+				try {
+					remoteService.doCallbacks(ID);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				JOptionPane.showMessageDialog(ClientGUI.this,
+						"Order successful! \n" + "Total price: " + totalPrice
+								+ " Kr.");
+				totalPrice = 0;
+				price.setText("Total price: " + totalPrice + " Kr.");
 			}
-			JOptionPane.showMessageDialog(ClientGUI.this,
-					"Order successful! \n" + "Total price: " + totalPrice
-							+ " Kr.");
-			totalPrice = 0;
-			price.setText("Total price: " + totalPrice + " Kr.");
 		}
 	}
 
@@ -549,11 +565,11 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				remoteService.callStaff(ID);
+				JOptionPane
+						.showMessageDialog(ClientGUI.this, "Staff has seen your request");
+			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(ClientGUI.this,
-						"Staff notified.");
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+						"Oops, something went wrong");
 			}
 		}
 	}
@@ -563,14 +579,14 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JList list = (JList) tab.getComponent(0);
-			Item selectedElement = (Item) list.getSelectedValue();
 			try{
+			Item selectedElement = (Item) list.getSelectedValue();
 			JOptionPane.showMessageDialog(ClientGUI.this,
 						selectedElement.moreInfo());
 			}
 			catch(NullPointerException m){
 				JOptionPane.showMessageDialog(ClientGUI.this,
-						"Item from menu must be selected!");
+						"Please select the item from menu first");
 			}
 		}
 	}
