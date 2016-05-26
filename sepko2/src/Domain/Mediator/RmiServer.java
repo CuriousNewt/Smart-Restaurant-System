@@ -66,7 +66,6 @@ public class RmiServer extends Observable implements RmiServerInterface {
 
 	public RmiServer(Controller controller, Database database) throws Exception {
 		this.controller = controller;
-		this.gui = new ServerGUI(controller, database);
 		clientID = 1;
 		clientList = new ArrayList<ClientInterface>();
 		// thread.start();
@@ -84,6 +83,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		RmiServerInterface rmiService = (RmiServerInterface) UnicastRemoteObject
 				.exportObject(new RmiServer(controller, database), 1099);
 		rmiRegistry.bind("RmiService", rmiService);
+		gui = new ServerGUI(controller, database, rmiService);
 
 		// TODO delete sysout after everitynk yz fajn
 		System.out.println("SERVER RUNS");
@@ -142,7 +142,11 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	public synchronized void updateMenuOfClients() throws RemoteException {
+		for(int i = 0; i < clientList.size();i++) {
+			clientList.get(i).updateMenu();
+		}
 	}
 
 	@Override

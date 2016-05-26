@@ -317,6 +317,78 @@ public class ClientGUI extends JFrame {
 
 	// ADDING FUNCTIONS //
 	// *********************************************************************
+	public void getMenuByType() {
+		pastaModel.clear();
+		for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
+			pastaModel.addElement(controller.showMenuByType("pasta")
+					.get(i));
+		}
+
+		porkModel.clear();
+		for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
+			porkModel.addElement(controller.showMenuByType("pork").get(
+					i));
+		}
+
+		chickenModel.clear();
+		for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
+			chickenModel.addElement(controller
+					.showMenuByType("chicken").get(i));
+		}
+		starterModel.clear();
+		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+			starterModel.addElement(controller
+					.showMenuByType("starter").get(i));
+		}
+		
+
+		beefModel.clear();
+		for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
+			beefModel.addElement(controller.showMenuByType("beef").get(
+					i));
+		}
+
+		dessertModel.clear();
+		for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
+			dessertModel.addElement(controller
+					.showMenuByType("dessert").get(i));
+		}
+
+		soupModel.clear();
+		for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
+			soupModel.addElement(controller.showMenuByType("soups")
+					.get(i));
+		}
+
+		seaFoodModel.clear();
+		for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
+			seaFoodModel.addElement(controller
+					.showMenuByType("seafood").get(i));
+		}
+		
+
+		sideDishModel.clear();
+		for (int i = 0; i < controller.showMenuByType("sidedish")
+				.size(); i++) {
+			sideDishModel.addElement(controller.showMenuByType(
+					"sidedish").get(i));
+		}
+
+		alcoholicDrinksModel.clear();
+		for (int i = 0; i < controller.showMenuByType("alcoholic")
+				.size(); i++) {
+			alcoholicDrinksModel.addElement(controller.showMenuByType(
+					"alcoholic").get(i));
+		}
+
+		nonAlcoholicDrinksModel.clear();
+		for (int i = 0; i < controller.showMenuByType("nonalcoholic")
+				.size(); i++) {
+			nonAlcoholicDrinksModel.addElement(controller
+					.showMenuByType("nonalcoholic").get(i));
+		}
+
+}
 
 	class MenuByType implements ChangeListener {
 		public void stateChanged(ChangeEvent arg0) {
@@ -324,12 +396,7 @@ public class ClientGUI extends JFrame {
 			JTabbedPane sourceTabbedPane = (JTabbedPane) arg0.getSource();
 			int index = sourceTabbedPane.getSelectedIndex();
 			String temp = sourceTabbedPane.getTitleAt(index).toLowerCase();
-			try {
-				controller = remoteService.getController();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
 
 			switch (temp) {
 			case "pasta":
@@ -533,5 +600,9 @@ public class ClientGUI extends JFrame {
 			starterModel
 					.addElement(controller.showMenuByType("starter").get(i));
 		}
+	}
+	
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 }

@@ -17,6 +17,6 @@ public interface RmiServerInterface extends Remote {
     ArrayList<Item> showOrders(int tableNumber) throws RemoteException;
     void registerForCallback(ClientInterface clientInterface) throws RemoteException;
     void doCallbacks(int ID) throws RemoteException;
-
+    void updateMenuOfClients() throws RemoteException;
 	void callStaff(int ID) throws RemoteException;
 }

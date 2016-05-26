@@ -10,6 +10,6 @@ public interface ClientInterface extends Remote {
 	void setID(int ID) throws RemoteException;
 	public Order getOrder() throws RemoteException;
 	public void callStaff()  throws RemoteException;
-	
+	void updateMenu() throws RemoteException;
 	
 }

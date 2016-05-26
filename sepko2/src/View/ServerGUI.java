@@ -22,6 +22,7 @@ import Controller.Controller;
 import Domain.Mediator.Database;
 import Domain.Model.Item;
 import Domain.Model.Table;
+import Utility.RmiServerInterface;
 
 public class ServerGUI extends JFrame {
 
@@ -31,6 +32,7 @@ public class ServerGUI extends JFrame {
 	private JMenuItem menuItemEditMenu;
 	private Controller controller;
 	private Database database;
+	private RmiServerInterface rmiService;
 
 	// JPANELS
 	// *********************************************************************
@@ -59,9 +61,10 @@ public class ServerGUI extends JFrame {
 	private DefaultListModel tablesModel;
 	private DefaultListModel ordersModel;
 
-	public ServerGUI(Controller controller, Database database) throws Exception {
+	public ServerGUI(Controller controller, Database database, RmiServerInterface rmiService) throws Exception {
 		this.database = database;
 		this.controller = controller;
+		this.rmiService = rmiService;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setJMenuBar(topMenuBar);
 		setTitle("SEP Restaurant System");
@@ -81,7 +84,7 @@ public class ServerGUI extends JFrame {
 		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
 		menuItemEditMenu = new JMenuItem("Edit menu..");
-		editMenuGui = new EditMenuGUI(database, controller);
+		editMenuGui = new EditMenuGUI(database, controller, rmiService);
 
 		// JPANELS
 		// **********************************************************************

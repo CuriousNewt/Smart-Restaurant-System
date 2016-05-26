@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -22,14 +23,15 @@ import javax.swing.event.ChangeListener;
 
 import Controller.Controller;
 import Domain.Mediator.Database;
-import Domain.Mediator.ModelManager;
 import Domain.Model.Item;
+import Utility.RmiServerInterface;
 
 public class EditMenuGUI extends JFrame {
 
 	private JTabbedPane menuTabs;
 	private Controller controller;
 	private Database database;
+	private RmiServerInterface rmiService;
 
 	// JPANELS
 	// *********************************************************************
@@ -104,12 +106,13 @@ public class EditMenuGUI extends JFrame {
 	private DefaultListModel<Item> nonAlcoholicDrinksModel;
 	private DefaultListModel<Item> alcoholicDrinksModel;
 
-	public EditMenuGUI(Database database, Controller controller)
+	public EditMenuGUI(Database database, Controller controller, RmiServerInterface rmiService)
 			throws Exception {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Edit Menu");
 		this.controller = controller;
 		this.database = database;
+		this.rmiService = rmiService;
 		setLayout(new BorderLayout());
 		setComponents();
 		fillFirstTab();
@@ -500,6 +503,12 @@ public class EditMenuGUI extends JFrame {
 				e1.printStackTrace();
 			}
 			getMenuByType();
+			try {
+				rmiService.updateMenuOfClients();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 	}
