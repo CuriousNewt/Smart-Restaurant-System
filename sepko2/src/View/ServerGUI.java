@@ -175,6 +175,7 @@ public class ServerGUI extends JFrame {
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
 		listOfTables.addMouseListener(new ViewTableOrder());
 		ordersEditButton.addActionListener(new RemoveItem());
+		selectButton.addActionListener(new ViewButton());
 	}
 
 	public void updateListOfOrders(int tableNumber) {
@@ -199,6 +200,25 @@ public class ServerGUI extends JFrame {
 			}
 			catch(Exception exception){
 				JOptionPane.showMessageDialog(ServerGUI.this, "Select an item you want to remove first");
+			}
+		}
+	}
+	class ViewButton implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JList temp = listOfTables;
+			try{
+			Table table = (Table) temp.getSelectedValue();
+			if(table.getOrder().size() == 0){
+				JOptionPane.showMessageDialog(ServerGUI.this,
+						"NO ORDERS TO SERVE FOR TABLE " 
+				+ table.getTableNumber());
+			}
+			updateListOfOrders(table.getTableNumber() - 1);
+			}
+			catch(Exception exception){
+				JOptionPane.showMessageDialog(ServerGUI.this, "Select the table you want to check first");
 			}
 		}
 	}
@@ -251,11 +271,6 @@ public class ServerGUI extends JFrame {
 
 	}
 
-	/*
-	 * public static void main(String[] args) throws Exception { ServerGUI gui =
-	 * new ServerGUI(); gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-	 * gui.setVisible(true); }
-	 */
 	public void addTableToList(Object table) {
 		tablesModel.addElement(table);
 	}
