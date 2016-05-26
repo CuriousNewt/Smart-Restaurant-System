@@ -75,7 +75,26 @@ public class Database implements Storage {
 
 	@Override
 	public void removeFromMenu(Item item) throws SQLException {
-		// TODO Auto-generated method stub
+		org.postgresql.Driver driver = new org.postgresql.Driver();
+		DriverManager.registerDriver(driver);
+		Connection connection = DriverManager.getConnection
+				(ip, "postgres", "root");
+		try {
+			if(item instanceof Meal){
+			Meal meal = (Meal) item;
+			PreparedStatement statement = connection.prepareStatement
+					("DELETE FROM meal WHERE name = '" + item.getName() + "'");
+			statement.executeUpdate();
+			}
+			else if(item instanceof Drink) {
+				Drink drink = (Drink) item;
+				PreparedStatement statement = connection.prepareStatement
+						("DELETE FROM drink WHERE name = '" + item.getName() + "'");
+				statement.executeUpdate();
+			}
+		} finally {
+			connection.close();
+		}
 		
 	}
 
