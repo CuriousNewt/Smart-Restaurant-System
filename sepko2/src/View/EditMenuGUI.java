@@ -2,6 +2,9 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -19,6 +22,7 @@ import javax.swing.event.ChangeListener;
 
 import Controller.Controller;
 import Domain.Mediator.Database;
+import Domain.Mediator.ModelManager;
 import Domain.Model.Item;
 
 public class EditMenuGUI extends JFrame {
@@ -298,6 +302,79 @@ public class EditMenuGUI extends JFrame {
 
 	public void addActionListeners() {
 		menuTabs.addChangeListener(new MenuByType());
+		removeButton.addActionListener(new removeFromMenu());
+	}
+	public void getMenuByType() {
+			pastaModel.clear();
+			for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
+				pastaModel.addElement(controller.showMenuByType("pasta")
+						.get(i));
+			}
+
+			porkModel.clear();
+			for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
+				porkModel.addElement(controller.showMenuByType("pork").get(
+						i));
+			}
+
+			chickenModel.clear();
+			for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
+				chickenModel.addElement(controller
+						.showMenuByType("chicken").get(i));
+			}
+			starterModel.clear();
+			for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+				starterModel.addElement(controller
+						.showMenuByType("starter").get(i));
+			}
+			
+
+			beefModel.clear();
+			for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
+				beefModel.addElement(controller.showMenuByType("beef").get(
+						i));
+			}
+
+			dessertModel.clear();
+			for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
+				dessertModel.addElement(controller
+						.showMenuByType("dessert").get(i));
+			}
+
+			soupModel.clear();
+			for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
+				soupModel.addElement(controller.showMenuByType("soups")
+						.get(i));
+			}
+
+			seaFoodModel.clear();
+			for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
+				seaFoodModel.addElement(controller
+						.showMenuByType("seafood").get(i));
+			}
+			
+
+			sideDishModel.clear();
+			for (int i = 0; i < controller.showMenuByType("sidedish")
+					.size(); i++) {
+				sideDishModel.addElement(controller.showMenuByType(
+						"sidedish").get(i));
+			}
+
+			alcoholicDrinksModel.clear();
+			for (int i = 0; i < controller.showMenuByType("alcoholic")
+					.size(); i++) {
+				alcoholicDrinksModel.addElement(controller.showMenuByType(
+						"alcoholic").get(i));
+			}
+
+			nonAlcoholicDrinksModel.clear();
+			for (int i = 0; i < controller.showMenuByType("nonalcoholic")
+					.size(); i++) {
+				nonAlcoholicDrinksModel.addElement(controller
+						.showMenuByType("nonalcoholic").get(i));
+			}
+
 	}
 
 	class MenuByType implements ChangeListener {
@@ -406,7 +483,30 @@ public class EditMenuGUI extends JFrame {
 		}
 	}
 
+	
+	class removeFromMenu implements ActionListener {
+		
+		
+		public void actionPerformed(ActionEvent e) {
+			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+			JList list = (JList) tab.getComponent(0);
+			Item selectedElement = (Item) list.getSelectedValue();
+			try {
+				database.removeFromMenu(selectedElement);
+				controller.clearMenu();
+				database.getMenu();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			getMenuByType();
+		}
+		
+	}
+
+
 	private void fillFirstTab() {
+
 		starterModel.clear();
 		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
 			starterModel
