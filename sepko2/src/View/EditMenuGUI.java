@@ -56,7 +56,6 @@ public class EditMenuGUI extends JFrame {
 	private JLabel productAmountLabel;
 	private JLabel productTypeLabel;
 	private JLabel itemTypeLabel;
-	
 
 	private JTextField productNameTextField;
 	private JTextField productDescriptionTextField;
@@ -83,7 +82,7 @@ public class EditMenuGUI extends JFrame {
 	private JList<Item> soupList;
 	private JList<Item> seaFoodList;
 	private JList<Item> sideDishList;
-	private JList<Item> desertList;
+	private JList<Item> dessertList;
 	private JList<Item> appetizerList;
 	private JList<Item> pastaList;
 	private JList<Item> nonAlcoholicDrinksList;
@@ -101,7 +100,8 @@ public class EditMenuGUI extends JFrame {
 	private DefaultListModel<Item> nonAlcoholicDrinksModel;
 	private DefaultListModel<Item> alcoholicDrinksModel;
 
-	public EditMenuGUI(Database database, Controller controller) throws Exception {
+	public EditMenuGUI(Database database, Controller controller)
+			throws Exception {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Edit Menu");
 		this.controller = controller;
@@ -164,7 +164,7 @@ public class EditMenuGUI extends JFrame {
 		soupList = new JList(soupModel);
 		seaFoodList = new JList(seaFoodModel);
 		sideDishList = new JList(sideDishModel);
-		desertList = new JList(dessertModel);
+		dessertList = new JList(dessertModel);
 		appetizerList = new JList(starterModel);
 		pastaList = new JList(pastaModel);
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
@@ -178,8 +178,6 @@ public class EditMenuGUI extends JFrame {
 		productAmountLabel = new JLabel("Amount of product:");
 		itemTypeLabel = new JLabel("Type of item:");
 		productTypeLabel = new JLabel("Type of Product:");
-		
-		
 
 		productNameTextField = new JTextField();
 		productDescriptionTextField = new JTextField();
@@ -188,8 +186,8 @@ public class EditMenuGUI extends JFrame {
 		productTypeComboBoxModel = new DefaultComboBoxModel<String>(
 				(new String[] { "Meal", "Drink" }));
 		productMealContentComboBoxModel = new DefaultComboBoxModel<String>(
-				new String[] { "Starter", "Soup", "Pork", "Beef", "Chicken", "Pasta", "Sea Food",
-						"Side dish", "Dessert"});
+				new String[] { "Starter", "Soup", "Pork", "Beef", "Chicken",
+						"Pasta", "Sea Food", "Side dish", "Dessert" });
 
 		productDrinkContentComboBoxModel = new DefaultComboBoxModel<String>(
 				new String[] { "Non-alcoholic", "Alcoholic" });
@@ -197,10 +195,10 @@ public class EditMenuGUI extends JFrame {
 		productTypeComboBox = new JComboBox<String>(productTypeComboBoxModel);
 
 		productContentComboBox = new JComboBox<String>();
-		if(productTypeComboBox.getSelectedItem().equals("Meal")){
+		if (productTypeComboBox.getSelectedItem().equals("Meal")) {
 			productContentComboBox.setModel(productMealContentComboBoxModel);
-		}
-		else productContentComboBox.setModel(productDrinkContentComboBoxModel);
+		} else
+			productContentComboBox.setModel(productDrinkContentComboBoxModel);
 	}
 
 	private void addBorders() {
@@ -247,7 +245,7 @@ public class EditMenuGUI extends JFrame {
 		menuTabs.add("Pasta", pasta);
 		menuTabs.add("Sea Food", seaFood);
 		menuTabs.add("Side dish", sideDish);
-		menuTabs.add("Deserts", desert);
+		menuTabs.add("Desserts", desert);
 		menuTabs.add("Non-alcoholic drinks", nonAlcoholicDrinks);
 		menuTabs.add("Alcoholic drinks", alcoholicDrinks);
 
@@ -257,12 +255,12 @@ public class EditMenuGUI extends JFrame {
 		soupPanel.add(soupList, BorderLayout.CENTER);
 		seaFood.add(seaFoodList, BorderLayout.CENTER);
 		sideDish.add(sideDishList, BorderLayout.CENTER);
-		desert.add(desertList, BorderLayout.CENTER);
+		desert.add(dessertList, BorderLayout.CENTER);
 		starter.add(appetizerList, BorderLayout.CENTER);
 		nonAlcoholicDrinks.add(nonAlcoholicDrinksList, BorderLayout.CENTER);
 		alcoholicDrinks.add(alcoholicDrinksList, BorderLayout.CENTER);
 		pasta.add(pastaList, BorderLayout.CENTER);
-		
+
 		eastContentPanel.add(productNameLabel);
 		eastContentPanel.add(productNameTextField);
 		eastContentPanel.add(productDescriptionLabel);
@@ -275,7 +273,6 @@ public class EditMenuGUI extends JFrame {
 		eastContentPanel.add(productTypeComboBox);
 		eastContentPanel.add(productTypeLabel);
 		eastContentPanel.add(productContentComboBox);
-		
 
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
@@ -298,11 +295,11 @@ public class EditMenuGUI extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 
 	}
-	
-	public void addActionListeners(){
+
+	public void addActionListeners() {
 		menuTabs.addChangeListener(new MenuByType());
 	}
-	
+
 	class MenuByType implements ChangeListener {
 		public void stateChanged(ChangeEvent arg0) {
 
@@ -408,12 +405,12 @@ public class EditMenuGUI extends JFrame {
 			}
 		}
 	}
-	
-	private void fillFirstTab(){
+
+	private void fillFirstTab() {
 		starterModel.clear();
 		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
-			starterModel.addElement(controller
-					.showMenuByType("starter").get(i));
+			starterModel
+					.addElement(controller.showMenuByType("starter").get(i));
 		}
 	}
 }
