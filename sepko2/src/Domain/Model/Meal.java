@@ -37,10 +37,16 @@ public class Meal extends Item {
 	}
 	
 	public void setAsPrepared(){
-		super.setAsPrepared();
+		this.isPrepared = true;
 	}
 	public boolean isPrepared(){
 		return isPrepared;
+	}
+
+	@Override
+	public void setAsServed() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

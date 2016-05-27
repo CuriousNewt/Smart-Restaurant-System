@@ -33,4 +33,22 @@ public class Drink extends Item {
 		return type;
 	}
 
+	@Override
+	public void setAsServed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setAsPrepared() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isPrepared() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
