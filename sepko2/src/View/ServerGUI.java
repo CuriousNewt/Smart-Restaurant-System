@@ -332,7 +332,9 @@ public class ServerGUI extends JFrame {
 	}
 
 	public void colourBackground(int ID) {
-		listOfTables.setSelectionBackground(Color.green);
+		
+		listOfTables.setSelectedIndex(ID-1);
+		listOfTables.getComponent(ID-1).setBackground(Color.green);
 		
 	}
 
