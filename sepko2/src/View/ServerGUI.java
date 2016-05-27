@@ -214,7 +214,12 @@ public class ServerGUI extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			 listOfOrders.setSelectionBackground(Color.green);
+			int index = listOfOrders.getSelectedIndex();
+			String temp = listOfOrders.getSelectedValue() + " - SERVED";
+			ordersModel.add(index, temp);
+			
+			
+			
 		}
 	}
 	
