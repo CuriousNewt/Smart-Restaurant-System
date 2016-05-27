@@ -29,7 +29,6 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 			FileNotFoundException {
 		super();
 		this.service = service;
-
 	}
 
 	public static int getID() {

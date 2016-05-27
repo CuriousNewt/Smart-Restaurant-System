@@ -18,4 +18,8 @@ public class TableList implements Serializable {
 		return tables.get(index);
 	}
 
+	public int size() {
+		return tables.size();
+	}
+
 }

@@ -344,10 +344,7 @@ public class ServerGUI extends JFrame {
 		listOfTables.setSelectedIndex(ID-1);
 		
 		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
-				+ " made a new order.");
-		
-		kitchen.updateList();
-		
+				+ " made a new order.");		
 	}
 
 	

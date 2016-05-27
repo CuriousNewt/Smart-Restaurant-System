@@ -1,24 +1,21 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
 import Domain.Model.Item;
-
-import com.toedter.calendar.JDateChooser;
+import Domain.Model.Meal;
+import Utility.RmiServerInterface;
 
 public class KitchenGUI extends JFrame {
 
@@ -43,15 +40,18 @@ public class KitchenGUI extends JFrame {
 	private JList<Item> mealList;
 
 	private DefaultListModel<Item> mealListModel;
+	private RmiServerInterface serverInterface;
 
 
-	public KitchenGUI() throws Exception {
+	public KitchenGUI(RmiServerInterface serverInterface) throws Exception {
+		this.serverInterface = serverInterface;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Kitchen");
 		setLayout(new BorderLayout());
 		setComponents();
 		addPanelsAndLayouts();
 		addBorders();
+		addActionListeners();
 		pack();
 	}
 
@@ -111,10 +111,28 @@ public class KitchenGUI extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 
 	}
-
-	public static void main(String[] args) throws Exception {
-		KitchenGUI gui = new KitchenGUI();
-		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		gui.setVisible(true);
+	
+	public void updateLists() throws RemoteException{
+		for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
+			for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
+				Item item = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
+				if(item instanceof Meal && !item.isPrepared()){
+					mealListModel.addElement(item);
+				}
+			}
+		}
+	}
+	
+	class setAsPrepared implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int index = mealList.getSelectedIndex();
+			mealList.getSelectedValue().setAsPrepared();
+			mealListModel.removeElementAt(index);
+		}	
+	}
+	
+	public void addActionListeners(){
+		setAsFinished.addActionListener(new setAsPrepared());
 	}
 }

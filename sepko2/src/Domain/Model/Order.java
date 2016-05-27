@@ -5,11 +5,9 @@ import java.util.ArrayList;
 
 public class Order implements Serializable {
 	private ArrayList<Item> items;
-	private boolean served;
 	private boolean paid;
 	
 	public Order(){
-		this.served = false;
 		this.paid = false;
 		items = new ArrayList<>();
 	}
@@ -34,16 +32,8 @@ public class Order implements Serializable {
 		this.paid = true;
 	}
 	
-	public void serve(){
-		this.served = true;
-	}
-	
 	public boolean isPaid(){
 		return paid;
-	}
-	
-	public boolean isServed(){
-		return served;
 	}
 	
 	public double getPrice(){
