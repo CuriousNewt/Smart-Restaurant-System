@@ -547,10 +547,12 @@ public class ClientGUI extends JFrame {
 				client.setOrder(order);
 				try {
 					remoteService.doCallbacks(ID);
+					remoteService.colourBackground(ID);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				JOptionPane.showMessageDialog(ClientGUI.this,
 						"Order successful! \n" + "Total price: " + totalPrice
 								+ " Kr.");
@@ -565,7 +567,6 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				remoteService.callStaff(ID);
-				remoteService.colourBackground(ID);
 				JOptionPane
 						.showMessageDialog(ClientGUI.this, "Staff has seen your request");
 			} catch (Exception exception) {
