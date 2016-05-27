@@ -35,6 +35,7 @@ public class KitchenClient extends UnicastRemoteObject implements RemoteObserver
 		while(true){
 			try {
 				System.out.println("hovno");
+				System.out.println(gui.getTheFuckingItem().isPrepared());
 				gui.updateLists();
 				Thread.sleep(15000);
 			} catch (InterruptedException | RemoteException e) {
