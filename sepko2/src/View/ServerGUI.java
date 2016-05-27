@@ -343,6 +343,7 @@ public class ServerGUI extends JFrame {
 	public void colourBackground(int ID) {
 		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
 				+ " made an order.");
+		listOfTables.setSelectedIndex(ID-1);
 		
 	}
 
