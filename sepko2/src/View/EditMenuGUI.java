@@ -315,6 +315,7 @@ public class EditMenuGUI extends JFrame {
 		editButton.addActionListener(new addInfoToEditMenu());
 		removeButton.addActionListener(new removeFromMenu());
 		addButton.addActionListener(new addToMenu());
+		productTypeComboBox.addActionListener(new updateComboBox());
 
 	}
 
@@ -513,8 +514,19 @@ public class EditMenuGUI extends JFrame {
 			Item selectedElement = (Item) list.getSelectedValue();
 			removeSelectedItemFromMenu(selectedElement);
 		}
-
 	}
+	
+	class updateComboBox implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (productTypeComboBox.getSelectedItem().equals("Meal")) {
+				productContentComboBox.setModel(productMealContentComboBoxModel);
+			} else
+				productContentComboBox.setModel(productDrinkContentComboBoxModel);
+			}			
+		}
+		
 
 	class addInfoToEditMenu implements ActionListener {
 
@@ -636,4 +648,5 @@ public class EditMenuGUI extends JFrame {
 					.addElement(controller.showMenuByType("starter").get(i));
 		}
 	}
+
 }
