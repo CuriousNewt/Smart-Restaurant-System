@@ -25,6 +25,7 @@ import javax.swing.event.ChangeListener;
 
 import Controller.Controller;
 import Domain.Mediator.Database;
+import Domain.Model.Drink;
 import Domain.Model.Item;
 import Domain.Model.Meal;
 import Utility.RmiServerInterface;
@@ -313,7 +314,8 @@ public class EditMenuGUI extends JFrame {
 		menuTabs.addChangeListener(new MenuByType());
 		editButton.addActionListener(new addInfoToEditMenu());
 		removeButton.addActionListener(new removeFromMenu());
-		
+		addButton.addActionListener(new addToMenu());
+
 	}
 
 	public void getMenuByType() {
@@ -485,6 +487,23 @@ public class EditMenuGUI extends JFrame {
 			}
 		}
 	}
+	public void removeSelectedItemFromMenu(Item selectedElement) {
+		try {
+			database.removeFromMenu(selectedElement);
+			controller.clearMenu();
+			database.getMenu();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		getMenuByType();
+		try {
+			rmiService.updateMenuOfClients();
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 
 	class removeFromMenu implements ActionListener {
 
@@ -492,21 +511,7 @@ public class EditMenuGUI extends JFrame {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JList list = (JList) tab.getComponent(0);
 			Item selectedElement = (Item) list.getSelectedValue();
-			try {
-				database.removeFromMenu(selectedElement);
-				controller.clearMenu();
-				database.getMenu();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			getMenuByType();
-			try {
-				rmiService.updateMenuOfClients();
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			removeSelectedItemFromMenu(selectedElement);
 		}
 
 	}
@@ -522,15 +527,104 @@ public class EditMenuGUI extends JFrame {
 			productDescriptionTextField.setText(selectedElement
 					.getDescription());
 			productPriceTextField.setText("" + selectedElement.getPrice());
-			productAmountTextField.setText("" + selectedElement.getAmount());
-			System.out.println(selectedElement instanceof Meal);
-			if(selectedElement instanceof Meal) {
-				productTypeComboBox.setModel(productTypeComboBoxModel.getIndexOf(0));
+			productAmountTextField.setText("" + (int) selectedElement.getAmount());
+			if (selectedElement instanceof Meal) {
+				productTypeComboBox.setSelectedIndex(0);
+				productContentComboBox
+						.setModel(productMealContentComboBoxModel);
+				String temp = selectedElement.getType();
+				switch (temp) {
+				case "starter": productContentComboBox.setSelectedIndex(0); break;
+				case "soups": productContentComboBox.setSelectedIndex(1); break;
+				case "dessert": productContentComboBox.setSelectedIndex(8); break;
+				case "beef":productContentComboBox.setSelectedIndex(3); break;
+				case "chicken": productContentComboBox.setSelectedIndex(4); break;
+				case "pork": productContentComboBox.setSelectedIndex(2); break;
+				case "pasta": productContentComboBox.setSelectedIndex(5); break;
+				case "seafood": productContentComboBox.setSelectedIndex(6); break;
+				case "sidedish": productContentComboBox.setSelectedIndex(7); break;
+				}
+
 			} else {
-				productContentComboBox.setModel(productDrinkContentComboBoxModel);
+				productTypeComboBox.setSelectedIndex(1);
+				productContentComboBox
+						.setModel(productDrinkContentComboBoxModel);
+				if (selectedElement.getType().equals("nonalcoholic")) {
+					productContentComboBox.setSelectedIndex(0);
+				} else {
+					productContentComboBox.setSelectedIndex(1);
+				}
+
 			}
+			removeSelectedItemFromMenu(selectedElement);
+			
 		}
 
+	}
+	
+	class addToMenu implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String name = productNameTextField.getText();
+			String description = productDescriptionTextField.getText();
+			double price = Double.parseDouble(productPriceTextField.getText());
+			if(productTypeComboBox.getSelectedIndex() == 0) {
+				int amount = Integer.parseInt(productAmountTextField.getText());
+				String type = (String) productContentComboBox.getSelectedItem();
+				switch(type) {
+					case "Starter": type = "starter"; break;
+					case "Soup": type = "soups"; break;
+					case "Pork": type = "pork"; break;
+					case "Beef": type = "beef"; break;
+					case "Chicken": type = "chicken"; break;
+					case "Pasta": type = "pasta"; break;
+					case "Sea Food": type = "seafood"; break;
+					case "Side dish": type = "sidedish"; break;
+					case "Dessert": type = "dessert"; break;
+				}
+				Meal meal = new Meal(name, description, price, amount, type);
+				try {
+					database.addToMenu(meal);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			} else {
+				double amount = Double.parseDouble(productAmountTextField.getText());
+				String type = (String) productContentComboBox.getSelectedItem();
+				Drink drink = new Drink(name, description, price, amount, type);
+				if(type.equals("Non-alcoholic")) {
+					type = "nonalcoholic";
+				} else {
+					type = "alcoholic";
+				}
+				try {
+					database.addToMenu(drink);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			try {
+				controller.clearMenu();
+				database.getMenu();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			getMenuByType();
+			try {
+				rmiService.updateMenuOfClients();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+		}
+		
 	}
 
 	private void fillFirstTab() {
