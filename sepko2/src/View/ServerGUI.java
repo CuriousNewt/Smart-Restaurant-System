@@ -63,7 +63,7 @@ public class ServerGUI extends JFrame {
 	private JList<Table> listOfTables;
 	private JList<String> listOfOrders;
 	private DefaultListModel tablesModel;
-	private DefaultListModel ordersModel;
+	private DefaultListModel<String> ordersModel;
 
 	public ServerGUI(Controller controller, Database database,
 			RmiServerInterface rmiService) throws Exception {
@@ -194,7 +194,7 @@ public class ServerGUI extends JFrame {
 	public void updateListOfOrders(int tableNumber) {
 		ordersModel.clear();
 		for (int i = 0; i < controller.showOrders(tableNumber).size(); i++) {
-			ordersModel.add(i, controller.showOrders(tableNumber).get(i));
+			ordersModel.add(i, controller.showOrders(tableNumber).get(i).toString());
 			// TODO displaying items and tables
 		}
 
@@ -215,8 +215,8 @@ public class ServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int index = listOfOrders.getSelectedIndex();
-			String temp = listOfOrders.getSelectedValue() + " - SERVED";
-			ordersModel.add(index, temp);
+			String temp = listOfOrders.getSelectedValue().toString() + " - SERVED";
+			ordersModel.setElementAt(temp, index);
 			
 			
 			
