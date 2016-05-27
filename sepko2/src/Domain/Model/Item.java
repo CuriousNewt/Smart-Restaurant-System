@@ -57,4 +57,8 @@ public abstract class Item implements Serializable{
 	public boolean isPrepared() {
 		return isPrepared;
 	}
+	
+	public boolean equals(Item item){
+		return item.name.equals(this.name) && item.price == this.price;
+	}
 }
