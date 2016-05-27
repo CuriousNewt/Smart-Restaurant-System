@@ -24,6 +24,7 @@ public class RmiServer extends Observable implements RmiServerInterface {
 
 	private Controller controller;
 	private ArrayList<ClientInterface> clientList;
+	private KitchenClientInterface kitchenInterface;
 	private int clientID;
 	private static ServerGUI gui;
 
@@ -126,6 +127,14 @@ public class RmiServer extends Observable implements RmiServerInterface {
 				controller.addTable(table);
 			}
 		}
+	}
+	
+	public synchronized void registerKitchenForCallBack(KitchenClientInterface kitchenInterface) throws RemoteException {
+		this.kitchenInterface = kitchenInterface;
+	}
+	
+	public void updateKitchen(Order order) throws RemoteException {
+		kitchenInterface.updateKitchen(order);
 	}
 
 	@Override

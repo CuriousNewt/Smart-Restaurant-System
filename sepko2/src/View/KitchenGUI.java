@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.RemoteException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -13,8 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import Controller.Controller;
 import Domain.Model.Item;
 import Domain.Model.Meal;
+import Domain.Model.Order;
 import Utility.RmiServerInterface;
 
 public class KitchenGUI extends JFrame {
@@ -38,12 +39,13 @@ public class KitchenGUI extends JFrame {
 	// *********************************************************************
 	private JList<Item> mealList;
 
-	private DefaultListModel<Item> mealListModel;
+	private DefaultListModel<Meal> mealListModel;
 	private RmiServerInterface serverInterface;
+	private Controller controller;
 
-
-	public KitchenGUI(RmiServerInterface serverInterface) throws Exception {
+	public KitchenGUI(RmiServerInterface serverInterface, Controller controller) throws Exception {
 		this.serverInterface = serverInterface;
+		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Kitchen");
 		setLayout(new BorderLayout());
@@ -111,47 +113,25 @@ public class KitchenGUI extends JFrame {
 
 	}
 	
-	public void updateLists() throws RemoteException{
-		mealListModel.clear();
-		for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
-			for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
-				Meal item = (Meal) serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
-				if(item instanceof Meal && !item.isPrepared()){
-					mealListModel.addElement(item);
-				}
+	private void addActionListeners() {
+		setAsFinished.addActionListener(new setAsFinished());
+	}
+	
+	class setAsFinished implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mealListModel.removeElementAt(mealList.getSelectedIndex());
+		}
+		
+	}
+	
+	public void updateKitchen(Order order) {
+		for(int i=0; i < order.size(); i++){
+			if(order.getItem(i) instanceof Meal) {
+				mealListModel.addElement((Meal) order.getItem(i));				
 			}
 		}
 	}
-	
-	class setAsPrepared implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			int index = mealList.getSelectedIndex();
-			Meal item = (Meal) mealList.getSelectedValue();
-			try {
-				bezdopice : 
-					for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
-					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
-						Meal itemTemp = (Meal) serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
-						if(item.equals(itemTemp)){
-							
-							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
-							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j));
-							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
-							break bezdopice;
-						}
-					}
-				}
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}			
-			mealListModel.removeElementAt(index);
-		}	
-	}
-	
-	public void addActionListeners(){
-		setAsFinished.addActionListener(new setAsPrepared());
-	}
 }
+

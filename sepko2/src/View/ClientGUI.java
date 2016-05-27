@@ -548,6 +548,7 @@ public class ClientGUI extends JFrame {
 				try {
 					remoteService.doCallbacks(ID);
 					remoteService.colourBackground(ID);
+					remoteService.updateKitchen(order);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
