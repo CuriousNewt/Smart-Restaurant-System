@@ -340,26 +340,7 @@ public class ServerGUI extends JFrame {
 
 	public void colourBackground(int ID) {
 		
-		listOfTables.setCellRenderer(new MyListRenderer());
 		
 	}
-	
-	 private class MyListRenderer extends DefaultListCellRenderer
-	    {
-	  
-	        public Component getListCellRendererComponent( JList list,
-	                Object value, int index, boolean isSelected,
-	                boolean cellHasFocus )
-	        {
-	            super.getListCellRendererComponent( list, value, index,
-	                    isSelected, cellHasFocus );
-	            
-	            if( isSelected ){
-	            setBackground(Color.green);
-	            }
-	            
-	            return(this);
-	        }
-	    }
 
 }
