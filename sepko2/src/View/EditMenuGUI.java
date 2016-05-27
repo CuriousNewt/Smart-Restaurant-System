@@ -593,12 +593,12 @@ public class EditMenuGUI extends JFrame {
 			} else {
 				double amount = Double.parseDouble(productAmountTextField.getText());
 				String type = (String) productContentComboBox.getSelectedItem();
-				Drink drink = new Drink(name, description, price, amount, type);
 				if(type.equals("Non-alcoholic")) {
 					type = "nonalcoholic";
 				} else {
 					type = "alcoholic";
 				}
+				Drink drink = new Drink(name, description, price, amount, type);
 				try {
 					database.addToMenu(drink);
 				} catch (SQLException e1) {
