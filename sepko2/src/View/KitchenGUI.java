@@ -126,22 +126,22 @@ public class KitchenGUI extends JFrame {
 	class setAsPrepared implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			RmiServerInterface interfaz = serverInterface;
 			int index = mealList.getSelectedIndex();
 			Item item = mealList.getSelectedValue();
 			try {
 				bezdopice : 
-					for(int i = 0; i < interfaz.getController().getTables().size(); i++){
-					for(int j = 0; j < interfaz.getController().getTables().getTable(i).getOrder().size(); j++){
-						Item itemTemp = interfaz.getController().getTables().getTable(i).getOrder().getItem(j);
+					for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
+					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
+						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 						if(item.equals(itemTemp)){
-							interfaz.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
-							System.out.println(interfaz.getController().getTables().getTable(i).getOrder().getItem(j));
-							System.out.println(interfaz.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
+							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
+							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j));
+							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
 							break bezdopice;
 						}
 					}
 				}
+			updateLists();
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
