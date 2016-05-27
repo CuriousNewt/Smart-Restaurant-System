@@ -331,4 +331,9 @@ public class ServerGUI extends JFrame {
 		tablesModel.addElement(table);
 	}
 
+	public void colourBackground(int ID) {
+		listOfTables.setSelectionBackground(Color.green);
+		
+	}
+
 }

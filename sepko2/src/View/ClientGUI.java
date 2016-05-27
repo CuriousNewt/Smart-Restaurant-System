@@ -565,6 +565,7 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				remoteService.callStaff(ID);
+				remoteService.colourBackground(ID);
 				JOptionPane
 						.showMessageDialog(ClientGUI.this, "Staff has seen your request");
 			} catch (Exception exception) {

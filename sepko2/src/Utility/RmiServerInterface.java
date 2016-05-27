@@ -19,4 +19,5 @@ public interface RmiServerInterface extends Remote {
     void doCallbacks(int ID) throws RemoteException;
     void updateMenuOfClients() throws RemoteException;
 	void callStaff(int ID) throws RemoteException;
+	void colourBackground(int ID) throws RemoteException;;
 }
