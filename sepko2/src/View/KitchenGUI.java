@@ -130,12 +130,16 @@ public class KitchenGUI extends JFrame {
 			int index = mealList.getSelectedIndex();
 			Item item = mealList.getSelectedValue();
 			try {
-				for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
+				bezdopice : 
+					for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
 					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
 						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
+						System.out.println("hovno na treti");
 						if(item.equals(itemTemp)){
+							System.out.println("hovnonapatou");
 							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
 							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
+							break bezdopice;
 						}
 					}
 				}
