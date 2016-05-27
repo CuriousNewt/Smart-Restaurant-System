@@ -513,6 +513,7 @@ public class EditMenuGUI extends JFrame {
 			JList list = (JList) tab.getComponent(0);
 			Item selectedElement = (Item) list.getSelectedValue();
 			removeSelectedItemFromMenu(selectedElement);
+			resetProductFields();
 		}
 	}
 	
@@ -634,10 +635,16 @@ public class EditMenuGUI extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			
+			resetProductFields();
 		}
 		
+	}
+	
+	public void resetProductFields() {
+		productNameTextField.setText("");
+		productDescriptionTextField.setText("");
+		productAmountTextField.setText("");
+		productPriceTextField.setText("");
 	}
 
 	private void fillFirstTab() {
