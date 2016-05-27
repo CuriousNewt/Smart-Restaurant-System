@@ -53,8 +53,8 @@ public class KitchenClient extends UnicastRemoteObject implements RemoteObserver
 		gui = new KitchenGUI(serverInterface);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
-		/*Thread kitchen = new Thread(client);
-		kitchen.start();*/
+		Thread kitchen = new Thread(client);
+		kitchen.start();
 	}
 
 }

@@ -130,7 +130,6 @@ public class KitchenGUI extends JFrame {
 			int index = mealList.getSelectedIndex();
 			Item item = mealList.getSelectedValue();
 			try {
-				updateLists();
 				bezdopice : 
 					for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
 					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
@@ -147,7 +146,7 @@ public class KitchenGUI extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}			
-			//mealListModel.removeElementAt(index);
+			mealListModel.removeElementAt(index);
 		}	
 	}
 	
