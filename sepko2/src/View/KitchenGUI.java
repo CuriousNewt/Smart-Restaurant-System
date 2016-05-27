@@ -128,7 +128,20 @@ public class KitchenGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int index = mealList.getSelectedIndex();
-			mealList.getSelectedValue().setAsPrepared();
+			Item item = mealList.getSelectedValue();
+			try {
+				for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
+					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
+						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
+						if(item.equals(itemTemp)){
+							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
+						}
+					}
+				}
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}			
 			mealListModel.removeElementAt(index);
 		}	
 	}
