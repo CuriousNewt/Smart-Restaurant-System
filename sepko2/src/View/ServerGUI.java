@@ -341,24 +341,11 @@ public class ServerGUI extends JFrame {
 	}
 
 	public void colourBackground(int ID) {
-		listOfTables.setCellRenderer(new CellRenderer());		
+		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
+				+ " made an order.");
 		
 	}
 
-	public class CellRenderer extends JComponent implements ListCellRenderer
-	{
-
-	  @Override
-	  public Component getListCellRendererComponent(JList aList, Object aValue, int aIndex, boolean aIsSelected, boolean aCellHasFocus)
-	  {
-	    
-	    JPanel pane = new JPanel(new BorderLayout()); // add contents here   
-
-	    
-	    pane.setBackground(Color.green);
-	    return pane;
-	  }
-	}	
 	
 }
 	
