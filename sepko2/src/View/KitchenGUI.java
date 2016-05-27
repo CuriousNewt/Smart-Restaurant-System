@@ -18,7 +18,6 @@ import Domain.Model.Meal;
 import Utility.RmiServerInterface;
 
 public class KitchenGUI extends JFrame {
-	private Item superItem;
 
 	// JPANELS
 	// *********************************************************************
@@ -135,7 +134,6 @@ public class KitchenGUI extends JFrame {
 					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
 						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 						if(item.equals(itemTemp)){
-							superItem = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
 							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
 							break bezdopice;
@@ -149,9 +147,7 @@ public class KitchenGUI extends JFrame {
 			mealListModel.removeElementAt(index);
 		}	
 	}
-	public Item getTheFuckingItem(){
-		return superItem;
-	}
+	
 	public void addActionListeners(){
 		setAsFinished.addActionListener(new setAsPrepared());
 	}

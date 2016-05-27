@@ -42,7 +42,7 @@ public abstract class Item implements Serializable{
 	}
 	
 	public void setAsPrepared(){
-		this.isPrepared = true;
+		this.isPrepared = false;
 	}
 	public abstract double getAmount();
 
