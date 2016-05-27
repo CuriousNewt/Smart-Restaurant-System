@@ -113,6 +113,7 @@ public class KitchenGUI extends JFrame {
 	}
 	
 	public void updateLists() throws RemoteException{
+		mealListModel.clear();
 		for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
 			for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
 				Item item = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
