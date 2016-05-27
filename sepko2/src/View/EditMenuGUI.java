@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
@@ -24,6 +26,7 @@ import javax.swing.event.ChangeListener;
 import Controller.Controller;
 import Domain.Mediator.Database;
 import Domain.Model.Item;
+import Domain.Model.Meal;
 import Utility.RmiServerInterface;
 
 public class EditMenuGUI extends JFrame {
@@ -79,6 +82,7 @@ public class EditMenuGUI extends JFrame {
 	// *********************************************************************
 	private JButton addButton;
 	private JButton removeButton;
+	private JButton editButton;
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
@@ -106,8 +110,8 @@ public class EditMenuGUI extends JFrame {
 	private DefaultListModel<Item> nonAlcoholicDrinksModel;
 	private DefaultListModel<Item> alcoholicDrinksModel;
 
-	public EditMenuGUI(Database database, Controller controller, RmiServerInterface rmiService)
-			throws Exception {
+	public EditMenuGUI(Database database, Controller controller,
+			RmiServerInterface rmiService) throws Exception {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Edit Menu");
 		this.controller = controller;
@@ -151,6 +155,7 @@ public class EditMenuGUI extends JFrame {
 		// *********************************************************************
 		removeButton = new JButton("Remove..");
 		addButton = new JButton("Add..");
+		editButton = new JButton("Edit..");
 
 		// JLISTS & DEFAULT LIST MODELS
 		porkModel = new DefaultListModel<Item>();
@@ -239,7 +244,7 @@ public class EditMenuGUI extends JFrame {
 		eastContentPanel.setLayout(new GridLayout(7, 2));
 
 		eastButtonPanel.setLayout(new GridLayout(1, 6));
-		westButtonPanel.setLayout(new GridLayout(1, 1));
+		westButtonPanel.setLayout(new GridLayout(1, 2));
 		westTextPanel.setLayout(new BorderLayout());
 
 		// ADDING INTO PANELS
@@ -292,6 +297,7 @@ public class EditMenuGUI extends JFrame {
 		eastPanel.add(eastContentPanel, BorderLayout.CENTER);
 
 		westButtonPanel.add(removeButton);
+		westButtonPanel.add(editButton);
 
 		westPanel.add(westButtonPanel, BorderLayout.SOUTH);
 		westPanel.add(westTextPanel, BorderLayout.CENTER);
@@ -305,78 +311,72 @@ public class EditMenuGUI extends JFrame {
 
 	public void addActionListeners() {
 		menuTabs.addChangeListener(new MenuByType());
+		editButton.addActionListener(new addInfoToEditMenu());
 		removeButton.addActionListener(new removeFromMenu());
+		
 	}
+
 	public void getMenuByType() {
-			pastaModel.clear();
-			for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
-				pastaModel.addElement(controller.showMenuByType("pasta")
-						.get(i));
-			}
+		pastaModel.clear();
+		for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
+			pastaModel.addElement(controller.showMenuByType("pasta").get(i));
+		}
 
-			porkModel.clear();
-			for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
-				porkModel.addElement(controller.showMenuByType("pork").get(
-						i));
-			}
+		porkModel.clear();
+		for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
+			porkModel.addElement(controller.showMenuByType("pork").get(i));
+		}
 
-			chickenModel.clear();
-			for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
-				chickenModel.addElement(controller
-						.showMenuByType("chicken").get(i));
-			}
-			starterModel.clear();
-			for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
-				starterModel.addElement(controller
-						.showMenuByType("starter").get(i));
-			}
-			
+		chickenModel.clear();
+		for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
+			chickenModel
+					.addElement(controller.showMenuByType("chicken").get(i));
+		}
+		starterModel.clear();
+		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+			starterModel
+					.addElement(controller.showMenuByType("starter").get(i));
+		}
 
-			beefModel.clear();
-			for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
-				beefModel.addElement(controller.showMenuByType("beef").get(
-						i));
-			}
+		beefModel.clear();
+		for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
+			beefModel.addElement(controller.showMenuByType("beef").get(i));
+		}
 
-			dessertModel.clear();
-			for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
-				dessertModel.addElement(controller
-						.showMenuByType("dessert").get(i));
-			}
+		dessertModel.clear();
+		for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
+			dessertModel
+					.addElement(controller.showMenuByType("dessert").get(i));
+		}
 
-			soupModel.clear();
-			for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
-				soupModel.addElement(controller.showMenuByType("soups")
-						.get(i));
-			}
+		soupModel.clear();
+		for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
+			soupModel.addElement(controller.showMenuByType("soups").get(i));
+		}
 
-			seaFoodModel.clear();
-			for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
-				seaFoodModel.addElement(controller
-						.showMenuByType("seafood").get(i));
-			}
-			
+		seaFoodModel.clear();
+		for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
+			seaFoodModel
+					.addElement(controller.showMenuByType("seafood").get(i));
+		}
 
-			sideDishModel.clear();
-			for (int i = 0; i < controller.showMenuByType("sidedish")
-					.size(); i++) {
-				sideDishModel.addElement(controller.showMenuByType(
-						"sidedish").get(i));
-			}
+		sideDishModel.clear();
+		for (int i = 0; i < controller.showMenuByType("sidedish").size(); i++) {
+			sideDishModel.addElement(controller.showMenuByType("sidedish").get(
+					i));
+		}
 
-			alcoholicDrinksModel.clear();
-			for (int i = 0; i < controller.showMenuByType("alcoholic")
-					.size(); i++) {
-				alcoholicDrinksModel.addElement(controller.showMenuByType(
-						"alcoholic").get(i));
-			}
+		alcoholicDrinksModel.clear();
+		for (int i = 0; i < controller.showMenuByType("alcoholic").size(); i++) {
+			alcoholicDrinksModel.addElement(controller.showMenuByType(
+					"alcoholic").get(i));
+		}
 
-			nonAlcoholicDrinksModel.clear();
-			for (int i = 0; i < controller.showMenuByType("nonalcoholic")
-					.size(); i++) {
-				nonAlcoholicDrinksModel.addElement(controller
-						.showMenuByType("nonalcoholic").get(i));
-			}
+		nonAlcoholicDrinksModel.clear();
+		for (int i = 0; i < controller.showMenuByType("nonalcoholic").size(); i++) {
+			nonAlcoholicDrinksModel.addElement(controller.showMenuByType(
+					"nonalcoholic").get(i));
+		}
 
 	}
 
@@ -486,10 +486,8 @@ public class EditMenuGUI extends JFrame {
 		}
 	}
 
-	
 	class removeFromMenu implements ActionListener {
-		
-		
+
 		public void actionPerformed(ActionEvent e) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JList list = (JList) tab.getComponent(0);
@@ -510,9 +508,30 @@ public class EditMenuGUI extends JFrame {
 				e1.printStackTrace();
 			}
 		}
-		
+
 	}
 
+	class addInfoToEditMenu implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+			JList list = (JList) tab.getComponent(0);
+			Item selectedElement = (Item) list.getSelectedValue();
+			productNameTextField.setText(selectedElement.getName());
+			productDescriptionTextField.setText(selectedElement
+					.getDescription());
+			productPriceTextField.setText("" + selectedElement.getPrice());
+			productAmountTextField.setText("" + selectedElement.getAmount());
+			System.out.println(selectedElement instanceof Meal);
+			if(selectedElement instanceof Meal) {
+				productTypeComboBox.setModel(productTypeComboBoxModel.getIndexOf(0));
+			} else {
+				productContentComboBox.setModel(productDrinkContentComboBoxModel);
+			}
+		}
+
+	}
 
 	private void fillFirstTab() {
 
