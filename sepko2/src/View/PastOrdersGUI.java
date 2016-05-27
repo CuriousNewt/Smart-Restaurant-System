@@ -1,28 +1,32 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
+import Domain.Mediator.Database;
+import Domain.Mediator.ModelManager;
 import Domain.Model.Item;
 
 import com.toedter.calendar.JDateChooser;
 
 public class PastOrdersGUI extends JFrame {
 
-
+	private Database database;
+	private ModelManager manager;
+	
 	// JPANELS
 	// *********************************************************************
 	private JPanel mainPanel;
@@ -39,7 +43,8 @@ public class PastOrdersGUI extends JFrame {
 
 	// JBUTTONS
 	// *********************************************************************
-
+	private JButton searchButton;
+	
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
@@ -47,16 +52,19 @@ public class PastOrdersGUI extends JFrame {
 
 	private JDateChooser calendar;
 
-	private DefaultListModel<Item> orderListModel;
+	private DefaultListModel<String> orderListModel;
 
 
-	public PastOrdersGUI() throws Exception {
+	public PastOrdersGUI(Database database, ModelManager manager) throws Exception {
+		this.database = database;
+		this.manager = manager;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("SEP Restaurant System - Past orders menu");
 		setLayout(new BorderLayout());
 		setComponents();
 		addPanelsAndLayouts();
 		addBorders();
+		addActionListeners();
 		pack();
 	}
 
@@ -72,10 +80,10 @@ public class PastOrdersGUI extends JFrame {
 
 		// JBUTTONS
 		// *********************************************************************
-
+		searchButton = new JButton("Search!!!!!!!!!!!!!!!!!!!!!");
 		
 		// JLISTS & DEFAULT LIST MODELS
-		orderListModel = new DefaultListModel();
+		orderListModel = new DefaultListModel<String>();
 		
 		orderList = new JList(orderListModel);
 
@@ -92,6 +100,10 @@ public class PastOrdersGUI extends JFrame {
 
 	}
 
+	private void addActionListeners(){
+		searchButton.addActionListener(new UpdateList());
+	}
+	
 	private void addPanelsAndLayouts() {
 
 		// SETTING OF LAYOUTS
@@ -108,6 +120,7 @@ public class PastOrdersGUI extends JFrame {
 
 		mainPanel.add(northPanel, BorderLayout.NORTH);
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
+		mainPanel.add(searchButton,BorderLayout.SOUTH);
 
 		northPanel.add(calendar);
 		northPanel.add(totalDayPriceLabel);
@@ -120,10 +133,32 @@ public class PastOrdersGUI extends JFrame {
 
 	}
 
-	public static void main(String[] args) throws Exception {
+	class UpdateList implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				database.getAllPastOrders((Date) calendar.getDate());
+				System.out.println(calendar.getDate());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+			for(int i=0;i<manager.getPastOrders().size();i++){
+				orderListModel.addElement(manager.getPastOrders().get(i)); 
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	/*public static void main(String[] args) throws Exception {
 		PastOrdersGUI gui = new PastOrdersGUI();
 		gui.setSize(800, 800);
 		gui.setLocationRelativeTo(null);
 		gui.setVisible(true);
-	}
+	}*/
 }

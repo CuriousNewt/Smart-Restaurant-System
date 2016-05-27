@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,9 +29,11 @@ import Utility.RmiServerInterface;
 public class ServerGUI extends JFrame {
 
 	private EditMenuGUI editMenuGui;
+	private PastOrdersGUI pastOrdersGui;
 	private JMenuBar topMenuBar;
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
+	private JMenuItem menuItempastOrders;
 	private Controller controller;
 	private Database database;
 	private RmiServerInterface rmiService;
@@ -86,7 +89,9 @@ public class ServerGUI extends JFrame {
 		topMenuBar = new JMenuBar();
 		topMenu = new JMenu("Edit");
 		menuItemEditMenu = new JMenuItem("Edit menu..");
+		menuItempastOrders = new JMenuItem("Past orders..");
 		editMenuGui = new EditMenuGUI(database, controller, rmiService);
+		pastOrdersGui = new PastOrdersGUI(database, controller.getManager());
 
 		// JPANELS
 		// **********************************************************************
@@ -160,6 +165,7 @@ public class ServerGUI extends JFrame {
 		add(topMenuBar, BorderLayout.NORTH);
 		topMenuBar.add(topMenu);
 		topMenu.add(menuItemEditMenu);
+		topMenu.add(menuItempastOrders);
 	}
 
 	// ADDING FUNCTIONS
@@ -172,6 +178,8 @@ public class ServerGUI extends JFrame {
 			editMenuGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 	}
+	
+	
 
 	public void addActionListeners() {
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
@@ -179,6 +187,8 @@ public class ServerGUI extends JFrame {
 		ordersEditButton.addActionListener(new RemoveItem());
 		selectButton.addActionListener(new ViewButton());
 		paidButton.addActionListener(new AddPastOrder());
+		menuItempastOrders.addActionListener(new OpenPastOrdersGUI());
+		setAsBringed.addActionListener(new servedButton());
 	}
 
 	public void updateListOfOrders(int tableNumber) {
@@ -189,7 +199,25 @@ public class ServerGUI extends JFrame {
 		}
 
 	}
+	class OpenPastOrdersGUI implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pastOrdersGui.setVisible(true);
+			pastOrdersGui.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			pastOrdersGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
+		}
+		
+	}
 
+	class servedButton implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			 listOfOrders.setSelectionBackground(Color.green);
+		}
+	}
+	
 	class AddPastOrder implements ActionListener {
 
 		@Override

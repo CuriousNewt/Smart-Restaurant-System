@@ -9,10 +9,12 @@ public class ModelManager implements RestaurantManager, Serializable {
 	
 	private Menu menu;
 	private TableList tables;
+	private ArrayList<String> pastOrdersArrayList;
 	
 	public ModelManager() {
 		this.menu = new Menu();
 		this.tables = new TableList();
+		pastOrdersArrayList = new ArrayList<String>();
 	}
 	
 	public Menu getMenu() {
@@ -84,6 +86,10 @@ public class ModelManager implements RestaurantManager, Serializable {
 	
 	public void addTable(Table table){
 		tables.addTable(table);
+	}
+
+	public ArrayList<String> getPastOrders() {
+		return pastOrdersArrayList;
 	}
 
 	

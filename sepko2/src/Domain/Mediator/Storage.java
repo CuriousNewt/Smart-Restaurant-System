@@ -1,5 +1,6 @@
 package Domain.Mediator;
 
+import java.util.Date;
 import java.sql.SQLException;
 
 import Domain.Model.Item;
@@ -14,5 +15,5 @@ public interface Storage {
 
 	void addToPastOrders(Order order) throws SQLException;
 
-	void getAllPastOrders() throws SQLException;
+	void getAllPastOrders(Date date) throws SQLException;
 }

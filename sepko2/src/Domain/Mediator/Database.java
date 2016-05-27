@@ -2,6 +2,7 @@ package Domain.Mediator;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,8 +131,24 @@ public class Database implements Storage {
 	}
 
 	@Override
-	public void getAllPastOrders() throws SQLException {
-		// TODO Auto-generated method stub
+	public void getAllPastOrders(Date date) throws SQLException {
+		ResultSet temp;
+		
+		org.postgresql.Driver driver = new org.postgresql.Driver();
+		DriverManager.registerDriver(driver);
+		Connection connection = DriverManager.getConnection(ip, "postgres",
+				"Admin");
+		
+		try {
+				PreparedStatement statementPastOrders = connection
+						.prepareStatement("SELECT * FROM past_orders");
+				temp = statementPastOrders.executeQuery();
+				getPastOrdersToList(temp, date);
+				
+		} finally {
+			connection.close();
+		}
+		
 
 	}
 
@@ -140,6 +157,17 @@ public class Database implements Storage {
 			manager.getMenu().addMeal(result.getString("name"),
 					result.getString("description"), result.getDouble("price"),
 					result.getInt("amount"), result.getString("type"));
+		}
+	}
+	
+	private void getPastOrdersToList(ResultSet result, Date date) throws SQLException {
+		while (result.next()) {
+				
+			if(result.getDate("date").equals(date)){
+				String temp = result.getInt("order_number") + " " +result.getDate("date") + " " + result.getString("name") + " " +
+					result.getDouble("price") +result.getDouble("amount");
+					manager.getPastOrders().add(temp);
+			}
 		}
 	}
 

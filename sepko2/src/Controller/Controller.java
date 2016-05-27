@@ -72,4 +72,7 @@ public class Controller implements Serializable {
 		manager.addTable(table);
 	}
 
+	public ModelManager getManager(){
+		return manager;
+	}
 }
