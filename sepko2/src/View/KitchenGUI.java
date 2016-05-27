@@ -135,6 +135,7 @@ public class KitchenGUI extends JFrame {
 						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 						if(item.equals(itemTemp)){
 							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
+							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
 						}
 					}
 				}
