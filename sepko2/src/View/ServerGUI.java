@@ -198,6 +198,7 @@ public class ServerGUI extends JFrame {
 			Table table = (Table) temp.getSelectedValue();
 			try {
 				database.addToPastOrders(table.getOrder());
+				ordersModel.clear();
 			} catch (SQLException e1) {
 			
 				e1.printStackTrace();

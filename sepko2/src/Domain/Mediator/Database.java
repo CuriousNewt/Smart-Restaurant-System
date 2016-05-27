@@ -114,7 +114,6 @@ public class Database implements Storage {
 				"Admin");
 		try {
 			for (int i = 0; i < order.size(); i++) {
-				System.out.println(order.size());
 				PreparedStatement statementPastOrders = connection
 						.prepareStatement("INSERT INTO past_orders (order_number, date, name, price, amount) VALUES "
 								+ "(" + orderID + "," + "CURRENT_DATE" + ", '"
