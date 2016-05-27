@@ -2,14 +2,17 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +22,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
+
+
+
 
 import Controller.Controller;
 import Domain.Mediator.Database;
@@ -333,9 +340,26 @@ public class ServerGUI extends JFrame {
 
 	public void colourBackground(int ID) {
 		
-		listOfTables.setSelectedIndex(ID-1);
-		listOfTables.getComponent(ID-1).setBackground(Color.green);
+		listOfTables.setCellRenderer(new MyListRenderer());
 		
 	}
+	
+	 private class MyListRenderer extends DefaultListCellRenderer
+	    {
+	  
+	        public Component getListCellRendererComponent( JList list,
+	                Object value, int index, boolean isSelected,
+	                boolean cellHasFocus )
+	        {
+	            super.getListCellRendererComponent( list, value, index,
+	                    isSelected, cellHasFocus );
+	            
+	            if( isSelected ){
+	            setBackground(Color.green);
+	            }
+	            
+	            return(this);
+	        }
+	    }
 
 }
