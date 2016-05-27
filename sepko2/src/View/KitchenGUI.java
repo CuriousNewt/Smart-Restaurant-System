@@ -135,7 +135,11 @@ public class KitchenGUI extends JFrame {
 					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
 						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 						if(item.equals(itemTemp)){
+							try{
 							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
+							}catch(Exception e1){
+								e1.printStackTrace();
+							}
 							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j));
 							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
 							break bezdopice;
