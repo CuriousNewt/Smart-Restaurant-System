@@ -115,7 +115,7 @@ public class KitchenGUI extends JFrame {
 		mealListModel.clear();
 		for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
 			for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
-				Item item = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
+				Meal item = (Meal) serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 				if(item instanceof Meal && !item.isPrepared()){
 					mealListModel.addElement(item);
 				}
@@ -128,18 +128,15 @@ public class KitchenGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			int index = mealList.getSelectedIndex();
-			Item item = mealList.getSelectedValue();
+			Meal item = (Meal) mealList.getSelectedValue();
 			try {
 				bezdopice : 
 					for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
 					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
-						Item itemTemp = serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
+						Meal itemTemp = (Meal) serverInterface.getController().getTables().getTable(i).getOrder().getItem(j);
 						if(item.equals(itemTemp)){
-							try{
+							
 							serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).setAsPrepared();
-							}catch(Exception e1){
-								e1.printStackTrace();
-							}
 							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j));
 							System.out.println(serverInterface.getController().getTables().getTable(i).getOrder().getItem(j).isPrepared());
 							break bezdopice;
