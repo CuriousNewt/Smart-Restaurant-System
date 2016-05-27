@@ -116,13 +116,15 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	public synchronized void registerForCallback(ClientInterface clientInterface) throws RemoteException {
 		if (!(clientList.contains(clientInterface))) {
 			clientList.add(clientInterface);
-			clientInterface.setID(clientID);
-			System.out.println(clientID);
-			System.out.println("NEW CLIENT!");
-			Table table = new Table(clientID);
-			clientID++;
-			gui.addTableToList(table);
-			controller.addTable(table);
+			if(clientInterface.getIDForKitchen() != 666){
+				clientInterface.setID(clientID);
+				System.out.println(clientID);
+				System.out.println("NEW CLIENT!");
+				Table table = new Table(clientID);
+				clientID++;
+				gui.addTableToList(table);
+				controller.addTable(table);
+			}
 		}
 	}
 

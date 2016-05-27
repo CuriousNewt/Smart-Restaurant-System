@@ -96,5 +96,10 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 		}
 	}
 
+	@Override
+	public int getIDForKitchen() throws RemoteException {
+		return ID;
+	}
+
 
 }

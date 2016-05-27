@@ -11,5 +11,5 @@ public interface ClientInterface extends Remote {
 	public Order getOrder() throws RemoteException;
 	public void callStaff()  throws RemoteException;
 	void updateMenu() throws RemoteException;
-	
+	int getIDForKitchen() throws RemoteException;
 }

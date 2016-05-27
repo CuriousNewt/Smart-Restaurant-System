@@ -341,9 +341,12 @@ public class ServerGUI extends JFrame {
 	}
 
 	public void colourBackground(int ID) {
+		listOfTables.setSelectedIndex(ID-1);
+		
 		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
 				+ " made a new order.");
-		listOfTables.setSelectedIndex(ID-1);
+		
+		kitchen.updateList();
 		
 	}
 
