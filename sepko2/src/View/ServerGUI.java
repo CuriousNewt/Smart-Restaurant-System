@@ -57,7 +57,7 @@ public class ServerGUI extends JFrame {
 
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
-	private JList<String> listOfTables;
+	private JList<Table> listOfTables;
 	private JList<String> listOfOrders;
 	private DefaultListModel tablesModel;
 	private DefaultListModel ordersModel;
@@ -109,7 +109,7 @@ public class ServerGUI extends JFrame {
 		// *************************************************
 		tablesModel = new DefaultListModel();
 		ordersModel = new DefaultListModel();
-		listOfTables = new JList<String>(tablesModel);
+		listOfTables = new JList<Table>(tablesModel);
 		listOfOrders = new JList<String>(ordersModel);
 
 		// JLABELS
@@ -194,7 +194,7 @@ public class ServerGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JList temp = (JList) e.getSource();
+			JList temp = (JList) listOfTables;
 			Table table = (Table) temp.getSelectedValue();
 			try {
 				database.addToPastOrders(table.getOrder());
