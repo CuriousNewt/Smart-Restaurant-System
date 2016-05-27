@@ -126,9 +126,11 @@ public class KitchenGUI extends JFrame {
 	class setAsPrepared implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
 			int index = mealList.getSelectedIndex();
 			Item item = mealList.getSelectedValue();
 			try {
+				updateLists();
 				bezdopice : 
 					for(int i = 0; i < serverInterface.getController().getTables().size(); i++){
 					for(int j = 0; j < serverInterface.getController().getTables().getTable(i).getOrder().size(); j++){
@@ -141,12 +143,11 @@ public class KitchenGUI extends JFrame {
 						}
 					}
 				}
-			updateLists();
 			} catch (RemoteException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}			
-			mealListModel.removeElementAt(index);
+			//mealListModel.removeElementAt(index);
 		}	
 	}
 	
