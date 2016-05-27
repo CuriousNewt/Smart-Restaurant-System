@@ -33,7 +33,7 @@ public class Database implements Storage {
 
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"Admin");
+				"root");
 		try {
 			PreparedStatement statementMeal = connection
 					.prepareStatement("SELECT * FROM meal");
@@ -55,7 +55,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"Admin");
+				"root");
 		try {
 			if (item instanceof Meal) {
 				Meal meal = (Meal) item;
@@ -86,7 +86,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"Admin");
+				"root");
 		try {
 			if (item instanceof Meal) {
 				Meal meal = (Meal) item;
@@ -112,7 +112,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"Admin");
+				"root");
 		try {
 			for (int i = 0; i < order.size(); i++) {
 				PreparedStatement statementPastOrders = connection
@@ -137,7 +137,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"Admin");
+				"root");
 		
 		try {
 				PreparedStatement statementPastOrders = connection
