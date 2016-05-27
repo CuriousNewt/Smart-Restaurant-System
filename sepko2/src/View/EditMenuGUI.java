@@ -593,6 +593,7 @@ public class EditMenuGUI extends JFrame {
 			} else {
 				double amount = Double.parseDouble(productAmountTextField.getText());
 				String type = (String) productContentComboBox.getSelectedItem();
+				productContentComboBox.setModel(productDrinkContentComboBoxModel);
 				if(type.equals("Non-alcoholic")) {
 					type = "nonalcoholic";
 				} else {
