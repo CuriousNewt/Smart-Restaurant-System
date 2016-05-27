@@ -341,7 +341,7 @@ public class ServerGUI extends JFrame {
 	}
 
 	public void colourBackground(int ID) {
-		
+		listOfTables.setCellRenderer(new CellRenderer());		
 		
 	}
 
@@ -354,6 +354,7 @@ public class ServerGUI extends JFrame {
 	    
 	    JPanel pane = new JPanel(new BorderLayout()); // add contents here   
 
+	    
 	    pane.setBackground(Color.green);
 	    return pane;
 	  }
