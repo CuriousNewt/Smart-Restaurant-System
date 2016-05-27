@@ -154,7 +154,8 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	@Override
 	public void colourBackground(int ID) throws RemoteException {
 		gui.colourBackground(ID);
-		
 	}
 
+	
+	
 }

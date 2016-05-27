@@ -9,12 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -22,10 +21,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+
+
+
+
+
 import javax.swing.ListCellRenderer;
-
-
-
 
 import Controller.Controller;
 import Domain.Mediator.Database;
@@ -343,4 +345,21 @@ public class ServerGUI extends JFrame {
 		
 	}
 
+	public class CellRenderer extends JComponent implements ListCellRenderer
+	{
+
+	  @Override
+	  public Component getListCellRendererComponent(JList aList, Object aValue, int aIndex, boolean aIsSelected, boolean aCellHasFocus)
+	  {
+	    
+	    JPanel pane = new JPanel(new BorderLayout()); // add contents here   
+
+	    pane.setBackground(Color.green);
+	    return pane;
+	  }
+	}	
+	
 }
+	
+	
+
