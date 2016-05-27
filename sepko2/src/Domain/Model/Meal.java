@@ -3,11 +3,13 @@ package Domain.Model;
 public class Meal extends Item {
 	private int amount;
 	private String type;
+	private boolean isPrepared;
 	
 	public Meal(String name, String description, double price, int amount, String type) {
 		super(name, description, price);
 		this.amount = amount;
 		this.type = type.toLowerCase();
+		this.isPrepared = false;
 	}
 
 	@Override
@@ -32,6 +34,13 @@ public class Meal extends Item {
 	@Override
 	public String getType() {
 		return type;
+	}
+	
+	public void setAsPrepared(){
+		super.setAsPrepared();
+	}
+	public boolean isPrepared(){
+		return isPrepared;
 	}
 
 }
