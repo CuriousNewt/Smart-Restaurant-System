@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -50,7 +51,7 @@ public class ServerGUI extends JFrame {
 	// JBUTTONS
 	// *********************************************************************
 	private JButton ordersEditButton;
-	private JButton payedButton;
+	private JButton paidButton;
 	private JButton setAsBringed;
 	private JButton selectButton;
 
@@ -61,7 +62,8 @@ public class ServerGUI extends JFrame {
 	private DefaultListModel tablesModel;
 	private DefaultListModel ordersModel;
 
-	public ServerGUI(Controller controller, Database database, RmiServerInterface rmiService) throws Exception {
+	public ServerGUI(Controller controller, Database database,
+			RmiServerInterface rmiService) throws Exception {
 		this.database = database;
 		this.controller = controller;
 		this.rmiService = rmiService;
@@ -99,7 +101,7 @@ public class ServerGUI extends JFrame {
 		// JBUTTONS
 		// *********************************************************************
 		ordersEditButton = new JButton("Remove selected item");
-		payedButton = new JButton("Set selected order as paid");
+		paidButton = new JButton("Set selected order as paid");
 		setAsBringed = new JButton("Set selected order as served");
 		selectButton = new JButton("Show orders of the selected table");
 
@@ -142,7 +144,7 @@ public class ServerGUI extends JFrame {
 		eastListPanel.add(listOfOrders);
 
 		eastButtonPanel.add(ordersEditButton);
-		eastButtonPanel.add(payedButton);
+		eastButtonPanel.add(paidButton);
 		eastButtonPanel.add(setAsBringed);
 
 		westButtonPanel.add(selectButton);
@@ -176,6 +178,7 @@ public class ServerGUI extends JFrame {
 		listOfTables.addMouseListener(new ViewTableOrder());
 		ordersEditButton.addActionListener(new RemoveItem());
 		selectButton.addActionListener(new ViewButton());
+		paidButton.addActionListener(new AddPastOrder());
 	}
 
 	public void updateListOfOrders(int tableNumber) {
@@ -187,38 +190,56 @@ public class ServerGUI extends JFrame {
 
 	}
 
+	class AddPastOrder implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JList temp = (JList) e.getSource();
+			Table table = (Table) temp.getSelectedValue();
+			try {
+				database.addToPastOrders(table.getOrder());
+			} catch (SQLException e1) {
+			
+				e1.printStackTrace();
+			}
+
+		}
+	}
+
 	class RemoveItem implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JList list = listOfOrders;
-			try{
-			Item item = (Item) list.getSelectedValue();
-			controller.removeItemFromOrder(item,
-					listOfTables.getSelectedIndex());
-			updateListOfOrders(listOfTables.getSelectedIndex());
-			}
-			catch(Exception exception){
-				JOptionPane.showMessageDialog(ServerGUI.this, "Select an item you want to remove first");
+			try {
+				Item item = (Item) list.getSelectedValue();
+				controller.removeItemFromOrder(item,
+						listOfTables.getSelectedIndex());
+				updateListOfOrders(listOfTables.getSelectedIndex());
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(ServerGUI.this,
+						"Select an item you want to remove first");
 			}
 		}
 	}
+
 	class ViewButton implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JList temp = listOfTables;
-			try{
-			Table table = (Table) temp.getSelectedValue();
-			if(table.getOrder().size() == 0){
+			try {
+				Table table = (Table) temp.getSelectedValue();
+				if (table.getOrder().size() == 0) {
+					JOptionPane.showMessageDialog(
+							ServerGUI.this,
+							"NO ORDERS TO SERVE FOR TABLE "
+									+ table.getTableNumber());
+				}
+				updateListOfOrders(table.getTableNumber() - 1);
+			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(ServerGUI.this,
-						"NO ORDERS TO SERVE FOR TABLE " 
-				+ table.getTableNumber());
-			}
-			updateListOfOrders(table.getTableNumber() - 1);
-			}
-			catch(Exception exception){
-				JOptionPane.showMessageDialog(ServerGUI.this, "Select the table you want to check first");
+						"Select the table you want to check first");
 			}
 		}
 	}
@@ -230,10 +251,11 @@ public class ServerGUI extends JFrame {
 			if (e.getClickCount() == 2) {
 				JList temp = (JList) e.getSource();
 				Table table = (Table) temp.getSelectedValue();
-				if(table.getOrder().size() == 0){
-					JOptionPane.showMessageDialog(ServerGUI.this,
-							"NO ORDERS TO SERVE FOR TABLE " 
-					+ table.getTableNumber());
+				if (table.getOrder().size() == 0) {
+					JOptionPane.showMessageDialog(
+							ServerGUI.this,
+							"NO ORDERS TO SERVE FOR TABLE "
+									+ table.getTableNumber());
 				}
 				updateListOfOrders(table.getTableNumber() - 1);
 			}
