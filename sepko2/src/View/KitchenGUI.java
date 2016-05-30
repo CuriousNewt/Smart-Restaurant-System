@@ -139,5 +139,14 @@ public class KitchenGUI extends JFrame {
 			}
 		}
 	}
+
+	public void updateKitchenRemoveItem(Item item) { 
+			for(int i=0; i < mealListModel.size(); i++) {
+				if(mealListModel.getElementAt(i).equals(item)) {
+					mealListModel.removeElementAt(i);
+					break;
+				}
+			}
+	}
 }
 

@@ -7,6 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.JFrame;
 
+import Domain.Model.Item;
 import Domain.Model.Order;
 import Utility.RmiServerInterface;
 import View.KitchenGUI;
@@ -38,7 +39,9 @@ public class KitchenClient extends UnicastRemoteObject implements
 	@Override
 	public void updateKitchen(Order order) {
 		gui.updateKitchen(order);
-
+	}
+	public void updateKitchenRemoveItem(Item item) {
+		gui.updateKitchenRemoveItem(item);
 	}
 
 }

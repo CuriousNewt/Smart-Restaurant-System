@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -265,7 +266,8 @@ public class ServerGUI extends JFrame {
 				controller.removeItemFromOrder(item,
 						listOfTables.getSelectedIndex());
 				updateListOfOrders(listOfTables.getSelectedIndex());
-			} catch (NullPointerException | ArrayIndexOutOfBoundsException exception) {
+				rmiService.updateKitchenRemoveItem(item);
+			} catch (NullPointerException | ArrayIndexOutOfBoundsException | RemoteException exception) {
 				JOptionPane.showMessageDialog(ServerGUI.this,
 						"Select an item you want to remove first");
 			}

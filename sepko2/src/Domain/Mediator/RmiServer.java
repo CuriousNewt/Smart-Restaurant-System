@@ -89,6 +89,9 @@ public class RmiServer implements RmiServerInterface {
 	public void updateKitchen(Order order) throws RemoteException {
 		kitchenInterface.updateKitchen(order);
 	}
+	public void updateKitchenRemoveItem(Item item) throws RemoteException {
+		kitchenInterface.updateKitchenRemoveItem(item);
+	}
 
 	@Override
 	public synchronized void doCallbacks(int ID) {

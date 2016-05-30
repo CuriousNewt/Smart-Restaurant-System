@@ -23,4 +23,5 @@ public interface RmiServerInterface extends Remote{
 	void colourBackground(int ID) throws RemoteException;
 	void registerKitchenForCallBack(KitchenClientInterface kitchenInterface) throws RemoteException;
 	void updateKitchen(Order order) throws RemoteException;
+	void updateKitchenRemoveItem(Item item) throws RemoteException;
 }
