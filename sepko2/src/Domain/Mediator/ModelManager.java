@@ -104,7 +104,7 @@ public class ModelManager implements RestaurantManager, Serializable {
 	}
 
 	public void clearPastOrders() {
-		pastOrdersArrayList = null;
+		pastOrdersArrayList = new ArrayList<String>();
 	}
 
 	
