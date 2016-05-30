@@ -222,7 +222,7 @@ public class ClientGUI extends JFrame {
 
 	private void addBorders() {
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-		eastPanel.setBorder(BorderFactory.createTitledBorder("ORDERS"));
+		eastPanel.setBorder(BorderFactory.createTitledBorder("ORDER ITEMS"));
 		menuTabs.setBorder(BorderFactory.createTitledBorder("MENU"));
 		minusButtonPanel.setBorder(BorderFactory
 				.createEmptyBorder(100, 0, 0, 0));

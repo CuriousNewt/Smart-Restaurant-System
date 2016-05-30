@@ -1,20 +1,16 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
-import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -23,16 +19,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-
-
-
-
-import javax.swing.ListCellRenderer;
-
 import Controller.Controller;
 import Domain.Mediator.Database;
 import Domain.Model.Item;
+import Domain.Model.Meal;
 import Domain.Model.Table;
 import Utility.RmiServerInterface;
 
@@ -188,8 +178,6 @@ public class ServerGUI extends JFrame {
 			editMenuGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 	}
-	
-	
 
 	public void addActionListeners() {
 		menuItemEditMenu.addActionListener(new OpenEditMenu());
@@ -209,48 +197,56 @@ public class ServerGUI extends JFrame {
 		}
 
 	}
+
 	class OpenPastOrdersGUI implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			pastOrdersGui.setVisible(true);
 			pastOrdersGui.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			pastOrdersGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);	
+			pastOrdersGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
-		
+
 	}
 
 	class servedButton implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try{
-			int index = listOfOrders.getSelectedIndex();
-			listOfOrders.getSelectedValue().setAsServed();
-			Item temp = listOfOrders.getSelectedValue();
-			ordersModel.remove(index);
-			ordersModel.insertElementAt(temp, index);
+			try {
+				if(listOfTables.getSelectedIndex() == -1){
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"Select a table first");
+				} else {
+				int index = listOfOrders.getSelectedIndex();
+				listOfOrders.getSelectedValue().setAsServed();
+				Item temp = listOfOrders.getSelectedValue();
+				ordersModel.remove(index);
+				ordersModel.insertElementAt(temp, index);
+			} }                 
+			catch (NullPointerException exception) {
+				JOptionPane.showMessageDialog(ServerGUI.this,
+						"Select an order you served first");
 			}
-			catch(NullPointerException exception){
-				JOptionPane.showMessageDialog(ServerGUI.this, "Select an order you served first");
-			}
 			
-			
-			
+		
+
 		}
 	}
-	
+
 	class AddPastOrder implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JList temp = (JList) listOfTables;
 			try {
-			Table table = (Table) temp.getSelectedValue();
+				Table table = (Table) temp.getSelectedValue();
 				database.addToPastOrders(table.getOrder());
 				ordersModel.clear();
 			} catch (Exception exception) {
-				JOptionPane.showMessageDialog(ServerGUI.this, "To set an order as paid, you must select the table first");
+				JOptionPane
+						.showMessageDialog(ServerGUI.this,
+								"To set an order as paid, you must select the table first");
 			}
 
 		}
@@ -260,17 +256,25 @@ public class ServerGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JList list = listOfOrders;
-			try {
-				Item item = (Item) list.getSelectedValue();
-				controller.removeItemFromOrder(item,
-						listOfTables.getSelectedIndex());
-				updateListOfOrders(listOfTables.getSelectedIndex());
-				rmiService.updateKitchenRemoveItem(item);
-			} catch (NullPointerException | ArrayIndexOutOfBoundsException | RemoteException exception) {
-				JOptionPane.showMessageDialog(ServerGUI.this,
-						"Select an item you want to remove first");
-			}
+			int dialogButton = JOptionPane.showConfirmDialog(ServerGUI.this,
+					"Do you really want to delete this order item?",  "Confrim",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (dialogButton == JOptionPane.YES_OPTION) {
+				JList list = listOfOrders;
+				try {
+					Item item = (Item) list.getSelectedValue();
+					controller.removeItemFromOrder(item,
+							listOfTables.getSelectedIndex());
+					updateListOfOrders(listOfTables.getSelectedIndex());
+					if (item instanceof Meal) {
+						rmiService.updateKitchenRemoveItem(item);
+					}
+				} catch (NullPointerException | ArrayIndexOutOfBoundsException
+						| RemoteException exception) {
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"Select an item you want to remove first");
+				}
+			} 
 		}
 	}
 
@@ -349,14 +353,10 @@ public class ServerGUI extends JFrame {
 	}
 
 	public void colourBackground(int ID) {
-		listOfTables.setSelectedIndex(ID-1);
-		
+		listOfTables.setSelectedIndex(ID - 1);
+
 		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
-				+ " made a new order.");		
+				+ " made a new order.");
 	}
 
-	
 }
-	
-	
-

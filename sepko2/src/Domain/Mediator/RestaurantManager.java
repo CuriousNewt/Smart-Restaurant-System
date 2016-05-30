@@ -28,4 +28,6 @@ public interface RestaurantManager {
 	void addItemToOrder(Item item, int tableNumber);
 
 	void removeItemFromOrder(Item item, int tableNumber);
+	
+	boolean isDuplicate(Item item);
 }

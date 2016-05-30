@@ -81,7 +81,7 @@ public class PastOrdersGUI extends JFrame {
 
 		// JBUTTONS
 		// *********************************************************************
-		searchButton = new JButton("Search!!!!!!!!!!!!!!!!!!!!!");
+		searchButton = new JButton("Search");
 		
 		// JLISTS & DEFAULT LIST MODELS
 		orderListModel = new DefaultListModel<String>();
@@ -138,18 +138,25 @@ public class PastOrdersGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			orderListModel.clear();
 			try {
 				database.getAllPastOrders((Date) calendar.getDate());
+				
 			} catch (SQLException | NullPointerException e) {
 				if(e instanceof NullPointerException)
 					JOptionPane.showMessageDialog(PastOrdersGUI.this, "First, select the date you want to check");
-				else
-					JOptionPane.showMessageDialog(PastOrdersGUI.this, "Database issues! Call your IT service");
+				else if (e instanceof SQLException) {
+					if(orderListModel.isEmpty()) {
+						JOptionPane.showMessageDialog(PastOrdersGUI.this, "No past orders for selected date");
+					} else {
+						JOptionPane.showMessageDialog(PastOrdersGUI.this, "Database issues! Call your IT service");
+					}
+				}
 			}
 		    
 			for(int i=0;i<manager.getPastOrders().size();i++){
 				orderListModel.addElement(manager.getPastOrders().get(i)); 
-			}		
+			}	
 		}	
 	}
 }

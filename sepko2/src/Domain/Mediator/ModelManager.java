@@ -60,6 +60,7 @@ public class ModelManager implements RestaurantManager, Serializable {
 	public Menu showDrinks() {
 		return this.menu.showDrinks();
 	}
+	
 
 	@Override
 	public void addItemToOrder(Item item, int tableNumber) {
@@ -90,6 +91,16 @@ public class ModelManager implements RestaurantManager, Serializable {
 
 	public ArrayList<String> getPastOrders() {
 		return pastOrdersArrayList;
+	}
+
+	@Override
+	public boolean isDuplicate(Item item) {
+		for(int i = 0; i < menu.size(); i++) {
+			if(menu.get(i).equals(item)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	

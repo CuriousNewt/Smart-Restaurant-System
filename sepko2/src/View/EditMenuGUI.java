@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -507,13 +508,18 @@ public class EditMenuGUI extends JFrame {
 	}
 
 	class removeFromMenu implements ActionListener {
-
+		
 		public void actionPerformed(ActionEvent e) {
+			int dialogButton = JOptionPane.showConfirmDialog(EditMenuGUI.this,
+					"Do you really want to delete this item from menu?",  "Confrim",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (dialogButton == JOptionPane.YES_OPTION) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JList list = (JList) tab.getComponent(0);
 			Item selectedElement = (Item) list.getSelectedValue();
 			removeSelectedItemFromMenu(selectedElement);
 			resetProductFields();
+			} 
 		}
 	}
 	
@@ -533,6 +539,10 @@ public class EditMenuGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			int dialogButton = JOptionPane.showConfirmDialog(EditMenuGUI.this,
+					"Do you really want to edit this menu item?",  "Confrim",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (dialogButton == JOptionPane.YES_OPTION) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JList list = (JList) tab.getComponent(0);
 			Item selectedElement = (Item) list.getSelectedValue();
@@ -570,7 +580,7 @@ public class EditMenuGUI extends JFrame {
 
 			}
 			removeSelectedItemFromMenu(selectedElement);
-			
+			}
 		}
 
 	}
@@ -579,6 +589,7 @@ public class EditMenuGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			String name = productNameTextField.getText();
 			String description = productDescriptionTextField.getText();
 			double price = Double.parseDouble(productPriceTextField.getText());
@@ -597,6 +608,11 @@ public class EditMenuGUI extends JFrame {
 					case "Dessert": type = "dessert"; break;
 				}
 				Meal meal = new Meal(name, description, price, amount, type);
+				if(controller.getManager().isDuplicate(meal)) {
+					JOptionPane.showMessageDialog(EditMenuGUI.this, "Item is already in menu, you can't add"
+							+ " duplicates");
+					return;
+				}
 				try {
 					database.addToMenu(meal);
 				} catch (SQLException e1) {
@@ -613,6 +629,11 @@ public class EditMenuGUI extends JFrame {
 					type = "alcoholic";
 				}
 				Drink drink = new Drink(name, description, price, amount, type);
+				if(controller.getManager().isDuplicate(drink)) {
+					JOptionPane.showMessageDialog(EditMenuGUI.this, "Item is already in menu, you can't add"
+							+ " duplicates");
+					return;
+				}
 				try {
 					database.addToMenu(drink);
 				} catch (SQLException e1) {

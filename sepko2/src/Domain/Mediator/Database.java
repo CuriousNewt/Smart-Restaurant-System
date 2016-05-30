@@ -164,8 +164,8 @@ public class Database implements Storage {
 		while (result.next()) {
 				
 			if(result.getDate("date").equals(date)){
-				String temp = result.getInt("order_number") + " " +result.getDate("date") + " " + result.getString("name") + " " +
-					result.getDouble("price") +result.getDouble("amount");
+				String temp = result.getInt("order_number") + " | " +result.getDate("date") + " | " + result.getString("name") 
+						+ " | " + result.getDouble("price") + " | " + result.getDouble("amount");
 					manager.getPastOrders().add(temp);
 			}
 		}
