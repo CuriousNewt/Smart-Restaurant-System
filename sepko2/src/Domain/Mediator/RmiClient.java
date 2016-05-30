@@ -5,19 +5,14 @@ import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import Controller.Controller;
 import Domain.Model.*;
-import Utility.RemoteObserver;
 import Utility.RmiServerInterface;
 import View.ClientGUI;
 
-public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
-		ClientInterface, Serializable {
-
+public class RmiClient extends UnicastRemoteObject implements ClientInterface, Serializable {
+	
 	private static int ID;
 	private static final long serialVersionUID = 1L;
 	private RmiServerInterface service;
@@ -55,7 +50,6 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 				.lookup(ip + "/RmiService");
 		RmiClient client = new RmiClient(remoteService);
 		remoteService.registerForCallback(client);
-		remoteService.addObserver(client);
 		gui = new ClientGUI(remoteService.getController(), getID(),remoteService, client);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
@@ -83,7 +77,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 
 	@Override
 	public void setID(int ID) {
-		this.ID = ID;
+		RmiClient.ID = ID;
 
 	}
 	public void updateMenu() {
@@ -91,7 +85,7 @@ public class RmiClient extends UnicastRemoteObject implements RemoteObserver,
 			gui.setController(remoteService.getController());
 			gui.getMenuByType();
 		} catch (RemoteException e) {
-			System.out.println("doooo pièe... èosi sa riadne dojebalo");
+			e.printStackTrace();
 		}
 	}
 

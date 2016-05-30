@@ -1,69 +1,26 @@
 package Domain.Mediator;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.JFrame;
-
 import Controller.Controller;
 import Domain.Model.Item;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 import Domain.Model.Table;
-import Utility.RemoteObserver;
 import Utility.RmiServerInterface;
 import View.ServerGUI;
 
-public class RmiServer extends Observable implements RmiServerInterface {
+public class RmiServer implements RmiServerInterface {
 
 	private Controller controller;
 	private ArrayList<ClientInterface> clientList;
 	private KitchenClientInterface kitchenInterface;
 	private int clientID;
 	private static ServerGUI gui;
-
-	/*
-	 * Thread thread = new Thread() {
-	 * 
-	 * @Override public void run() { while (true) { try { Thread.sleep(10000); }
-	 * catch (InterruptedException e) { } setChanged(); try {
-	 * notifyObservers(show("menu")); } catch (RemoteException e) {
-	 * e.printStackTrace(); } } }; };
-	 */
-
-	private class WrappedObserver implements Observer, Serializable {
-
-		private static final long serialVersionUID = 1L;
-
-		private RemoteObserver observer;
-		private int id;
-
-		public WrappedObserver(RemoteObserver observer) {
-			this.observer = observer;
-			this.id = RmiClient.getID();
-		}
-
-		public int id() {
-			return this.id;
-		}
-
-		@Override
-		public void update(Observable o, Object argument) {
-			try {
-				observer.update(o.toString(), argument);
-			} catch (RemoteException e) {
-				System.out.println("Remote exception removing table no. "
-						+ id());
-				o.deleteObserver(this);
-			}
-		}
-	}
 
 	public RmiServer(Controller controller, Database database) throws Exception {
 		this.controller = controller;
@@ -108,16 +65,11 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	}
 
 	@Override
-	public void addObserver(RemoteObserver o) throws RemoteException {
-		WrappedObserver observer = new WrappedObserver(o);
-		addObserver(observer);
-	}
-
-	@Override
-	public synchronized void registerForCallback(ClientInterface clientInterface) throws RemoteException {
+	public synchronized void registerForCallback(ClientInterface clientInterface)
+			throws RemoteException {
 		if (!(clientList.contains(clientInterface))) {
 			clientList.add(clientInterface);
-			if(clientInterface.getIDForKitchen() != 666){
+			if (clientInterface.getIDForKitchen() != 666) {
 				clientInterface.setID(clientID);
 				System.out.println(clientID);
 				System.out.println("NEW CLIENT!");
@@ -128,11 +80,12 @@ public class RmiServer extends Observable implements RmiServerInterface {
 			}
 		}
 	}
-	
-	public synchronized void registerKitchenForCallBack(KitchenClientInterface kitchenInterface) throws RemoteException {
+
+	public synchronized void registerKitchenForCallBack(
+			KitchenClientInterface kitchenInterface) throws RemoteException {
 		this.kitchenInterface = kitchenInterface;
 	}
-	
+
 	public void updateKitchen(Order order) throws RemoteException {
 		kitchenInterface.updateKitchen(order);
 	}
@@ -142,17 +95,18 @@ public class RmiServer extends Observable implements RmiServerInterface {
 		Order order;
 		try {
 			order = clientList.get(ID - 1).getOrder();
-			for(int i = 0; i < order.size(); i++){
-				controller.addItemToOrder(order.getItem(i), ID-1);
+			for (int i = 0; i < order.size(); i++) {
+				controller.addItemToOrder(order.getItem(i), ID - 1);
 			}
 			System.out.println(clientList.get(0).toString());
-			gui.updateListOfOrders(ID-1);
+			gui.updateListOfOrders(ID - 1);
 		} catch (RemoteException e) {
 			System.out.println("Something went wrong RMISERVER 140");
 		}
 	}
+
 	public synchronized void updateMenuOfClients() throws RemoteException {
-		for(int i = 0; i < clientList.size();i++) {
+		for (int i = 0; i < clientList.size(); i++) {
 			clientList.get(i).updateMenu();
 		}
 	}
@@ -168,5 +122,5 @@ public class RmiServer extends Observable implements RmiServerInterface {
 	}
 
 	
-	
+
 }

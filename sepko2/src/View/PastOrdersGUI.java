@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Domain.Mediator.Database;
@@ -139,26 +140,16 @@ public class PastOrdersGUI extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			try {
 				database.getAllPastOrders((Date) calendar.getDate());
-				System.out.println(calendar.getDate());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (SQLException | NullPointerException e) {
+				if(e instanceof NullPointerException)
+					JOptionPane.showMessageDialog(PastOrdersGUI.this, "First, select the date you want to check");
+				else
+					JOptionPane.showMessageDialog(PastOrdersGUI.this, "Database issues! Call your IT service");
 			}
 		    
 			for(int i=0;i<manager.getPastOrders().size();i++){
 				orderListModel.addElement(manager.getPastOrders().get(i)); 
-			}
-			
-		}
-		
+			}		
+		}	
 	}
-	
-	
-	
-	/*public static void main(String[] args) throws Exception {
-		PastOrdersGUI gui = new PastOrdersGUI();
-		gui.setSize(800, 800);
-		gui.setLocationRelativeTo(null);
-		gui.setVisible(true);
-	}*/
 }

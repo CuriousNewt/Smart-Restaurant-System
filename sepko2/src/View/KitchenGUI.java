@@ -10,6 +10,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Controller.Controller;
@@ -121,7 +122,12 @@ public class KitchenGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try{
 			mealListModel.removeElementAt(mealList.getSelectedIndex());
+			}
+			catch(NullPointerException | ArrayIndexOutOfBoundsException exeption){
+				JOptionPane.showMessageDialog(KitchenGUI.this, "First, select a meal that left the kitchen");
+			}
 		}
 		
 	}

@@ -1,4 +1,5 @@
 package Utility;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -10,9 +11,7 @@ import Domain.Model.Item;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 
-public interface RmiServerInterface extends Remote {
-
-    void addObserver(RemoteObserver o) throws RemoteException;
+public interface RmiServerInterface extends Remote{
 
     Menu show(String what) throws RemoteException;
     Controller getController() throws RemoteException;

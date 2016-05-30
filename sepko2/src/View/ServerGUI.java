@@ -70,9 +70,9 @@ public class ServerGUI extends JFrame {
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
 	private JList<Table> listOfTables;
-	private JList<String> listOfOrders;
-	private DefaultListModel tablesModel;
-	private DefaultListModel<String> ordersModel;
+	private JList<Item> listOfOrders;
+	private DefaultListModel<Table> tablesModel;
+	private DefaultListModel<Item> ordersModel;
 
 	public ServerGUI(Controller controller, Database database,
 			RmiServerInterface rmiService) throws Exception {
@@ -124,7 +124,7 @@ public class ServerGUI extends JFrame {
 		tablesModel = new DefaultListModel();
 		ordersModel = new DefaultListModel();
 		listOfTables = new JList<Table>(tablesModel);
-		listOfOrders = new JList<String>(ordersModel);
+		listOfOrders = new JList<Item>(ordersModel);
 
 		// JLABELS
 		// **********************************************************************
@@ -203,7 +203,7 @@ public class ServerGUI extends JFrame {
 	public void updateListOfOrders(int tableNumber) {
 		ordersModel.clear();
 		for (int i = 0; i < controller.showOrders(tableNumber).size(); i++) {
-			ordersModel.add(i, controller.showOrders(tableNumber).get(i).toString());
+			ordersModel.add(i, controller.showOrders(tableNumber).get(i));
 			// TODO displaying items and tables
 		}
 
@@ -223,9 +223,16 @@ public class ServerGUI extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			try{
 			int index = listOfOrders.getSelectedIndex();
-			String temp = listOfOrders.getSelectedValue().toString() + " - SERVED";
-			ordersModel.setElementAt(temp, index);
+			listOfOrders.getSelectedValue().setAsServed();
+			Item temp = listOfOrders.getSelectedValue();
+			ordersModel.remove(index);
+			ordersModel.insertElementAt(temp, index);
+			}
+			catch(NullPointerException exception){
+				JOptionPane.showMessageDialog(ServerGUI.this, "Select an order you served first");
+			}
 			
 			
 			
@@ -237,13 +244,12 @@ public class ServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JList temp = (JList) listOfTables;
-			Table table = (Table) temp.getSelectedValue();
 			try {
+			Table table = (Table) temp.getSelectedValue();
 				database.addToPastOrders(table.getOrder());
 				ordersModel.clear();
-			} catch (SQLException e1) {
-			
-				e1.printStackTrace();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(ServerGUI.this, "To set an order as paid, you must select the table first");
 			}
 
 		}
@@ -259,7 +265,7 @@ public class ServerGUI extends JFrame {
 				controller.removeItemFromOrder(item,
 						listOfTables.getSelectedIndex());
 				updateListOfOrders(listOfTables.getSelectedIndex());
-			} catch (Exception exception) {
+			} catch (NullPointerException | ArrayIndexOutOfBoundsException exception) {
 				JOptionPane.showMessageDialog(ServerGUI.this,
 						"Select an item you want to remove first");
 			}
@@ -336,7 +342,7 @@ public class ServerGUI extends JFrame {
 
 	}
 
-	public void addTableToList(Object table) {
+	public void addTableToList(Table table) {
 		tablesModel.addElement(table);
 	}
 
