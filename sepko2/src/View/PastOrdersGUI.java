@@ -139,6 +139,7 @@ public class PastOrdersGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			orderListModel.clear();
+			manager.getPastOrders();
 			try {
 				database.getAllPastOrders((Date) calendar.getDate());
 				

@@ -30,4 +30,6 @@ public interface RestaurantManager {
 	void removeItemFromOrder(Item item, int tableNumber);
 	
 	boolean isDuplicate(Item item);
+	
+	void clearPastOrders();
 }

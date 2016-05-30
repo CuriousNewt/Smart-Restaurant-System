@@ -103,5 +103,9 @@ public class ModelManager implements RestaurantManager, Serializable {
 		return false;
 	}
 
+	public void clearPastOrders() {
+		pastOrdersArrayList = null;
+	}
+
 	
 }
