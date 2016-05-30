@@ -33,7 +33,7 @@ public class Database implements Storage {
 
 		DriverManager.registerDriver(new org.postgresql.Driver());
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"root");
+				"Admin");
 		try {
 			PreparedStatement statementMeal = connection
 					.prepareStatement("SELECT * FROM meal");
@@ -55,7 +55,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"root");
+				"Admin");
 		try {
 			if (item instanceof Meal) {
 				Meal meal = (Meal) item;
@@ -86,7 +86,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"root");
+				"Admin");
 		try {
 			if (item instanceof Meal) {
 				Meal meal = (Meal) item;
@@ -112,7 +112,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"root");
+				"Admin");
 		try {
 			for (int i = 0; i < order.size(); i++) {
 				PreparedStatement statementPastOrders = connection
@@ -137,7 +137,7 @@ public class Database implements Storage {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
 		DriverManager.registerDriver(driver);
 		Connection connection = DriverManager.getConnection(ip, "postgres",
-				"root");
+				"Admin");
 		
 		try {
 				PreparedStatement statementPastOrders = connection
@@ -164,8 +164,8 @@ public class Database implements Storage {
 		while (result.next()) {
 				
 			if(result.getDate("date").equals(date)){
-				String temp = result.getInt("order_number") + " | " +result.getDate("date") + " | " + result.getString("name") 
-						+ " | " + result.getDouble("price") + " | " + result.getDouble("amount");
+				String temp = "Order ID: " +result.getInt("order_number") + " | Date: " + result.getDate("date") + " | Name: " + result.getString("name") 
+						+ " | Price: " + result.getDouble("price") + "kr. | Amount: " + result.getDouble("amount");
 					manager.getPastOrders().add(temp);
 			}
 		}

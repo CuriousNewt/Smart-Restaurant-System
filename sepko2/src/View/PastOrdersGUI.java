@@ -37,8 +37,7 @@ public class PastOrdersGUI extends JFrame {
 
 	// JLABELS
 	// *********************************************************************
-	private JLabel totalDayPriceLabel;
-	private JLabel amountOfItemsSoldLabel;
+
 
 
 
@@ -91,8 +90,7 @@ public class PastOrdersGUI extends JFrame {
 		
 		// JLABELS
 		// **********************************************************************
-		totalDayPriceLabel = new JLabel("Total Price: ");
-		amountOfItemsSoldLabel = new JLabel("Total items sold: ");
+
 	
 	}
 
@@ -124,8 +122,7 @@ public class PastOrdersGUI extends JFrame {
 		mainPanel.add(searchButton,BorderLayout.SOUTH);
 
 		northPanel.add(calendar);
-		northPanel.add(totalDayPriceLabel);
-		northPanel.add(amountOfItemsSoldLabel);
+
 		
 		centerPanel.add(orderList);
 		
