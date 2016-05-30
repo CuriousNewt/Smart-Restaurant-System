@@ -4,12 +4,14 @@ public class Meal extends Item {
 	private int amount;
 	private String type;
 	private boolean isPrepared;
+	private boolean isServed;
 	
 	public Meal(String name, String description, double price, int amount, String type) {
 		super(name, description, price);
 		this.amount = amount;
 		this.type = type.toLowerCase();
 		this.isPrepared = false;
+		this.isServed = false;
 	}
 
 	@Override
@@ -23,7 +25,12 @@ public class Meal extends Item {
 	}
 	
 	public String toString(){
-		return  (int)getAmount() + "g  " + super.getName() + "---" + super.getPrice()+"Kr.";
+		
+		if(isServed == false){
+			return  (int)getAmount() + "g  " + super.getName() + "---" + super.getPrice()+"Kr." ; 
+		}else{
+			return  servedString();
+		}
 	}
 	
 	public String moreInfo(){
@@ -43,10 +50,15 @@ public class Meal extends Item {
 		return isPrepared;
 	}
 
-	@Override
-	public void setAsServed() {
-		// TODO Auto-generated method stub
-		
+	public void setAsServed(){
+		isServed = true;
+	}
+	
+	public boolean isServed(){
+		return isServed;
 	}
 
+	public String servedString(){
+		return  (int)getAmount() + "g  " + super.getName() + "---" + super.getPrice()+"Kr. - IS SERVED";
+	}
 }

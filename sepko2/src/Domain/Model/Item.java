@@ -31,11 +31,10 @@ public abstract class Item implements Serializable{
 	
 	public abstract void setAsServed();
 	
-	public boolean isServed(){
-		return false;
-	}
+	public abstract boolean isServed();
 	
 	public abstract void setAsPrepared();
+	
 	public abstract double getAmount();
 
 	public abstract void setAmount(double amount);

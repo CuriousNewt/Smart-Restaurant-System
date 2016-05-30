@@ -3,11 +3,13 @@ package Domain.Model;
 public class Drink extends Item {
 	private double amount;
 	private String type;
+	private boolean isServed;
 	
 	public Drink(String name, String description, double price, double amount, String type) {
 		super(name, description, price);
 		this.amount = amount;
 		this.type = type;
+		this.isServed = false;
 	}
 
 	@Override
@@ -21,7 +23,12 @@ public class Drink extends Item {
 	}
 	
 	public String toString(){
-		return getAmount() + "l  " + super.getName() + "-- " + super.getDescription() + "---- " + super.getPrice()+"Kr.";
+		
+		if(isServed == false){
+			return getAmount() + "l  " + super.getName() + "-- " + super.getDescription() + "---- " + super.getPrice()+"Kr.";
+		}else{
+			return servedString();
+		}
 	}
 	public String moreInfo(){
 		return super.getName() + "\n" + super.getDescription() + "\n" + "Amount: " +
@@ -33,16 +40,22 @@ public class Drink extends Item {
 		return type;
 	}
 
-	@Override
-	public void setAsServed() {
-		// TODO Auto-generated method stub
-		
+	public void setAsServed(){
+		isServed = true;
+	}
+	
+	public boolean isServed(){
+		return isServed;
 	}
 
 	@Override
 	public void setAsPrepared() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public String servedString(){
+		return getAmount() + "l  " + super.getName() + "-- " + super.getDescription() + "---- " + super.getPrice()+"Kr. -- IS SERVED";
 	}
 
 	@Override
