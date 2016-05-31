@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -261,7 +262,7 @@ public class ServerGUI extends JFrame {
 					ordersModel.clear();
 					table.remvoeWhenPaid();
 				}
-			} catch (Exception exception) {
+			} catch (NullPointerException | SQLException exception) {
 				JOptionPane.showMessageDialog(ServerGUI.this,
 						"First, select a table of which order is being paid");
 			}

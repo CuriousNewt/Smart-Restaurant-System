@@ -40,7 +40,7 @@ public class RmiServer implements RmiServerInterface {
 		RmiServerInterface rmiService = (RmiServerInterface) UnicastRemoteObject
 				.exportObject(new RmiServer(controller, database), 1099);
 		rmiRegistry.bind("RmiService", rmiService);
-
+		
 		gui = new ServerGUI(controller, database, rmiService);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
@@ -83,7 +83,6 @@ public class RmiServer implements RmiServerInterface {
 	public void updateKitchen(Order order) throws RemoteException {
 		kitchenInterface.updateKitchen(order);
 	}
-
 	public void updateKitchenRemoveItem(Item item) throws RemoteException {
 		kitchenInterface.updateKitchenRemoveItem(item);
 	}
@@ -118,5 +117,7 @@ public class RmiServer implements RmiServerInterface {
 	public void colourBackground(int ID) throws RemoteException {
 		gui.colourBackground(ID);
 	}
+
+	
 
 }

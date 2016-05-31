@@ -584,8 +584,6 @@ public class ClientGUI extends JFrame {
 				for (int i = 0; i < modelOfOrders.size(); i++) {
 					order.addItem(modelOfOrders.getElementAt(i));
 				}
-
-				System.out.println(order.show());
 				modelOfOrders.clear();
 				client.setOrder(order);
 				try {
