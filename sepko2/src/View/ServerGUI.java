@@ -18,6 +18,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import Controller.Controller;
 import Domain.Mediator.Database;
@@ -48,6 +49,13 @@ public class ServerGUI extends JFrame {
 	private JPanel westButtonPanel;
 	private JPanel westListPanel;
 
+	// JSROLLPANES
+		// *********************************************************************
+	private JScrollPane TablesScrollPane;
+	private JScrollPane OrdersScrollPane;
+
+	
+	
 	// JLABELS
 	// *********************************************************************
 
@@ -116,6 +124,11 @@ public class ServerGUI extends JFrame {
 		ordersModel = new DefaultListModel();
 		listOfTables = new JList<Table>(tablesModel);
 		listOfOrders = new JList<Item>(ordersModel);
+		
+		// JSROLLPANES
+				// *********************************************************************
+		TablesScrollPane = new JScrollPane(listOfTables);
+		OrdersScrollPane = new JScrollPane(listOfOrders);
 
 		// JLABELS
 		// **********************************************************************
@@ -146,14 +159,14 @@ public class ServerGUI extends JFrame {
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
 
-		eastListPanel.add(listOfOrders);
+		eastListPanel.add(OrdersScrollPane);
 
 		eastButtonPanel.add(ordersEditButton);
 		eastButtonPanel.add(paidButton);
 		eastButtonPanel.add(setAsBringed);
 
 		westButtonPanel.add(selectButton);
-		westListPanel.add(listOfTables);
+		westListPanel.add(TablesScrollPane);
 
 		eastPanel.add(eastButtonPanel, BorderLayout.SOUTH);
 		eastPanel.add(eastListPanel, BorderLayout.CENTER);
