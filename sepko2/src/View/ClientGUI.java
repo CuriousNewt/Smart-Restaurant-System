@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -58,7 +59,7 @@ public class ClientGUI extends JFrame {
 	private JPanel plusButtonPanel;
 	private JPanel priceMiddlePanel;
 
-	private JPanel starter;
+	private JPanel starterPanel;
 	private JPanel soupPanel;
 	private JPanel porkPanel;
 	private JPanel beefPanel;
@@ -89,7 +90,7 @@ public class ClientGUI extends JFrame {
 	// JLISTS & DEFAULT LIST MODELS //
 	// *********************************************************************
 
-	private JList<Item> appetizerList;
+	private JList<Item> starterList;
 	private JList<Item> soupList;
 	private JList<Item> porkList;
 	private JList<Item> beefList;
@@ -97,7 +98,7 @@ public class ClientGUI extends JFrame {
 	private JList<Item> pastaList;
 	private JList<Item> seaFoodList;
 	private JList<Item> sideDishList;
-	private JList<Item> desertList;
+	private JList<Item> dessertList;
 	private JList<Item> nonAlcoholicDrinksList;
 	private JList<Item> alcoholicDrinksList;
 
@@ -116,6 +117,22 @@ public class ClientGUI extends JFrame {
 	private DefaultListModel<Item> alcoholicDrinksModel;
 
 	private DefaultListModel<Item> modelOfOrders;
+	
+	// JSCROLLPANES
+	// *********************************************************************
+	
+	private JScrollPane porkListScrollPane;
+	private JScrollPane beefListScrollPane;
+	private JScrollPane chickenListScrollPane;
+	private JScrollPane soupListScrollPane;
+	private JScrollPane seaFoodListScrollPane;
+	private JScrollPane dessertListScrollPane;
+	private JScrollPane sideDishListScrollPane;
+	private JScrollPane starterListScrollPane;
+	private JScrollPane pastaScrollPane;
+	private JScrollPane nonAlcoholicScrollPane;
+	private JScrollPane alcoholicScrollPane;
+	
 
 	public ClientGUI(Controller controller, int ID,
 			RmiServerInterface remoteService, RmiClient client) throws Exception {
@@ -162,7 +179,7 @@ public class ClientGUI extends JFrame {
 		plusButtonPanel = new JPanel();
 		priceMiddlePanel = new JPanel();
 		infoPanel = new JPanel();
-		starter = new JPanel();
+		starterPanel = new JPanel();
 		soupPanel = new JPanel();
 		porkPanel = new JPanel();
 		beefPanel = new JPanel();
@@ -200,7 +217,7 @@ public class ClientGUI extends JFrame {
 
 		modelOfOrders = new DefaultListModel<Item>();
 
-		appetizerList = new JList(starterModel);
+		starterList = new JList(starterModel);
 		soupList = new JList(soupModel);
 		porkList = new JList(porkModel);
 		beefList = new JList(beefModel);
@@ -208,12 +225,27 @@ public class ClientGUI extends JFrame {
 		pastaList = new JList(pastaModel);
 		seaFoodList = new JList(seaFoodModel);
 		sideDishList = new JList(sideDishModel);
-		desertList = new JList(dessertModel);
+		dessertList = new JList(dessertModel);
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
 
 		listOfOrder = new JList(modelOfOrders);
 
+		// JSCROLLPANES
+		// *********************************************************************
+		
+		porkListScrollPane = new JScrollPane(porkList);
+		beefListScrollPane = new JScrollPane(beefList);
+		chickenListScrollPane = new JScrollPane(chickenList);
+		soupListScrollPane = new JScrollPane(soupList);
+		seaFoodListScrollPane = new JScrollPane(seaFoodList);
+		sideDishListScrollPane = new JScrollPane(sideDishList);
+		dessertListScrollPane = new JScrollPane(dessertList);
+		starterListScrollPane = new JScrollPane(starterList);
+		pastaScrollPane = new JScrollPane(pastaList);
+		nonAlcoholicScrollPane = new JScrollPane(nonAlcoholicDrinksList);
+		alcoholicScrollPane = new JScrollPane(alcoholicDrinksList);
+		
 		// JLABELS //
 		// **********************************************************************
 
@@ -240,7 +272,7 @@ public class ClientGUI extends JFrame {
 		westPanel.setLayout(new BorderLayout());
 		centerPanel.setLayout(new BorderLayout());
 
-		starter.setLayout(new BorderLayout());
+		starterPanel.setLayout(new BorderLayout());
 		soupPanel.setLayout(new BorderLayout());
 		porkPanel.setLayout(new BorderLayout());
 		beefPanel.setLayout(new BorderLayout());
@@ -263,8 +295,20 @@ public class ClientGUI extends JFrame {
 
 		// ADDING INTO PANELS //
 		// *********************************************************************
-
-		menuTabs.add("Starter", starter);
+		porkListScrollPane = new JScrollPane(porkList);
+		beefListScrollPane = new JScrollPane(beefList);
+		chickenListScrollPane = new JScrollPane(chickenList);
+		soupListScrollPane = new JScrollPane(soupList);
+		seaFoodListScrollPane = new JScrollPane(seaFoodList);
+		sideDishListScrollPane = new JScrollPane(sideDishList);
+		dessertListScrollPane = new JScrollPane(dessertList);
+		starterListScrollPane = new JScrollPane(starterList);
+		pastaScrollPane = new JScrollPane(pastaList);
+		nonAlcoholicScrollPane = new JScrollPane(nonAlcoholicDrinksList);
+		alcoholicScrollPane = new JScrollPane(alcoholicDrinksList);
+		
+		
+		menuTabs.add("Starter", starterPanel);
 		menuTabs.add("Soup", soupPanel);
 		menuTabs.add("Pork", porkPanel);
 		menuTabs.add("Beef", beefPanel);
@@ -275,17 +319,19 @@ public class ClientGUI extends JFrame {
 		menuTabs.add("Desserts", desert);
 		menuTabs.add("Non-alcoholic drinks", nonAlcoholicDrinks);
 		menuTabs.add("Alcoholic drinks", alcoholicDrinks);
-		starter.add(appetizerList, BorderLayout.CENTER);
-		soupPanel.add(soupList, BorderLayout.CENTER);
-		porkPanel.add(porkList, BorderLayout.CENTER);
-		beefPanel.add(beefList, BorderLayout.CENTER);
-		chickenPanel.add(chickenList, BorderLayout.CENTER);
-		pastaPanel.add(pastaList, BorderLayout.CENTER);
-		seaFood.add(seaFoodList, BorderLayout.CENTER);
-		sideDish.add(sideDishList, BorderLayout.CENTER);
-		desert.add(desertList, BorderLayout.CENTER);
-		nonAlcoholicDrinks.add(nonAlcoholicDrinksList, BorderLayout.CENTER);
-		alcoholicDrinks.add(alcoholicDrinksList, BorderLayout.CENTER);
+		
+		starterPanel.add(starterListScrollPane, BorderLayout.CENTER);
+		soupPanel.add(soupListScrollPane, BorderLayout.CENTER);
+		porkPanel.add(porkListScrollPane, BorderLayout.CENTER);
+		beefPanel.add(beefListScrollPane, BorderLayout.CENTER);
+		chickenPanel.add(chickenListScrollPane, BorderLayout.CENTER);
+		pastaPanel.add(pastaScrollPane, BorderLayout.CENTER);
+		seaFood.add(seaFoodListScrollPane, BorderLayout.CENTER);
+		sideDish.add(sideDishListScrollPane, BorderLayout.CENTER);
+		desert.add(dessertListScrollPane, BorderLayout.CENTER);
+		nonAlcoholicDrinks.add(nonAlcoholicScrollPane, BorderLayout.CENTER);
+		alcoholicDrinks.add(alcoholicScrollPane, BorderLayout.CENTER);
+	
 
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);

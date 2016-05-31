@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import Domain.Mediator.Database;
 import Domain.Mediator.ModelManager;
@@ -49,10 +50,12 @@ public class PastOrdersGUI extends JFrame {
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
 	private JList<Item> orderList;
-
 	private JDateChooser calendar;
-
 	private DefaultListModel<String> orderListModel;
+	
+	// JSCROLLPANES
+	// *********************************************************************
+	private JScrollPane ordersScrollPane;
 
 
 	public PastOrdersGUI(Database database, ModelManager manager) throws Exception {
@@ -87,6 +90,9 @@ public class PastOrdersGUI extends JFrame {
 		
 		orderList = new JList(orderListModel);
 
+		// JSROLLPANES
+		// *********************************************************************
+		ordersScrollPane = new JScrollPane(orderList);
 		
 		// JLABELS
 		// **********************************************************************
@@ -124,7 +130,7 @@ public class PastOrdersGUI extends JFrame {
 		northPanel.add(calendar);
 
 		
-		centerPanel.add(orderList);
+		centerPanel.add(ordersScrollPane);
 		
 	
 		add(mainPanel, BorderLayout.CENTER);

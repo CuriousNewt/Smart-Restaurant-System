@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import Controller.Controller;
 import Domain.Model.Item;
@@ -43,6 +44,11 @@ public class KitchenGUI extends JFrame {
 	private DefaultListModel<Meal> mealListModel;
 	private RmiServerInterface serverInterface;
 	private Controller controller;
+	
+	// JSCROLLPANES
+	// *********************************************************************
+	private JScrollPane mealListScrollPane;
+	
 
 	public KitchenGUI(RmiServerInterface serverInterface, Controller controller) throws Exception {
 		this.serverInterface = serverInterface;
@@ -75,6 +81,10 @@ public class KitchenGUI extends JFrame {
 		mealListModel = new DefaultListModel();
 		
 		mealList = new JList(mealListModel);
+		
+		// JSCROLLPANES
+		// *********************************************************************
+		mealListScrollPane = new JScrollPane(mealList);
 
 		
 		// JLABELS
@@ -107,7 +117,7 @@ public class KitchenGUI extends JFrame {
 
 		southPanel.add(setAsFinished);
 		
-		centerPanel.add(mealList);
+		centerPanel.add(mealListScrollPane);
 		
 	
 		add(mainPanel, BorderLayout.CENTER);
