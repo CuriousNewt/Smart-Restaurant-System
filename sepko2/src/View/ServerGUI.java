@@ -115,7 +115,7 @@ public class ServerGUI extends JFrame {
 		// *********************************************************************
 		ordersEditButton = new JButton("Remove selected item");
 		paidButton = new JButton("Set selected order as paid");
-		setAsBringed = new JButton("Set selected order as served");
+		setAsBringed = new JButton("Set selected item as served");
 		selectButton = new JButton("Show orders of the selected table");
 
 		// JLISTS & DEFAULT LIST MODELS
