@@ -1,5 +1,7 @@
 package View;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -29,10 +31,10 @@ import javax.swing.event.ChangeListener;
 
 import Controller.Controller;
 import Domain.Mediator.Database;
+import Domain.Mediator.RmiServerInterface;
 import Domain.Model.Drink;
 import Domain.Model.Item;
 import Domain.Model.Meal;
-import Utility.RmiServerInterface;
 
 public class EditMenuGUI extends JFrame {
 

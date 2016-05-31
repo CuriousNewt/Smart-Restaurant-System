@@ -1,5 +1,7 @@
 package View;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -24,10 +26,10 @@ import javax.swing.JScrollPane;
 
 import Controller.Controller;
 import Domain.Mediator.Database;
+import Domain.Mediator.RmiServerInterface;
 import Domain.Model.Item;
 import Domain.Model.Meal;
 import Domain.Model.Table;
-import Utility.RmiServerInterface;
 
 public class ServerGUI extends JFrame {
 

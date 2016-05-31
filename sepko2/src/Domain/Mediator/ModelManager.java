@@ -1,5 +1,7 @@
 package Domain.Mediator;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -106,6 +108,7 @@ public class ModelManager implements RestaurantManager, Serializable {
 	public void clearPastOrders() {
 		pastOrdersArrayList = new ArrayList<String>();
 	}
+
 
 	
 }

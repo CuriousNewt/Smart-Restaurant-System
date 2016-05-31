@@ -1,14 +1,17 @@
 package Domain.Mediator;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
 import javax.swing.JFrame;
+
 import Controller.Controller;
 import Domain.Model.*;
-import Utility.RmiServerInterface;
 import View.ClientGUI;
 
 public class RmiClient extends UnicastRemoteObject implements ClientInterface, Serializable {

@@ -1,5 +1,7 @@
 package Domain.Mediator;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.util.Date;
 import java.sql.SQLException;
 

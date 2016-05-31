@@ -1,5 +1,7 @@
 package Domain.Model;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -1,5 +1,7 @@
 package View;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -30,9 +32,9 @@ import javax.swing.event.ChangeListener;
 
 import Controller.Controller;
 import Domain.Mediator.RmiClient;
+import Domain.Mediator.RmiServerInterface;
 import Domain.Model.Item;
 import Domain.Model.Order;
-import Utility.RmiServerInterface;
 
 public class ClientGUI extends JFrame {
 

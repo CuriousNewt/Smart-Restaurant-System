@@ -1,5 +1,7 @@
 package View;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;

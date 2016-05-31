@@ -1,5 +1,7 @@
 package Domain.Mediator;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.util.Date;
@@ -19,6 +21,11 @@ public class Database implements Storage {
 	private ModelManager manager;
 	private int orderID;
 
+		/**
+	    * Constructor setting up ModelManager, IP variable and orderID.
+	    * @param filepath Path to the file with the IP of the database.
+	    * @param manager, which is setting the local variable manager.
+	    */
 	public Database(String filepath, ModelManager manager) {
 		this.manager = manager;
 		this.orderID = 1;
@@ -29,6 +36,11 @@ public class Database implements Storage {
 		}
 	}
 
+	
+		/**
+	    * Method getting menu from the database through the connection and calling methods for filling up menu.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	public void getMenu() throws SQLException {
 
 		DriverManager.registerDriver(new org.postgresql.Driver());
@@ -50,6 +62,11 @@ public class Database implements Storage {
 		}
 	}
 
+		/**
+	    * Method adding item to the database through the connection.
+	    * @param item Item, which is added to the database.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	public void addToMenu(Item item) throws SQLException {
 
 		org.postgresql.Driver driver = new org.postgresql.Driver();
@@ -81,6 +98,11 @@ public class Database implements Storage {
 		}
 	}
 
+		/**
+	    * Method removing item from the database through the connection.
+	    * @param item Item, which is removed from the menu.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	@Override
 	public void removeFromMenu(Item item) throws SQLException {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
@@ -107,6 +129,11 @@ public class Database implements Storage {
 
 	}
 
+		/**
+	    * Method adding paid order to the past orders in the database through the connection.
+	    * @param order Order, which is moved to the past orders in the database.
+	    * @throws SQLException If there is a problem between program and database.
+	    */	
 	@Override
 	public void addToPastOrders(Order order) throws SQLException {
 		org.postgresql.Driver driver = new org.postgresql.Driver();
@@ -129,7 +156,12 @@ public class Database implements Storage {
 		}
 
 	}
-
+	
+		/**
+	    * Method getting past orders from the database through the connection and calling methods for filling up PastOrdersGUI. 
+	    * @param date Date, when the order was paid.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	@Override
 	public void getAllPastOrders(Date date) throws SQLException {
 		ResultSet temp;
@@ -152,6 +184,12 @@ public class Database implements Storage {
 
 	}
 
+	
+		/**
+	    * Method calling manager for filling up meal to the menu on the client side. 
+	    * @param result Result variable filled up with data from database.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	private void getMealToMenu(ResultSet result) throws SQLException {
 		while (result.next()) {
 			manager.getMenu().addMeal(result.getString("name"),
@@ -160,6 +198,12 @@ public class Database implements Storage {
 		}
 	}
 	
+		/**
+	    * Method calling manager for filling up list of past orders for date on the server side. 
+	    * @param result Result variable filled up with data from database.
+	    * @param date Date variable for returning the past orders of the right date.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	private void getPastOrdersToList(ResultSet result, Date date) throws SQLException {
 		while (result.next()) {
 				
@@ -171,6 +215,11 @@ public class Database implements Storage {
 		}
 	}
 
+		/**
+	    * Method calling manager for filling up drinks to the menu on the client side. 
+	    * @param result Result variable filled up with data from database.
+	    * @throws SQLException If there is a problem between program and database.
+	    */
 	private void getDrinkToMenu(ResultSet result) throws SQLException {
 		while (result.next()) {
 			manager.getMenu().addDrink(result.getString("name"),

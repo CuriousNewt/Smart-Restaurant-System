@@ -1,5 +1,7 @@
 package Domain.Mediator;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -9,7 +11,6 @@ import javax.swing.JFrame;
 
 import Domain.Model.Item;
 import Domain.Model.Order;
-import Utility.RmiServerInterface;
 import View.KitchenGUI;
 
 public class KitchenClient extends UnicastRemoteObject implements

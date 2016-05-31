@@ -1,17 +1,20 @@
 package Domain.Mediator;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
+
 import Controller.Controller;
 import Domain.Model.Item;
 import Domain.Model.Menu;
 import Domain.Model.Order;
 import Domain.Model.Table;
-import Utility.RmiServerInterface;
 import View.ServerGUI;
 
 public class RmiServer implements RmiServerInterface {

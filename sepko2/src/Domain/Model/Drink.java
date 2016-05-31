@@ -1,5 +1,7 @@
 package Domain.Model;
-
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 public class Drink extends Item {
 	private double amount;
 	private String type;

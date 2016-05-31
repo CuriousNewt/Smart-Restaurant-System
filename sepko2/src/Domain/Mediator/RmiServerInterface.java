@@ -1,12 +1,12 @@
-package Utility;
-
+package Domain.Mediator;
+/**
+* @author Adam Minarik, Leonard Merva, Marek Dvoracek, Denis Drga, Marius Ungurean
+*/
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 import Controller.Controller;
-import Domain.Mediator.ClientInterface;
-import Domain.Mediator.KitchenClientInterface;
 import Domain.Model.Item;
 import Domain.Model.Menu;
 import Domain.Model.Order;
