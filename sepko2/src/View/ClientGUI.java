@@ -548,7 +548,8 @@ public class ClientGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
-			JList list = (JList) tab.getComponent(0);
+			JScrollPane ScrollPane = (JScrollPane) tab.getComponent(0);
+			JList list = list = (JList) ScrollPane.getComponent(0);
 			try {
 				Item selectedElement = (Item) list.getSelectedValue();
 				modelOfOrders.addElement(selectedElement);
