@@ -20,12 +20,21 @@ public class KitchenClient extends UnicastRemoteObject implements
 	private static RmiServerInterface remoteService;
 	private static KitchenGUI gui;
 
+		/**
+	    * Constructor setting up RmiServerInterface.
+	    * @param remoteService Variable containing the server interface.
+	    */
 	protected KitchenClient(RmiServerInterface remoteService)
 			throws RemoteException {
 		super();
 		KitchenClient.remoteService = remoteService;
 	}
 
+		/**
+	    * Main method, creating the connection with server, creating and starting kitchen GUI.
+	    * @param args String parameter for the main.
+	    * @throws Exception throws exception, or if method could not find gui class. 
+	    */
 	public static void main(String[] args) throws Exception {
 		String ip = ReadIP.getReadIP("ServerIPaID").getIP();
 		ip = "//" + ip + ":1099";
@@ -37,10 +46,19 @@ public class KitchenClient extends UnicastRemoteObject implements
 		gui.setVisible(true);
 	}
 
+		/**
+	    * Method calling a method from KitchenGUI for updating the list with an order.
+	    * @param order Order, which is added to the list on Kitchen side.
+	    */
 	@Override
 	public void updateKitchen(Order order) {
 		gui.updateKitchen(order);
 	}
+	
+		/**
+	    * Method calling a method from KitchenGUI for removing item from the list when the item is prepared.
+	    * @param item Item, which is removed from the list of orders.
+	    */
 	public void updateKitchenRemoveItem(Item item) {
 		gui.updateKitchenRemoveItem(item);
 	}

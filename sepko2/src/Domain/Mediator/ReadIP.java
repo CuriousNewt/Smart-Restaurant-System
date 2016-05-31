@@ -10,15 +10,26 @@ import java.io.IOException;
 public class ReadIP {
 	private static ReadIP readIP;
 	private String ip;
-	private int id;
 	private String filepath;
 
+		/**
+	    * Constructor setting up filepath and then setting up ip from the file.
+	    * @param filepath String, which Contains the path to the file.
+	    * * @throws FileNotFoundException If the file is not found.
+	    */
 	private ReadIP(String filepath) throws FileNotFoundException {
 		this.filepath = filepath;
 		this.ip = readIpFromTxt(filepath);
 		
 	}
 
+	
+		/**
+	    * Method for setting up integer ip variable from file.
+	    * @param filepath String containing the filepath of file with ip.
+	    * @return Method is returning String, which contains the ip.
+	    * @throws FileNotFoundException If the file is not found.
+	    */
 	private String readIpFromTxt(String filepath) throws FileNotFoundException {
 		@SuppressWarnings("resource")
 		BufferedReader in = new BufferedReader(new FileReader(filepath));
@@ -31,39 +42,29 @@ public class ReadIP {
 		return ip;
 	}
 	
-	private int readIdFromTxt(String filepath) throws FileNotFoundException {
-		@SuppressWarnings("resource")
-		BufferedReader in = new BufferedReader(new FileReader(filepath));
-		id = 0;
-		String idString = "";
-		try {
-			in.readLine();
-			idString = in.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		id = Integer.parseInt(idString);
-		return id;
-	}
 
-	public static ReadIP getReadIP(String filepath)
-			throws FileNotFoundException {
+		/**
+	    * Defining method of singleton pattern.
+	    * @param filepath String the filepath of file with ip.
+	    * @return ReadIP Returning itself.
+	    * @throws FileNotFoundException If the file is not found. 
+	    */
+	public static ReadIP getReadIP(String filepath) throws FileNotFoundException {
 		if (readIP == null) {
 			readIP = new ReadIP(filepath);
 		}
 		return readIP;
 	}
 
+		/**
+	    * Method returning the ip variale.
+	    * @return ip Variable containing the IP.
+	    */
 	public String getIP() {
 		return ip;
 	}
 	
-	public int getID() throws FileNotFoundException{
-		this.id = readIdFromTxt(filepath);
-		return id;
-	}
 	public static void main(String[] args) throws Exception{
-		System.out.println(ReadIP.getReadIP("ServerIPaID").getID());
 		System.out.println(ReadIP.getReadIP("ServerIPaID").getIP());
 		
 	}
