@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -112,8 +114,7 @@ public class EditMenuGUI extends JFrame {
 	private DefaultListModel<Item> pastaModel;
 	private DefaultListModel<Item> nonAlcoholicDrinksModel;
 	private DefaultListModel<Item> alcoholicDrinksModel;
-	
-	
+
 	private JScrollPane porkListScrollPane;
 	private JScrollPane beefListScrollPane;
 	private JScrollPane chickenListScrollPane;
@@ -186,17 +187,38 @@ public class EditMenuGUI extends JFrame {
 		nonAlcoholicDrinksModel = new DefaultListModel<Item>();
 		alcoholicDrinksModel = new DefaultListModel<Item>();
 
-		porkList = new JList(porkModel);
-		beefList = new JList(beefModel);
-		chickenList = new JList(chickenModel);
-		soupList = new JList(soupModel);
-		seaFoodList = new JList(seaFoodModel);
-		sideDishList = new JList(sideDishModel);
-		dessertList = new JList(dessertModel);
 		starterList = new JList(starterModel);
+		starterList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		soupList = new JList(soupModel);
+		soupList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		porkList = new JList(porkModel);
+		porkList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		beefList = new JList(beefModel);
+		beefList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		chickenList = new JList(chickenModel);
+		chickenList.setFont(new Font("Arial", Font.BOLD, 18));
+
 		pastaList = new JList(pastaModel);
+		pastaList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		seaFoodList = new JList(seaFoodModel);
+		seaFoodList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		sideDishList = new JList(sideDishModel);
+		sideDishList.setFont(new Font("Arial", Font.BOLD, 18));
+
+		dessertList = new JList(dessertModel);
+		dessertList.setFont(new Font("Arial", Font.BOLD, 18));
+
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
+		nonAlcoholicDrinksList.setFont(new Font("Arial", Font.BOLD, 18));
+
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
+		alcoholicDrinksList.setFont(new Font("Arial", Font.BOLD, 18));
 
 		// JSCROLLPANES
 		// *********************************************************************
@@ -212,7 +234,6 @@ public class EditMenuGUI extends JFrame {
 		nonAlcoholicScrollPane = new JScrollPane(nonAlcoholicDrinksList);
 		alcoholicScrollPane = new JScrollPane(alcoholicDrinksList);
 
-		
 		// JLABELS
 		// **********************************************************************
 		productNameLabel = new JLabel("Name of product:");
@@ -223,9 +244,18 @@ public class EditMenuGUI extends JFrame {
 		productTypeLabel = new JLabel("Type of Product:");
 
 		productNameTextField = new JTextField();
+		productNameTextField.setFont(new Font("Arial", Font.BOLD, 18));
+
 		productDescriptionTextField = new JTextField();
+		productDescriptionTextField.setFont(new Font("Arial", Font.ITALIC, 18));
+
 		productPriceTextField = new JTextField();
+		productPriceTextField
+				.setFont(new Font("Arial", Font.ROMAN_BASELINE, 18));
+
 		productAmountTextField = new JTextField();
+		productAmountTextField.setFont(new Font("Arial", Font.BOLD, 18));
+
 		productTypeComboBoxModel = new DefaultComboBoxModel<String>(
 				(new String[] { "Meal", "Drink" }));
 		productMealContentComboBoxModel = new DefaultComboBoxModel<String>(
@@ -291,7 +321,7 @@ public class EditMenuGUI extends JFrame {
 		menuTabs.add("Desserts", dessert);
 		menuTabs.add("Non-alcoholic drinks", nonAlcoholicDrinks);
 		menuTabs.add("Alcoholic drinks", alcoholicDrinks);
-		
+
 		porkPanel.add(porkListScrollPane, BorderLayout.CENTER);
 		beefPanel.add(beefListScrollPane, BorderLayout.CENTER);
 		chickenPanel.add(chickenListScrollPane, BorderLayout.CENTER);
@@ -518,13 +548,13 @@ public class EditMenuGUI extends JFrame {
 			}
 		}
 	}
+
 	public void removeSelectedItemFromMenu(Item selectedElement) {
 		try {
 			database.removeFromMenu(selectedElement);
 			controller.clearMenu();
 			database.getMenu();
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		getMenuByType();
@@ -537,88 +567,135 @@ public class EditMenuGUI extends JFrame {
 	}
 
 	class removeFromMenu implements ActionListener {
-		
+
 		public void actionPerformed(ActionEvent e) {
 			int dialogButton = JOptionPane.showConfirmDialog(EditMenuGUI.this,
-					"Do you really want to delete this item from menu?",  "Confrim",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					"Do you really want to delete this item from menu?",
+					"Confrim", JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE);
 			if (dialogButton == JOptionPane.YES_OPTION) {
-			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
-			JList list = (JList) tab.getComponent(0);
-			Item selectedElement = (Item) list.getSelectedValue();
-			removeSelectedItemFromMenu(selectedElement);
-			resetProductFields();
-			} 
+				JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+				JScrollPane ScrollPane = (JScrollPane) tab.getComponent(0);
+				JViewport viewport = (JViewport) ScrollPane.getComponent(0);
+				JList list = (JList) viewport.getComponent(0);
+				try {
+					Item selectedElement = (Item) list.getSelectedValue();
+					if(list.getSelectedIndex() == -1){
+						JOptionPane.showMessageDialog(EditMenuGUI.this,
+								"First, select the item you want to remove");
+					}
+					removeSelectedItemFromMenu(selectedElement);
+					resetProductFields();
+				} catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(EditMenuGUI.this,
+							"First, select the item you want to remove");
+				}
+				JOptionPane.showMessageDialog(EditMenuGUI.this, "Item removed successfully");
+			}
 		}
 	}
-	
+
 	class updateComboBox implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (productTypeComboBox.getSelectedItem().equals("Meal")) {
-				productContentComboBox.setModel(productMealContentComboBoxModel);
+				productContentComboBox
+						.setModel(productMealContentComboBoxModel);
 			} else
-				productContentComboBox.setModel(productDrinkContentComboBoxModel);
-			}			
+				productContentComboBox
+						.setModel(productDrinkContentComboBoxModel);
 		}
-		
+	}
 
 	class addInfoToEditMenu implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int dialogButton = JOptionPane.showConfirmDialog(EditMenuGUI.this,
-					"Do you really want to edit this menu item?",  "Confrim",
+					"Do you really want to edit this menu item?", "Confrim",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (dialogButton == JOptionPane.YES_OPTION) {
-			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
-			JList list = (JList) tab.getComponent(0);
-			Item selectedElement = (Item) list.getSelectedValue();
-			productNameTextField.setText(selectedElement.getName());
-			productDescriptionTextField.setText(selectedElement
-					.getDescription());
-			productPriceTextField.setText("" + selectedElement.getPrice());
-			productAmountTextField.setText("" + (int) selectedElement.getAmount());
-			if (selectedElement instanceof Meal) {
-				productTypeComboBox.setSelectedIndex(0);
-				productContentComboBox
-						.setModel(productMealContentComboBoxModel);
-				String temp = selectedElement.getType();
-				switch (temp) {
-				case "starter": productContentComboBox.setSelectedIndex(0); break;
-				case "soups": productContentComboBox.setSelectedIndex(1); break;
-				case "dessert": productContentComboBox.setSelectedIndex(8); break;
-				case "beef":productContentComboBox.setSelectedIndex(3); break;
-				case "chicken": productContentComboBox.setSelectedIndex(4); break;
-				case "pork": productContentComboBox.setSelectedIndex(2); break;
-				case "pasta": productContentComboBox.setSelectedIndex(5); break;
-				case "seafood": productContentComboBox.setSelectedIndex(6); break;
-				case "sidedish": productContentComboBox.setSelectedIndex(7); break;
-				}
+				JPanel tab = (JPanel) menuTabs.getSelectedComponent();
+				JScrollPane ScrollPane = (JScrollPane) tab.getComponent(0);
+				JViewport viewport = (JViewport) ScrollPane.getComponent(0);
+				JList list = (JList) viewport.getComponent(0);
+				try {
+					Item selectedElement = (Item) list.getSelectedValue();
+					productNameTextField.setText(selectedElement.getName());
+					productDescriptionTextField.setText(selectedElement
+							.getDescription());
+					productPriceTextField.setText(""
+							+ selectedElement.getPrice());
+					productAmountTextField.setText(""
+							+ (int) selectedElement.getAmount());
+					if (selectedElement instanceof Meal) {
+						productTypeComboBox.setSelectedIndex(0);
+						productContentComboBox
+								.setModel(productMealContentComboBoxModel);
+						String temp = selectedElement.getType();
+						switch (temp) {
+						case "starter":
+							productContentComboBox.setSelectedIndex(0);
+							break;
+						case "soups":
+							productContentComboBox.setSelectedIndex(1);
+							break;
+						case "dessert":
+							productContentComboBox.setSelectedIndex(8);
+							break;
+						case "beef":
+							productContentComboBox.setSelectedIndex(3);
+							break;
+						case "chicken":
+							productContentComboBox.setSelectedIndex(4);
+							break;
+						case "pork":
+							productContentComboBox.setSelectedIndex(2);
+							break;
+						case "pasta":
+							productContentComboBox.setSelectedIndex(5);
+							break;
+						case "seafood":
+							productContentComboBox.setSelectedIndex(6);
+							break;
+						case "sidedish":
+							productContentComboBox.setSelectedIndex(7);
+							break;
+						}
 
-			} else {
-				productTypeComboBox.setSelectedIndex(1);
-				productContentComboBox
-						.setModel(productDrinkContentComboBoxModel);
-				if (selectedElement.getType().equals("nonalcoholic")) {
-					productContentComboBox.setSelectedIndex(0);
-				} else {
-					productContentComboBox.setSelectedIndex(1);
-				}
+					} else {
+						productTypeComboBox.setSelectedIndex(1);
+						productContentComboBox
+								.setModel(productDrinkContentComboBoxModel);
+						if (selectedElement.getType().equals("nonalcoholic")) {
+							productContentComboBox.setSelectedIndex(0);
+						} else {
+							productContentComboBox.setSelectedIndex(1);
+						}
 
-			}
-			removeSelectedItemFromMenu(selectedElement);
+					}
+					removeSelectedItemFromMenu(selectedElement);
+				} catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(EditMenuGUI.this,
+							"First, select the item you want to edit");
+				}
 			}
 		}
 
 	}
-	
+
 	class addToMenu implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			if(productNameTextField.getText().equals("")
+					|| productDescriptionTextField.getText().equals("")
+					|| productPriceTextField.getText().equals("")
+					|| productAmountTextField.getText().equals("")){
+				JOptionPane.showMessageDialog(EditMenuGUI.this, "You must fill in all information before pressing 'Add'");
+			}
+			else{
 			String name = productNameTextField.getText();
 			String description = productDescriptionTextField.getText();
 			double price = Double.parseDouble(productPriceTextField.getText());
@@ -636,19 +713,23 @@ public class EditMenuGUI extends JFrame {
 					case "Side dish": type = "sidedish"; break;
 					case "Dessert": type = "dessert"; break;
 				}
+				
 				Meal meal = new Meal(name, description, price, amount, type);
+				
 				if(controller.getManager().isDuplicate(meal)) {
 					JOptionPane.showMessageDialog(EditMenuGUI.this, "Item is already in menu, you can't add"
 							+ " duplicates");
 					return;
 				}
+				
 				try {
 					database.addToMenu(meal);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-			} else {
+				}	
+			} 
+			else {
 				double amount = Double.parseDouble(productAmountTextField.getText());
 				String type = (String) productContentComboBox.getSelectedItem();
 				productContentComboBox.setModel(productDrinkContentComboBoxModel);
@@ -687,9 +768,10 @@ public class EditMenuGUI extends JFrame {
 			}
 			resetProductFields();
 		}
-		
+			JOptionPane.showMessageDialog(EditMenuGUI.this, "Item added successfully");
+		}
 	}
-	
+
 	public void resetProductFields() {
 		productNameTextField.setText("");
 		productDescriptionTextField.setText("");

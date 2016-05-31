@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -122,7 +123,9 @@ public class ServerGUI extends JFrame {
 		tablesModel = new DefaultListModel();
 		ordersModel = new DefaultListModel();
 		listOfTables = new JList<Table>(tablesModel);
+		listOfTables.setFont(new Font("Arial", Font.BOLD, 19));
 		listOfOrders = new JList<Item>(ordersModel);
+		listOfOrders.setFont(new Font("Arial", Font.BOLD, 19));
 
 		// JSROLLPANES
 		// *********************************************************************

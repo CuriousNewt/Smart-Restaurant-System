@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -89,6 +90,7 @@ public class PastOrdersGUI extends JFrame {
 		orderListModel = new DefaultListModel<String>();
 		
 		orderList = new JList(orderListModel);
+		orderList.setFont(new Font("Arial", Font.BOLD, 16));
 
 		// JSROLLPANES
 		// *********************************************************************

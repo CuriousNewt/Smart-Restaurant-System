@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +41,7 @@ public class KitchenGUI extends JFrame {
 	// JLISTS & DEFAULT LIST MODELS
 	// *********************************************************************
 	private JList<Item> mealList;
-
+	
 	private DefaultListModel<Meal> mealListModel;
 	private RmiServerInterface serverInterface;
 	private Controller controller;
@@ -81,6 +82,7 @@ public class KitchenGUI extends JFrame {
 		mealListModel = new DefaultListModel();
 		
 		mealList = new JList(mealListModel);
+		mealList.setFont(new Font("Arial", Font.BOLD, 18));
 		
 		// JSCROLLPANES
 		// *********************************************************************

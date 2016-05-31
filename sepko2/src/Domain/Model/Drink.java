@@ -25,7 +25,7 @@ public class Drink extends Item {
 	public String toString(){
 		
 		if(isServed == false){
-			return getAmount() + "l  " + super.getName() + "-- " + super.getDescription() + "---- " + super.getPrice()+"Kr.";
+			return getAmount() + "l  " + super.getName() + " ---- " + super.getPrice()+"Kr.";
 		}else{
 			return servedString();
 		}

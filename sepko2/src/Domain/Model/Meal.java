@@ -27,7 +27,7 @@ public class Meal extends Item {
 	public String toString(){
 		
 		if(isServed == false){
-			return  (int)getAmount() + "g  " + super.getName() + "---" + super.getPrice()+"Kr." ; 
+			return  (int)getAmount() + "g  " + super.getName() + " ---- " + super.getPrice()+"Kr." ; 
 		}else{
 			return  servedString();
 		}

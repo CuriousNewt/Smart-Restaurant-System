@@ -3,6 +3,7 @@ package View;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -200,7 +201,9 @@ public class ClientGUI extends JFrame {
 		// *********************************************************************
 
 		minusButton = new JButton("-");
+		minusButton.setFont(new Font("Arial", Font.BOLD, 25));
 		plusButton = new JButton("+");
+		plusButton.setFont(new Font("Arial", Font.BOLD, 19));
 		orderButton = new JButton("Order");
 		callStaffButton = new JButton("Call saff");
 		moreInfo = new JButton("More Info");
@@ -222,18 +225,29 @@ public class ClientGUI extends JFrame {
 		modelOfOrders = new DefaultListModel<Item>();
 
 		starterList = new JList(starterModel);
+		starterList.setFont(new Font("Arial", Font.BOLD , 19));
 		soupList = new JList(soupModel);
+		soupList.setFont(new Font("Arial", Font.BOLD , 19));
 		porkList = new JList(porkModel);
+		porkList.setFont(new Font("Arial", Font.BOLD , 19));
 		beefList = new JList(beefModel);
+		beefList.setFont(new Font("Arial", Font.BOLD , 19));
 		chickenList = new JList(chickenModel);
+		chickenList.setFont(new Font("Arial", Font.BOLD , 19));
 		pastaList = new JList(pastaModel);
+		pastaList.setFont(new Font("Arial", Font.BOLD , 19));
 		seaFoodList = new JList(seaFoodModel);
+		seaFoodList.setFont(new Font("Arial", Font.BOLD , 19));
 		sideDishList = new JList(sideDishModel);
+		sideDishList.setFont(new Font("Arial", Font.BOLD , 19));
 		dessertList = new JList(dessertModel);
+		dessertList.setFont(new Font("Arial", Font.BOLD , 19));
 		nonAlcoholicDrinksList = new JList(nonAlcoholicDrinksModel);
+		nonAlcoholicDrinksList.setFont(new Font("Arial", Font.BOLD , 19));
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
-
+		alcoholicDrinksList.setFont(new Font("Arial", Font.BOLD, 19));
 		listOfOrder = new JList(modelOfOrders);
+		listOfOrder.setFont(new Font("Arial", Font.BOLD, 19));
 
 		// JSCROLLPANES
 		// *********************************************************************
@@ -256,6 +270,7 @@ public class ClientGUI extends JFrame {
 		// **********************************************************************
 
 		price = new JLabel("Total price: 0 Kr. ");
+		price.setFont(new Font("Arial", Font.BOLD, 16));
 	}
 
 	private void addBorders() {
