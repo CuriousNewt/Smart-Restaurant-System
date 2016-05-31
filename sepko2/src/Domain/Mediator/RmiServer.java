@@ -26,7 +26,6 @@ public class RmiServer implements RmiServerInterface {
 		this.controller = controller;
 		clientID = 1;
 		clientList = new ArrayList<ClientInterface>();
-		// thread.start();
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -41,11 +40,8 @@ public class RmiServer implements RmiServerInterface {
 		RmiServerInterface rmiService = (RmiServerInterface) UnicastRemoteObject
 				.exportObject(new RmiServer(controller, database), 1099);
 		rmiRegistry.bind("RmiService", rmiService);
+
 		gui = new ServerGUI(controller, database, rmiService);
-
-		// TODO delete sysout after everitynk yz fajn
-		System.out.println("SERVER RUNS");
-
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
@@ -71,8 +67,6 @@ public class RmiServer implements RmiServerInterface {
 			clientList.add(clientInterface);
 			if (clientInterface.getIDForKitchen() != 666) {
 				clientInterface.setID(clientID);
-				System.out.println(clientID);
-				System.out.println("NEW CLIENT!");
 				Table table = new Table(clientID);
 				clientID++;
 				gui.addTableToList(table);
@@ -89,6 +83,7 @@ public class RmiServer implements RmiServerInterface {
 	public void updateKitchen(Order order) throws RemoteException {
 		kitchenInterface.updateKitchen(order);
 	}
+
 	public void updateKitchenRemoveItem(Item item) throws RemoteException {
 		kitchenInterface.updateKitchenRemoveItem(item);
 	}
@@ -123,7 +118,5 @@ public class RmiServer implements RmiServerInterface {
 	public void colourBackground(int ID) throws RemoteException {
 		gui.colourBackground(ID);
 	}
-
-	
 
 }

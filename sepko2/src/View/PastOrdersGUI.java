@@ -144,7 +144,8 @@ public class PastOrdersGUI extends JFrame {
 			orderListModel.clear();
 			manager.clearPastOrders();
 			try {
-				database.getAllPastOrders((Date) calendar.getDate());
+				Date date = calendar.getDate();
+				database.getAllPastOrders(date);
 				
 			} catch (SQLException | NullPointerException e) {
 				if(e instanceof NullPointerException)

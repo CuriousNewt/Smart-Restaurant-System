@@ -30,4 +30,8 @@ public class Table implements Serializable {
 	public int getTableNumber() {
 		return tableNumber;
 	}
+	
+	public void remvoeWhenPaid(){
+		this.order = new Order();
+	}
 }

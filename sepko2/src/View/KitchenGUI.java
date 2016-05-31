@@ -75,7 +75,7 @@ public class KitchenGUI extends JFrame {
 		// JBUTTONS
 		// *********************************************************************
 		
-		setAsFinished = new JButton("Finished..");
+		setAsFinished = new JButton("Prepared");
 		
 		// JLISTS & DEFAULT LIST MODELS
 		mealListModel = new DefaultListModel();

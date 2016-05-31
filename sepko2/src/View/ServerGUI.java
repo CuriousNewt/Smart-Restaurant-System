@@ -50,12 +50,10 @@ public class ServerGUI extends JFrame {
 	private JPanel westListPanel;
 
 	// JSROLLPANES
-		// *********************************************************************
+	// *********************************************************************
 	private JScrollPane TablesScrollPane;
 	private JScrollPane OrdersScrollPane;
 
-	
-	
 	// JLABELS
 	// *********************************************************************
 
@@ -113,10 +111,10 @@ public class ServerGUI extends JFrame {
 
 		// JBUTTONS
 		// *********************************************************************
-		ordersEditButton = new JButton("Remove selected item");
-		paidButton = new JButton("Set selected order as paid");
-		setAsBringed = new JButton("Set selected item as served");
-		selectButton = new JButton("Show orders of the selected table");
+		ordersEditButton = new JButton("Remove item");
+		paidButton = new JButton("Set order as paid");
+		setAsBringed = new JButton("Set item as served");
+		selectButton = new JButton("Show orders of the table");
 
 		// JLISTS & DEFAULT LIST MODELS
 		// *************************************************
@@ -124,9 +122,9 @@ public class ServerGUI extends JFrame {
 		ordersModel = new DefaultListModel();
 		listOfTables = new JList<Table>(tablesModel);
 		listOfOrders = new JList<Item>(ordersModel);
-		
+
 		// JSROLLPANES
-				// *********************************************************************
+		// *********************************************************************
 		TablesScrollPane = new JScrollPane(listOfTables);
 		OrdersScrollPane = new JScrollPane(listOfOrders);
 
@@ -227,22 +225,20 @@ public class ServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(listOfTables.getSelectedIndex() == -1){
+				if (listOfTables.getSelectedIndex() == -1) {
 					JOptionPane.showMessageDialog(ServerGUI.this,
-							"Select a table first");
+							"First, select a table served");
 				} else {
-				int index = listOfOrders.getSelectedIndex();
-				listOfOrders.getSelectedValue().setAsServed();
-				Item temp = listOfOrders.getSelectedValue();
-				ordersModel.remove(index);
-				ordersModel.insertElementAt(temp, index);
-			} }                 
-			catch (NullPointerException exception) {
+					int index = listOfOrders.getSelectedIndex();
+					listOfOrders.getSelectedValue().setAsServed();
+					Item temp = listOfOrders.getSelectedValue();
+					ordersModel.remove(index);
+					ordersModel.insertElementAt(temp, index);
+				}
+			} catch (NullPointerException exception) {
 				JOptionPane.showMessageDialog(ServerGUI.this,
-						"Select an order you served first");
+						"First, select a table served");
 			}
-			
-		
 
 		}
 	}
@@ -254,12 +250,20 @@ public class ServerGUI extends JFrame {
 			JList temp = (JList) listOfTables;
 			try {
 				Table table = (Table) temp.getSelectedValue();
-				database.addToPastOrders(table.getOrder());
-				ordersModel.clear();
+				if (table.getOrder().size() == 0)
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"No orders to pay");
+				else {
+					database.addToPastOrders(table.getOrder());
+					JOptionPane.showMessageDialog(ServerGUI.this,
+							"Total price to pay: "
+									+ table.getOrder().getPrice());
+					ordersModel.clear();
+					table.remvoeWhenPaid();
+				}
 			} catch (Exception exception) {
-				JOptionPane
-						.showMessageDialog(ServerGUI.this,
-								"To set an order as paid, you must select the table first");
+				JOptionPane.showMessageDialog(ServerGUI.this,
+						"First, select a table of which order is being paid");
 			}
 
 		}
@@ -270,24 +274,35 @@ public class ServerGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int dialogButton = JOptionPane.showConfirmDialog(ServerGUI.this,
-					"Do you really want to delete this order item?",  "Confrim",
+					"Do you really want to delete this item?", "Confrim",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (dialogButton == JOptionPane.YES_OPTION) {
 				JList list = listOfOrders;
 				try {
 					Item item = (Item) list.getSelectedValue();
-					controller.removeItemFromOrder(item,
-							listOfTables.getSelectedIndex());
-					updateListOfOrders(listOfTables.getSelectedIndex());
-					if (item instanceof Meal) {
-						rmiService.updateKitchenRemoveItem(item);
+					if (ordersModel.isEmpty())
+						JOptionPane.showMessageDialog(ServerGUI.this,
+								"No items to remove");
+					else {
+						if (list.getSelectedIndex() == -1) {
+							JOptionPane
+									.showMessageDialog(ServerGUI.this,
+											"First, select the item you want to remove");
+						} else {
+							controller.removeItemFromOrder(item,
+									listOfTables.getSelectedIndex());
+							updateListOfOrders(listOfTables.getSelectedIndex());
+							if (item instanceof Meal) {
+								rmiService.updateKitchenRemoveItem(item);
+							}
+						}
 					}
 				} catch (NullPointerException | ArrayIndexOutOfBoundsException
 						| RemoteException exception) {
 					JOptionPane.showMessageDialog(ServerGUI.this,
 							"Select an item you want to remove first");
 				}
-			} 
+			}
 		}
 	}
 
@@ -301,8 +316,7 @@ public class ServerGUI extends JFrame {
 				if (table.getOrder().size() == 0) {
 					JOptionPane.showMessageDialog(
 							ServerGUI.this,
-							"NO ORDERS TO SERVE FOR TABLE "
-									+ table.getTableNumber());
+							"No orders to serve");
 				}
 				updateListOfOrders(table.getTableNumber() - 1);
 			} catch (Exception exception) {
@@ -322,7 +336,7 @@ public class ServerGUI extends JFrame {
 				if (table.getOrder().size() == 0) {
 					JOptionPane.showMessageDialog(
 							ServerGUI.this,
-							"NO ORDERS TO SERVE FOR TABLE "
+							"No orders to serve for the table number "
 									+ table.getTableNumber());
 				}
 				updateListOfOrders(table.getTableNumber() - 1);
@@ -356,7 +370,7 @@ public class ServerGUI extends JFrame {
 	}
 
 	public void callStaff(int ID) {
-		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
+		JOptionPane.showMessageDialog(ServerGUI.this, "Customer at the table number " + ID
 				+ " requests your assistance.");
 
 	}
@@ -368,8 +382,7 @@ public class ServerGUI extends JFrame {
 	public void colourBackground(int ID) {
 		listOfTables.setSelectedIndex(ID - 1);
 
-		JOptionPane.showMessageDialog(ServerGUI.this, "Table number " + ID
-				+ " made a new order.");
+		JOptionPane.showMessageDialog(ServerGUI.this, "New order to the table number " + ID);
 	}
 
 }
