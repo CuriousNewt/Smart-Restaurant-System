@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -120,6 +122,8 @@ public class ClientGUI extends JFrame {
 	
 	// JSCROLLPANES
 	// *********************************************************************
+	
+	private JScrollPane ordersScrollPane;
 	
 	private JScrollPane porkListScrollPane;
 	private JScrollPane beefListScrollPane;
@@ -234,6 +238,8 @@ public class ClientGUI extends JFrame {
 		// JSCROLLPANES
 		// *********************************************************************
 		
+		ordersScrollPane = new JScrollPane(listOfOrder);
+		
 		porkListScrollPane = new JScrollPane(porkList);
 		beefListScrollPane = new JScrollPane(beefList);
 		chickenListScrollPane = new JScrollPane(chickenList);
@@ -295,17 +301,6 @@ public class ClientGUI extends JFrame {
 
 		// ADDING INTO PANELS //
 		// *********************************************************************
-		porkListScrollPane = new JScrollPane(porkList);
-		beefListScrollPane = new JScrollPane(beefList);
-		chickenListScrollPane = new JScrollPane(chickenList);
-		soupListScrollPane = new JScrollPane(soupList);
-		seaFoodListScrollPane = new JScrollPane(seaFoodList);
-		sideDishListScrollPane = new JScrollPane(sideDishList);
-		dessertListScrollPane = new JScrollPane(dessertList);
-		starterListScrollPane = new JScrollPane(starterList);
-		pastaScrollPane = new JScrollPane(pastaList);
-		nonAlcoholicScrollPane = new JScrollPane(nonAlcoholicDrinksList);
-		alcoholicScrollPane = new JScrollPane(alcoholicDrinksList);
 		
 		
 		menuTabs.add("Starter", starterPanel);
@@ -335,7 +330,7 @@ public class ClientGUI extends JFrame {
 
 		mainPanel.add(westPanel);
 		mainPanel.add(eastPanel);
-		eastListPanel.add(listOfOrder);
+		eastListPanel.add(ordersScrollPane);
 		westListPanel.add(menuTabs);
 		eastButtonPanel.add(orderButton);
 		eastButtonPanel.add(callStaffButton);
@@ -549,7 +544,8 @@ public class ClientGUI extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JPanel tab = (JPanel) menuTabs.getSelectedComponent();
 			JScrollPane ScrollPane = (JScrollPane) tab.getComponent(0);
-			JList list = (JList) ScrollPane.getComponent(0);
+			JViewport viewport = (JViewport) ScrollPane.getComponent(0);
+			JList list = (JList) viewport.getComponent(0);
 			try {
 				Item selectedElement = (Item) list.getSelectedValue();
 				modelOfOrders.addElement(selectedElement);
