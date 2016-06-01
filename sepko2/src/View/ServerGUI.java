@@ -385,7 +385,7 @@ public class ServerGUI extends JFrame {
 		tablesModel.addElement(table);
 	}
 
-	public void colourBackground(int ID) {
+	public void newOrderOnTable(int ID) {
 		listOfTables.setSelectedIndex(ID - 1);
 
 		JOptionPane.showMessageDialog(ServerGUI.this, "New order to the table number " + ID);

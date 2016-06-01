@@ -605,7 +605,7 @@ public class ClientGUI extends JFrame {
 				client.setOrder(order);
 				try {
 					remoteService.doCallbacks(ID);
-					remoteService.colourBackground(ID);
+					remoteService.newOrderOnTable(ID);
 					remoteService.updateKitchen(order);
 				} catch (RemoteException e1) {
 					// TODO Auto-generated catch block

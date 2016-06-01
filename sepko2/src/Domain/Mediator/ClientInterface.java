@@ -9,6 +9,7 @@ import Domain.Model.Item;
 import Domain.Model.Order;
 
 public interface ClientInterface extends Remote {
+	
 	/**
 	* Client interface method for setting up ID variable on client from server through RMI connection.
 	* @param ID Integer, declaring what ID will the client have.
@@ -33,8 +34,16 @@ public interface ClientInterface extends Remote {
 	void updateMenu() throws RemoteException;
 	/**
 	* Client interface method for getting ID from client to server through the RMI connection.
-	* @throws RemoteException When RMI connection between server and client is not working.
 	* @return int ID of the client.
+	* @throws RemoteException When RMI connection between server and client is not working.
 	*/
 	int getIDForKitchen() throws RemoteException;
+	
+	
+	/**
+	* Client interface method setting order object from client to server through the RMI connection.
+	* @param order Order object.
+	* @throws RemoteException When RMI connection between server and client is not working.
+	*/
+	void setOrder(Order order) throws RemoteException;
 }
