@@ -6,16 +6,23 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
-
+import javax.swing.*;
+import java.util.*;
+import java.awt.*;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,10 +34,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JViewport;
+import javax.swing.ListCellRenderer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Controller.Controller;
 import Domain.Mediator.ModelManager;
 import Domain.Mediator.RmiClient;
 import Domain.Mediator.RmiServerInterface;
@@ -49,6 +56,8 @@ public class ClientGUI extends JFrame {
 	private final int ID;
 	private RmiClient client;
 
+	final ImageIcon imageIcon = new ImageIcon("logo.png");
+	
 	// JPANELS //
 	// *********************************************************************
 	private JPanel mainPanel;
@@ -107,9 +116,7 @@ public class ClientGUI extends JFrame {
 	private JList<Item> dessertList;
 	private JList<Item> nonAlcoholicDrinksList;
 	private JList<Item> alcoholicDrinksList;
-
-	private JList<Item> listOfOrder;
-
+	
 	private DefaultListModel<Item> starterModel;
 	private DefaultListModel<Item> soupModel;
 	private DefaultListModel<Item> porkModel;
@@ -121,13 +128,29 @@ public class ClientGUI extends JFrame {
 	private DefaultListModel<Item> dessertModel;
 	private DefaultListModel<Item> nonAlcoholicDrinksModel;
 	private DefaultListModel<Item> alcoholicDrinksModel;
+	
+	private DefaultListModel<Item> modelOfOrders = new DefaultListModel<Item>();
 
-	private DefaultListModel<Item> modelOfOrders;
+	  
+	@SuppressWarnings("unchecked")
+	private JList<Item> listOfOrder = new JList(modelOfOrders) {
+	         Image image = imageIcon.getImage();
+	         Image imageTemp = image.getScaledInstance(325, 400, Image.SCALE_DEFAULT);
+	         {
+	            setOpaque(false);
+;
+	         }
+	         public void paintComponent(Graphics g) {
+	            g.drawImage(imageTemp, 240, 180, this);
+	            super.paintComponent(g);
+	         }
+	      };
+
 	
 	// JSCROLLPANES
 	// *********************************************************************
 	
-	private JScrollPane ordersScrollPane;
+	private JScrollPane ordersScrollPane ;
 	
 	private JScrollPane porkListScrollPane;
 	private JScrollPane beefListScrollPane;
@@ -144,6 +167,8 @@ public class ClientGUI extends JFrame {
 
 	public ClientGUI(ModelManager manager, int ID,
 			RmiServerInterface remoteService, RmiClient client) throws Exception {
+		
+		
 		this.manager = manager;
 		this.ID = ID;
 		this.remoteService = remoteService;
@@ -225,7 +250,7 @@ public class ClientGUI extends JFrame {
 		nonAlcoholicDrinksModel = new DefaultListModel<Item>();
 		alcoholicDrinksModel = new DefaultListModel<Item>();
 
-		modelOfOrders = new DefaultListModel<Item>();
+		
 
 		starterList = new JList(starterModel);
 		starterList.setFont(new Font("Arial", Font.BOLD , 19));
@@ -249,14 +274,17 @@ public class ClientGUI extends JFrame {
 		nonAlcoholicDrinksList.setFont(new Font("Arial", Font.BOLD , 19));
 		alcoholicDrinksList = new JList(alcoholicDrinksModel);
 		alcoholicDrinksList.setFont(new Font("Arial", Font.BOLD, 19));
-		listOfOrder = new JList(modelOfOrders);
+
 		listOfOrder.setFont(new Font("Arial", Font.BOLD, 19));
+		listOfOrder.setForeground(Color.BLACK);
+
+		
 
 		// JSCROLLPANES
 		// *********************************************************************
 		
-		ordersScrollPane = new JScrollPane(listOfOrder);
 		
+		ordersScrollPane = new JScrollPane(listOfOrder);
 		porkListScrollPane = new JScrollPane(porkList);
 		beefListScrollPane = new JScrollPane(beefList);
 		chickenListScrollPane = new JScrollPane(chickenList);
@@ -269,6 +297,7 @@ public class ClientGUI extends JFrame {
 		nonAlcoholicScrollPane = new JScrollPane(nonAlcoholicDrinksList);
 		alcoholicScrollPane = new JScrollPane(alcoholicDrinksList);
 		
+		listOfOrder.setCellRenderer(new OpaqueCellRenderer());
 		// JLABELS //
 		// **********************************************************************
 
@@ -685,4 +714,33 @@ public class ClientGUI extends JFrame {
 	public void setManager(ModelManager manager) {
 		this.manager = manager;
 	}
+	
+	
+	class OpaqueCellRenderer extends DefaultListCellRenderer implements ListCellRenderer<Object> {
+		   public Component getListCellRendererComponent(
+		      JList list,
+		      Object value,            // value to display
+		      int index,               // cell index
+		      boolean isSelected,      // is the cell selected
+		      boolean cellHasFocus)    // the list and the cell have the focus
+		   {
+		      Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		  
+		      if (isSelected) {
+		         ((JComponent) c).setOpaque(true);
+		         c.setBackground(list.getSelectionBackground());
+		         c.setForeground(list.getSelectionForeground());
+		      }
+		      else {
+		         ((JComponent) c).setOpaque(false);
+		         c.setBackground(list.getBackground());
+		         c.setForeground(list.getForeground());
+		      }
+		  
+		      return c;
+		   }
+		}
+	
 }
+
+

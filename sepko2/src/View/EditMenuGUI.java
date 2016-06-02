@@ -136,6 +136,7 @@ public class EditMenuGUI extends JFrame {
 		setTitle("SEP Restaurant System - Edit Menu");
 		this.database = database;
 		this.rmiService = rmiService;
+		this.manager = manager;
 		setLayout(new BorderLayout());
 		setComponents();
 		fillFirstTab();
