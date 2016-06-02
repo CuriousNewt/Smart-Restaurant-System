@@ -23,15 +23,6 @@ public class Controller implements Serializable {
 	}
 	
 		/**
-	    * Calls one of the methods for getting menu of items from manager based on the String parameter.
-	    * @param type String, which is determines the type of item .
-	    * @return Method is returning Menu of selected items .
-	    */
-	public Menu showMenuByType(String type){
-		return manager.getMenuByType(type);
-	}
-	
-		/**
 	    * Calls one of the methods for getting a type of menu from manager based on the String parameter.
 	    * @param what String, which is determines the type of menu.
 	    * @return Method is returning Menu of selected type.

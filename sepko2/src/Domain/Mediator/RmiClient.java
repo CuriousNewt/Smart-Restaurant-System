@@ -76,7 +76,7 @@ public class RmiClient extends UnicastRemoteObject implements ClientInterface, S
 				.lookup(ip + "/RmiService");
 		RmiClient client = new RmiClient(remoteService);
 		remoteService.registerForCallback(client);
-		gui = new ClientGUI(remoteService.getController(), getID(),remoteService, client);
+		gui = new ClientGUI(remoteService.getController().getManager(), getID(),remoteService, client);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
@@ -123,7 +123,7 @@ public class RmiClient extends UnicastRemoteObject implements ClientInterface, S
 	*/
 	public void updateMenu() {
 		try {
-			gui.setController(remoteService.getController());
+			gui.setManager(remoteService.getController().getManager());
 			gui.getMenuByType();
 		} catch (RemoteException e) {
 			e.printStackTrace();

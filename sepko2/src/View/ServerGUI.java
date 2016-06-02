@@ -100,7 +100,7 @@ public class ServerGUI extends JFrame {
 		topMenu = new JMenu("Edit");
 		menuItemEditMenu = new JMenuItem("Edit menu..");
 		menuItempastOrders = new JMenuItem("Past orders..");
-		editMenuGui = new EditMenuGUI(database, controller, rmiService);
+		editMenuGui = new EditMenuGUI(database,controller.getManager(), rmiService);
 		pastOrdersGui = new PastOrdersGUI(database, controller.getManager());
 
 		// JPANELS

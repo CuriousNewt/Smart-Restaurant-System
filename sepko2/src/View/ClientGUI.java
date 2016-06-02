@@ -31,6 +31,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Controller.Controller;
+import Domain.Mediator.ModelManager;
 import Domain.Mediator.RmiClient;
 import Domain.Mediator.RmiServerInterface;
 import Domain.Model.Item;
@@ -42,7 +43,7 @@ public class ClientGUI extends JFrame {
 	private JMenu topMenu;
 	private JMenuItem menuItemEditMenu;
 	private JTabbedPane menuTabs;
-	private Controller controller;
+	private ModelManager manager;
 	private double totalPrice;
 	private RmiServerInterface remoteService;
 	private final int ID;
@@ -141,9 +142,9 @@ public class ClientGUI extends JFrame {
 	private JScrollPane alcoholicScrollPane;
 	
 
-	public ClientGUI(Controller controller, int ID,
+	public ClientGUI(ModelManager manager, int ID,
 			RmiServerInterface remoteService, RmiClient client) throws Exception {
-		this.controller = controller;
+		this.manager = manager;
 		this.ID = ID;
 		this.remoteService = remoteService;
 		this.client = client;
@@ -377,73 +378,73 @@ public class ClientGUI extends JFrame {
 	// *********************************************************************
 	public void getMenuByType() {
 		pastaModel.clear();
-		for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
-			pastaModel.addElement(controller.showMenuByType("pasta")
+		for (int i = 0; i < manager.getMenuByType("pasta").size(); i++) {
+			pastaModel.addElement(manager.getMenuByType("pasta")
 					.get(i));
 		}
 
 		porkModel.clear();
-		for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
-			porkModel.addElement(controller.showMenuByType("pork").get(
+		for (int i = 0; i < manager.getMenuByType("pork").size(); i++) {
+			porkModel.addElement(manager.getMenuByType("pork").get(
 					i));
 		}
 
 		chickenModel.clear();
-		for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
-			chickenModel.addElement(controller
-					.showMenuByType("chicken").get(i));
+		for (int i = 0; i < manager.getMenuByType("chicken").size(); i++) {
+			chickenModel.addElement(manager
+					.getMenuByType("chicken").get(i));
 		}
 		starterModel.clear();
-		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
-			starterModel.addElement(controller
-					.showMenuByType("starter").get(i));
+		for (int i = 0; i < manager.getMenuByType("starter").size(); i++) {
+			starterModel.addElement(manager
+					.getMenuByType("starter").get(i));
 		}
 		
 
 		beefModel.clear();
-		for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
-			beefModel.addElement(controller.showMenuByType("beef").get(
+		for (int i = 0; i < manager.getMenuByType("beef").size(); i++) {
+			beefModel.addElement(manager.getMenuByType("beef").get(
 					i));
 		}
 
 		dessertModel.clear();
-		for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
-			dessertModel.addElement(controller
-					.showMenuByType("dessert").get(i));
+		for (int i = 0; i < manager.getMenuByType("dessert").size(); i++) {
+			dessertModel.addElement(manager
+					.getMenuByType("dessert").get(i));
 		}
 
 		soupModel.clear();
-		for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
-			soupModel.addElement(controller.showMenuByType("soups")
+		for (int i = 0; i < manager.getMenuByType("soups").size(); i++) {
+			soupModel.addElement(manager.getMenuByType("soups")
 					.get(i));
 		}
 
 		seaFoodModel.clear();
-		for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
-			seaFoodModel.addElement(controller
-					.showMenuByType("seafood").get(i));
+		for (int i = 0; i < manager.getMenuByType("seafood").size(); i++) {
+			seaFoodModel.addElement(manager
+					.getMenuByType("seafood").get(i));
 		}
 		
 
 		sideDishModel.clear();
-		for (int i = 0; i < controller.showMenuByType("sidedish")
+		for (int i = 0; i < manager.getMenuByType("sidedish")
 				.size(); i++) {
-			sideDishModel.addElement(controller.showMenuByType(
+			sideDishModel.addElement(manager.getMenuByType(
 					"sidedish").get(i));
 		}
 
 		alcoholicDrinksModel.clear();
-		for (int i = 0; i < controller.showMenuByType("alcoholic")
+		for (int i = 0; i < manager.getMenuByType("alcoholic")
 				.size(); i++) {
-			alcoholicDrinksModel.addElement(controller.showMenuByType(
+			alcoholicDrinksModel.addElement(manager.getMenuByType(
 					"alcoholic").get(i));
 		}
 
 		nonAlcoholicDrinksModel.clear();
-		for (int i = 0; i < controller.showMenuByType("nonalcoholic")
+		for (int i = 0; i < manager.getMenuByType("nonalcoholic")
 				.size(); i++) {
-			nonAlcoholicDrinksModel.addElement(controller
-					.showMenuByType("nonalcoholic").get(i));
+			nonAlcoholicDrinksModel.addElement(manager
+					.getMenuByType("nonalcoholic").get(i));
 		}
 
 }
@@ -459,92 +460,92 @@ public class ClientGUI extends JFrame {
 			switch (temp) {
 			case "pasta":
 				pastaModel.clear();
-				for (int i = 0; i < controller.showMenuByType("pasta").size(); i++) {
-					pastaModel.addElement(controller.showMenuByType("pasta")
+				for (int i = 0; i < manager.getMenuByType("pasta").size(); i++) {
+					pastaModel.addElement(manager.getMenuByType("pasta")
 							.get(i));
 				}
 				break;
 
 			case "pork":
 				porkModel.clear();
-				for (int i = 0; i < controller.showMenuByType("pork").size(); i++) {
-					porkModel.addElement(controller.showMenuByType("pork").get(
+				for (int i = 0; i < manager.getMenuByType("pork").size(); i++) {
+					porkModel.addElement(manager.getMenuByType("pork").get(
 							i));
 				}
 				break;
 
 			case "chicken":
 				chickenModel.clear();
-				for (int i = 0; i < controller.showMenuByType("chicken").size(); i++) {
-					chickenModel.addElement(controller
-							.showMenuByType("chicken").get(i));
+				for (int i = 0; i < manager.getMenuByType("chicken").size(); i++) {
+					chickenModel.addElement(manager
+							.getMenuByType("chicken").get(i));
 				}
 				break;
 
 			case "starter":
 				starterModel.clear();
-				for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
-					starterModel.addElement(controller
-							.showMenuByType("starter").get(i));
+				for (int i = 0; i < manager.getMenuByType("starter").size(); i++) {
+					starterModel.addElement(manager
+							.getMenuByType("starter").get(i));
 				}
 				break;
 
 			case "beef":
 				beefModel.clear();
-				for (int i = 0; i < controller.showMenuByType("beef").size(); i++) {
-					beefModel.addElement(controller.showMenuByType("beef").get(
+				for (int i = 0; i < manager.getMenuByType("beef").size(); i++) {
+					beefModel.addElement(manager.getMenuByType("beef").get(
 							i));
 				}
 				break;
 
 			case "desserts":
 				dessertModel.clear();
-				for (int i = 0; i < controller.showMenuByType("dessert").size(); i++) {
-					dessertModel.addElement(controller
-							.showMenuByType("dessert").get(i));
+				for (int i = 0; i < manager.getMenuByType("dessert").size(); i++) {
+					dessertModel.addElement(manager
+							.getMenuByType("dessert").get(i));
 				}
 				break;
 
 			case "soup":
 				soupModel.clear();
-				for (int i = 0; i < controller.showMenuByType("soups").size(); i++) {
-					soupModel.addElement(controller.showMenuByType("soups")
+				for (int i = 0; i < manager.getMenuByType("soups").size(); i++) {
+					soupModel.addElement(manager.getMenuByType("soups")
 							.get(i));
 				}
 				break;
 
 			case "sea food":
 				seaFoodModel.clear();
-				for (int i = 0; i < controller.showMenuByType("seafood").size(); i++) {
-					seaFoodModel.addElement(controller
-							.showMenuByType("seafood").get(i));
+				for (int i = 0; i < manager.getMenuByType("seafood").size(); i++) {
+					seaFoodModel.addElement(manager
+							.getMenuByType("seafood").get(i));
 				}
 				break;
 
 			case "side dish":
 				sideDishModel.clear();
-				for (int i = 0; i < controller.showMenuByType("sidedish")
+				for (int i = 0; i < manager.getMenuByType("sidedish")
 						.size(); i++) {
-					sideDishModel.addElement(controller.showMenuByType(
+					sideDishModel.addElement(manager.getMenuByType(
 							"sidedish").get(i));
 				}
 				break;
 
 			case "alcoholic drinks":
 				alcoholicDrinksModel.clear();
-				for (int i = 0; i < controller.showMenuByType("alcoholic")
+				for (int i = 0; i < manager.getMenuByType("alcoholic")
 						.size(); i++) {
-					alcoholicDrinksModel.addElement(controller.showMenuByType(
+					alcoholicDrinksModel.addElement(manager.getMenuByType(
 							"alcoholic").get(i));
 				}
 				break;
 
 			case "non-alcoholic drinks":
 				nonAlcoholicDrinksModel.clear();
-				for (int i = 0; i < controller.showMenuByType("nonalcoholic")
+				for (int i = 0; i < manager.getMenuByType("nonalcoholic")
 						.size(); i++) {
-					nonAlcoholicDrinksModel.addElement(controller
-							.showMenuByType("nonalcoholic").get(i));
+					nonAlcoholicDrinksModel.addElement(manager
+							.getMenuByType("nonalcoholic").get(i));
 				}
 				break;
 
@@ -675,13 +676,13 @@ public class ClientGUI extends JFrame {
 
 		// Filling up pork on start because its first selected tab
 
-		for (int i = 0; i < controller.showMenuByType("starter").size(); i++) {
+		for (int i = 0; i < manager.getMenuByType("starter").size(); i++) {
 			starterModel
-					.addElement(controller.showMenuByType("starter").get(i));
+					.addElement(manager.getMenuByType("starter").get(i));
 		}
 	}
 	
-	public void setController(Controller controller) {
-		this.controller = controller;
+	public void setManager(ModelManager manager) {
+		this.manager = manager;
 	}
 }

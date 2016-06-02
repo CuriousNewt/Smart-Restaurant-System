@@ -41,7 +41,7 @@ public class KitchenClient extends UnicastRemoteObject implements
 		remoteService = (RmiServerInterface) Naming.lookup(ip + "/RmiService");
 		KitchenClient client = new KitchenClient(remoteService);
 		remoteService.registerKitchenForCallBack(client);
-		gui = new KitchenGUI(remoteService, remoteService.getController());
+		gui = new KitchenGUI(remoteService);
 		gui.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gui.setVisible(true);
 	}
