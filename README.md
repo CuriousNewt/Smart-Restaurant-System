@@ -1,1 +1,1 @@
-# sepko2
+Semester project 2
